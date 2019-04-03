@@ -1,0 +1,12 @@
+<div>
+    <div class="row">
+      <app-dynamic-form-item
+        *ngFor="let item of items; let i = index;"
+        [currentUser]="userProgramRole"
+        [item]="item"
+        [form]="form"
+        class="form-item col-md-12"
+        [readOnly]="readOnly">
+      </app-dynamic-form-item>
+    </div>
+</div>

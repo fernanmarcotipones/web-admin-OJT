@@ -1,0 +1,140 @@
+<ngx-loading
+  [show]="fetchingFiscalYears ||
+  fetchingRegions ||
+  fetchingProvinces ||
+  fetchingMunicipalities ||
+  fetchingBarangays ||
+  fetchingProgramForm ||
+  fetchingForm ||
+  fetchingCSOGroups ||
+  fetchingRoles">
+</ngx-loading>
+<div class="col-12 filters-list" id="shared-filter-list">
+  <form [formGroup]="filterForm" #form="ngForm" novalidate>
+    <div class="row">
+      <div *ngIf="filterConfig?.referenceNumber" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <input type="text" formControlName="referenceNumber" class="form-control" placeholder="Project Id" (change)="changeFilter()">
+      </div>
+      <div *ngIf="filterConfig?.name" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <input type="text" formControlName="name" class="form-control" placeholder="Name" (change)="changeFilter()">
+      </div>
+      <div *ngIf="filterConfig?.searchKey" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <input type="text" formControlName="searchKey" class="form-control" placeholder="Project Id / Name" (change)="changeFilter()">
+      </div>
+      <div *ngIf="filterConfig?.userSearchKey" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <input type="text" formControlName="userSearchKey" class="form-control" placeholder="Name/Username/Email" (change)="changeFilter()">
+      </div>
+      <div *ngIf="filterConfig?.hasFeedback" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="hasFeedback" (change)="changeFilter();">
+          <option value="">Feedback</option>
+          <option *ngFor='let feedback of hasFeedback' [ngValue]=feedback.value> {{ feedback.label }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.userVerification" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="userVerification" (change)="changeFilter();">
+          <option value="">Verification</option>
+          <option *ngFor='let verification of userVerification' [ngValue]=verification.value> {{ verification.label }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.userActivation" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="userActivation" (change)="changeFilter();">
+          <option value="">Activation</option>
+          <option *ngFor='let activation of userActivation' [ngValue]=activation.value> {{ activation.label }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.csoGroup" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="csoGroup" (change)="changeFilter();" [attr.disabled]="disabledCSOGroupField?'':null">
+          <option value="">CSO Group</option>
+          <option *ngFor='let group of csoGroups' value="{{ group.objectId }}"> {{ group.name }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.role" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="role" (change)="changeFilter();">
+          <option value="">Role</option>
+          <option *ngFor='let role of roles' value="{{ role.objectId }}"> {{ role.name }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.fiscalYear" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="fiscalYear" (change)="changeFilter();">
+          <option value="">Fiscal Year</option>
+          <option *ngFor='let year of fiscalYears' value="{{ year }}"> {{ year }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.programForm" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="programForm" (change)="loadForm($event.target.value);">
+          <option value="">Program Form</option>
+          <option *ngFor='let programForm of programForms' value="{{ programForm.objectId }}"> {{ programForm.title | titlecase }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.monitoringForm || filterConfig?.feedbackForm" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="form" (change)="loadPoints($event.target.value);">
+          <option value="">Form</option>
+          <option *ngFor='let form of forms' value="{{ form.objectId }}"> {{ form.title | titlecase }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.dateRange" class="input-group daterange col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <input
+          (focus)="onFocusDateRange()"
+          (blur)="onBlurDateRange()"
+          type="text"
+          class="form-control"
+          [(ngModel)]="dateRange"
+          formControlName="dateRange"
+          placeholder="Date range"
+          bsDaterangepicker
+          placement="bottom"
+          [bsConfig]="{ containerClass: 'theme-red' }"
+          (ngModelChange)="changeFilter();"/>
+        <span *ngIf="dateRange" class="clear" (click)="dateRange = null; changeFilter();"><i class="fa fa-times"></i></span>
+      </div>
+      <div *ngIf="filterConfig?.reportStatus" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="reportStatus" (change)="changeFilter()">
+          <option value="">Report Status</option>
+          <option *ngFor='let status of reportStatuses' value="{{ status.value }}"> {{ status.name | titlecase }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.feedbackPoint" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="feedbackPoint" (change)="changeFilter()">
+          <option value="">Feedback Point</option>
+          <option *ngFor='let pt of points' value="{{ pt }}"> {{ pt }} Point(s)</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.feedbackStatus" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="feedbackStatus" (change)="changeFilter()">
+          <option value="">Feedback Status</option>
+          <option *ngFor='let status of feedbackStatuses' value="{{ status.value }}"> {{ status.name | titlecase }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.region" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="region" (change)="loadProvinces($event.target.value);" [attr.disabled]="disabledRegionField?'':null">
+          <option value="">Region</option>
+          <option *ngFor='let reg of regions' value="{{ reg.objectId }}"> {{ reg.name }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.province" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="province" (change)="loadMunicipalities($event.target.value);" [attr.disabled]="disabledProvinceField?'':null">
+          <option value="">Province</option>
+          <option *ngFor='let prov of provinces' value="{{ prov.objectId }}"> {{ prov.name | titlecase }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.district" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control"  formControlName="districtLevel" (change)="loadByDistrict($event.target.value);" [attr.disabled]="disabledDistrictField?'':null">
+          <option value="">District</option>
+          <option *ngFor='let districtLvl of districtLevels' value="{{ districtLvl.level }}"> {{ districtLvl.name }}</option>
+          </select>
+      </div>
+      <div *ngIf="filterConfig?.municipality" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="municipality" (change)="loadBarangays($event.target.value);" [attr.disabled]="disabledMunicipalityField?'':null">
+          <option value="">Municipality</option>
+          <option *ngFor='let mun of municipalities' value="{{ mun.objectId }}"> {{ mun.name | titlecase }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.barangay" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="barangay" (change)="changeFilter();" [attr.disabled]="disabledBarangayField?'':null">
+          <option value="">Barangay</option>
+          <option *ngFor='let brgy of barangays' value="{{ brgy.objectId }}"> {{ brgy.name | titlecase }}</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>

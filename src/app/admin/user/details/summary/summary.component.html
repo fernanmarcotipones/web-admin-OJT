@@ -1,0 +1,20 @@
+<div id="user-details-summary">
+  <div class="card">
+    <div class="user-picture">
+      <div class="background" [ngStyle]="{'background-image': 'url(' + userSummary.imgUrl + ')'}"></div>
+      <div class="user-image animated fadeInScaleUp" [ngStyle]="{'background-image': 'url(' + userSummary.imgUrl + ')'}"></div>
+    </div>
+    <div class="user-info">
+      <h3 class="name animated fadeIn">{{ (userSummary | userFullName) | titlecase }}</h3>
+      <h5 class="occupation animated fadeIn">{{ userSummary.occupation | titlecase}}</h5>
+    </div>
+    <div class="user-status">
+      <div class="badge-parent col-6" [ngClass]="userSummary.isActivated ? 'badge-success' : 'badge-danger'">
+        <span class="badge badge-pill">{{ userSummary.isActivated ? 'Active' : 'Inactive' }}</span>
+      </div>
+      <div class="badge-parent col-6" [ngClass]="userSummary.isVerified ? 'badge-success' : 'badge-danger'">
+        <span class="badge badge-pill">{{ userSummary.isVerified ? 'Verified' : 'Not Verified' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

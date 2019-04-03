@@ -1,0 +1,180 @@
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+// scss-lint:disable QualifyingElement
+hr.transparent {
+  border-top: 1px solid transparent;
+}
+
+.ngx-datatable.bootstrap {
+  box-shadow: none;
+  font-size: 13px;
+  .datatable-header {
+    height: unset !important;
+    background-color: #FFF;
+    .datatable-header-cell {
+      vertical-align: bottom;
+      padding: 0.75rem;
+      border-bottom: 1px solid #d1d4d7;
+      font-weight: bold;
+      .datatable-header-cell-label {
+        line-height: 24px;
+      }
+      .resize-handle {
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 5px;
+        padding: 0 4px;
+        visibility: hidden;
+        cursor: ew-resize;
+      }
+      &.resizeable:hover {
+        .resize-handle {
+          visibility: visible;
+        }
+      }
+    }
+
+    .datatable-row-left {
+      background-color: #FFF;
+      background-position: 100% 0;
+      background-repeat: repeat-y;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
+    }
+    .datatable-row-right {
+      background-color: #FFF;
+      background-position: 0 0;
+      background-repeat: repeat-y;
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
+    }
+    .resize-handle {
+      border-right: solid 1px #d1d4d7;
+    }
+  }
+  .datatable-body {
+    .datatable-body-row {
+      vertical-align: top;
+      border-top: 1px solid #d1d4d7;
+      &.datatable-row-even {
+        background-color: #f2f2f2;
+          .datatable-row-left {
+            background-color: #f2f2f2;
+            background-position: 100% 0;
+            background-repeat: repeat-y;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
+          }
+
+          .datatable-row-right {
+            background-color: #f2f2f2;
+            background-position: 0 0;
+            background-repeat: repeat-y;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
+          }
+      }
+      &.datatable-row-odd {
+        background-color: #FFF;
+          .datatable-row-left {
+            background-color: #FFF;
+            background-position: 100% 0;
+            background-repeat: repeat-y;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQIHWPSkNeSBmJhTQVtbiDNCgASagIIuJX8OgAAAABJRU5ErkJggg==);
+          }
+
+          .datatable-row-right {
+            background-color: #FFF;
+            background-position: 0 0;
+            background-repeat: repeat-y;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAABCAYAAAD5PA/NAAAAFklEQVQI12PQkNdi1VTQ5gbSwkAsDQARLAIGtOSFUAAAAABJRU5ErkJggg==);
+          }
+      }
+      &.active {
+        background-color: #1483ff;
+        color: #FFF;
+      }
+      .datatable-body-cell {
+        text-align: left;
+        vertical-align: top;
+        padding: 0.75rem;
+      }
+    }
+    // .progress-linear {
+    //   display: block;
+    //   position: relative;
+    //   width: 100%;
+    //   height: 5px;
+    //   padding: 0;
+    //   margin: 0;
+    //   position: absolute;
+    //   .container {
+    //     display: block;
+    //     position: relative;
+    //     overflow: hidden;
+    //     width: 100%;
+    //     height: 5px;
+    //     transform: translate(0, 0) scale(1, 1);
+    //     background-color: #aad1f9;
+    //     .bar {
+    //       transition: transform .2s linear;
+    //       background-color: #106cc8;
+    //       position: absolute;
+    //       left: 0;
+    //       top: 0;
+    //       bottom: 0;
+    //       width: 100%;
+    //       height: 5px;
+    //     }
+    //   }
+    // }
+  }
+  .datatable-footer {
+    background: #424242;
+    color: #ededed;
+    margin-top: -1px;
+    .page-count {
+      line-height: 50px;
+      height: 50px;
+      padding: 0 1.2rem;
+    }
+    .datatable-pager {
+      margin: 0 10px;
+      vertical-align: top;
+      ul {
+        li {
+          margin: 10px 0px;
+          &:not(.disabled) {
+            &.active,
+            &:hover {
+              a {
+                background-color: #545454;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+      a {
+        height: 22px;
+        min-width: 24px;
+        line-height: 22px;
+        padding: 0;
+        border-radius: 3px;
+        margin: 0 3px;
+        text-align: center;
+        vertical-align: top;
+        text-decoration: none;
+        vertical-align: bottom;
+        color: #ededed;
+      }
+      .datatable-icon-left,
+      .datatable-icon-skip,
+      .datatable-icon-right,
+      .datatable-icon-prev {
+        font-size: 18px;
+        line-height: 27px;
+        padding: 0 3px;
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+<ngx-loading [show]="false"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="row row-menu">
+    <div class="top-menu col-12">
+      <div class="menu-body">
+        <div class="col-12">
+          <app-filter-options 
+          [activeUserProgramRole]="currentUser?.activeUserProgramRole" 
+          [filterConfig]="userFilterConfig"
+          [defaultFilterValues]="defaultFilterValues"
+          (filterValues)="fetchFilterValues($event)"
+          (filterLoaded)="setFilterLoaded($event)"></app-filter-options>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fast fadeIn after-menu">
+    <div class="col-12 custom-table-card">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-list-alt top-view"></i> User List
+          <div class="card-actions">
+            <a *ngIf="currentUser?.activeUserProgramRole && currentUser?.activeUserProgramRole.role.name === 'ProjectAdmin'"
+              class="btn-setting cursor-pointer" [queryParamsHandling]="preserve" [routerLink]="['/admin/project-management', 'create']"
+              tooltip="Add New Project" placement="top">
+              <i class="icon-plus"></i></a>
+            <a class="btn-setting cursor-pointer" tooltip="Import Project(s)" placement="top"><i class="icon-cloud-download"></i></a>
+            <a class="btn-setting cursor-pointer" tooltip="Export Project(s)" placement="top"><i class="icon-cloud-upload"></i></a>
+          </div>
+        </div>
+        <div class="card-body">
+          <app-admin-user-table [activeUserProgramRole]="currentUser?.activeUserProgramRole" [filterValues]="filterValues"
+            [isFilterLoaded]="isFilterLoaded"></app-admin-user-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

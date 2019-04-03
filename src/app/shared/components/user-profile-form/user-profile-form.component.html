@@ -1,0 +1,108 @@
+<form [formGroup]="userProfileForm" #createUserForm="ngForm" class="custom-form animated fadeIn" novalidate>
+    <div class="form-group row">
+      <label class="col-md-4 form-control-label required">First Name</label>
+      <div class="col-md-8">
+        <input 
+          class="form-control form-control-sm" 
+          formControlName="firstName" 
+          type="text" 
+          maxlength="50"
+          (keyup)="onFieldChange()"
+          placeholder="First Name">
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('firstName') && userProfileForm.get('firstName').hasError('required')">
+          First name is required
+        </div>
+        <div class="error-msg" 
+          *ngIf="!userProfileForm.get('firstName').hasError('required') && 
+          (userProfileForm.get('firstName').hasError('isNotAlphabetOnly') || 
+          userProfileForm.get('firstName').hasError('isWhiteSpaceOnly'))">
+          Please input a valid first name
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 form-control-label">Middle Name</label>
+      <div class="col-md-8">
+        <input class="form-control form-control-sm" 
+          formControlName="middleName" 
+          type="text" 
+          maxlength="50"
+          (keyup)="onFieldChange()"
+          placeholder="Middle Name">
+        <div class="error-msg" 
+          *ngIf="!userProfileForm.get('middleName').hasError('required') && 
+          (userProfileForm.get('middleName').hasError('isNotAlphabetOnly') || 
+          userProfileForm.get('middleName').hasError('isWhiteSpaceOnly'))">
+          Please input a valid middle name
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 form-control-label required">Last Name</label>
+      <div class="col-md-8">
+        <input class="form-control form-control-sm" 
+          formControlName="lastName" 
+          type="text" 
+          maxlength="50"
+          (keyup)="onFieldChange()"
+          placeholder="Last Name">
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('lastName') && userProfileForm.get('lastName').hasError('required')">
+          Last name is required  
+        </div>
+        <div class="error-msg" 
+          *ngIf="!userProfileForm.get('lastName').hasError('required') && 
+          (userProfileForm.get('lastName').hasError('isNotAlphabetOnly') || 
+          userProfileForm.get('lastName').hasError('isWhiteSpaceOnly'))">
+          Please input a valid last name
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 form-control-label required">Occupation</label>
+      <div class="col-md-8">
+        <input class="form-control form-control-sm" 
+          formControlName="occupation" 
+          type="text" 
+          maxlength="50"
+          (keyup)="onFieldChange()"
+          placeholder="Occupation">
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('occupation') && userProfileForm.get('occupation').hasError('required')">
+          Occupation is required  
+        </div>
+        <div class="error-msg" 
+          *ngIf="!userProfileForm.get('occupation').hasError('required') && 
+          (userProfileForm.get('occupation').hasError('isNotAlphabetOnly') || 
+          userProfileForm.get('occupation').hasError('isWhiteSpaceOnly'))">
+          Please input a valid occupation
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 form-control-label required">Mobile No.</label>
+      <div class="col-md-8">
+        <input 
+          class="form-control form-control-sm" 
+          formControlName="mobileNumber" 
+          type="text" 
+          maxlength="13"
+          (keyup)="onFieldChange()"
+          placeholder="Mobile Number">
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('mobileNumber') && userProfileForm.get('mobileNumber').hasError('required')">
+          Mobile number is required  
+        </div>
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('mobileNumber') && !userProfileForm.get('mobileNumber').hasError('required') && 
+          userProfileForm.get('mobileNumber').hasError('isMobileInvalid')">
+          Please input a valid PH mobile number format
+        </div>
+        <div class="error-msg"
+          *ngIf="isFieldInvalid('mobileNumber') && userProfileForm.get('mobileNumber').hasError('mobileNumberTaken')">
+          Mobile number is already taken
+        </div>
+      </div>
+    </div>
+  </form>

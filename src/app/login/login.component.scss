@@ -1,0 +1,32 @@
+@import '../../scss/_custom-variables.red';
+
+.description{
+  background: $v2-primary-color;
+
+  .desc-logo{
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    .undp,.agency{
+      width:70px;
+      height: 150px;
+    }
+    .undp{
+      margin-right:5px;
+    }
+    .agency{
+      display:flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      div{
+        width:100%;
+        img{
+          width:auto;
+          height:68px;
+        }
+      }
+    }
+  }
+}

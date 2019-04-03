@@ -1,0 +1,105 @@
+<div id="content-container">
+    <div [formGroup]="form">
+      <div class="col-md-12">
+        <label *ngIf="item.type !='SECTION_HEADER'" attr.for="item.fieldId" class="question-title" >{{ item.order }}. {{item.title}}</label>
+
+        <label *ngIf="item.type=='SECTION_HEADER'" attr.for="item.fieldId" class="question-title section-header" > {{item.title}} </label>
+        <!-- <h6>{{ item?.description }}</h6> -->
+      </div>
+      <div ngSwitch="{{ item.controlType }}">
+
+        <div *ngSwitchCase="'textbox'">
+          <div class="col-md-12">
+              <input class="form-control" formControlName="{{item.fieldId}}" id="{{item.fieldId}}" type="{{item.type}}" placeholder="{{item.helpText}}" />
+            </div>
+            <br>
+        </div>
+
+        <div *ngSwitchCase="'textarea'">
+          <div class="col-md-12">
+              <textarea  class="form-control" rows="3" formControlName="{{item.fieldId}}" id="{{item.fieldId}}"></textarea>
+            </div>
+        </div>
+
+        <div *ngSwitchCase="'file'">
+          <div class="col-md-12">
+            <input class="form-control" formControlName="{{item.fieldId}}" id="{{item.fieldId}}" type="{{item.type}}" />
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'dropdown'">
+          <div class="col-md-12">
+            <select id="{{item.fieldId}}" formControlName="{{item.fieldId}}">
+              <option *ngFor="let opt of item.choices" value="{{opt}}">{{opt}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'radio'">
+          <div class="col-md-12">
+            <tr *ngFor="let opt of item.choices">
+              <td>
+                <label>
+                    <input type="radio" formControlName="{{ item.fieldId }}"
+                    value="{{ opt }}"
+                    (click)="item.value = opt;" />
+                    {{ opt }}
+                </label>
+              </td>
+            </tr>
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'radio_grid'">
+          <div class="col-md-12">
+              <div *ngIf="form.controls[item.fieldId]" class="form-group" formGroupName="{{ item.fieldId }}">
+                  <div class="row" *ngFor="let row of item.rows; let i = index;">
+                      <div class="col-md-8">
+                        {{ row }}
+                      </div>
+                      <div class="col-md-2" *ngFor="let col of item.columns">
+                          <label >
+                              <input type="radio" formControlName="{{ item.fieldId +'_'+ i }}"
+                                value="{{ col }}"
+                                (click)="item.value = col;" />
+                                {{ col }}
+                            </label>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+        <div *ngSwitchCase="'checkbox'">
+          <div class="col-md-12">
+            <div *ngIf="form.controls[item.fieldId]" class="form-group" formGroupName="{{ item.fieldId }}">
+              <div *ngFor="let opt of item.choices; let i=index">
+                <input type="checkbox" [formControl]="form.controls[item.fieldId].controls[i]"/> {{ opt }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div *ngSwitchCase="'grid'">
+            <div class="col-md-12">
+              <div class="form-group" formGroupName="{{ item.fieldId }}">
+                  <div class="row" *ngFor="let row of item.rows; let i = index;">
+                      <div class="col-md-8">
+                        {{ row }}
+                      </div>
+                      <div class="col-md-2" *ngFor="let col of item.columns">
+                          <label >
+                              <input type="checkbox"  formControlName="{{ item.fieldId +'_'+ i }}"
+                                value="{{ col }}"
+                                (click)="item.value = col;" />
+                                {{ col }}
+                            </label>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div> -->
+
+      </div>
+    </div>
+  </div>

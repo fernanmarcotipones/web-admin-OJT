@@ -1,0 +1,56 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="row animated fast fadeIn">
+  <div class="custom-table-card table-inside-modal">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-list-alt top-view"></i> Export History
+        <div class="card-actions">
+
+        </div>
+      </div>
+      <div class="card-body">
+        <div id="user-export-table">
+          <ngx-datatable class="bootstrap" [messages]="{totalMessage:'Export(s) Found'}" [rows]="rows" [rowHeight]="'auto'"
+            [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [externalPaging]="true" [count]="page.totalElements"
+            [offset]="page.pageNumber" [limit]="page.size" [externalSorting]="true" [loadingIndicator]="loading" (sort)="onSort($event)"
+            (page)='setPage($event)'>
+
+            <ngx-datatable-column name="type" prop="type" [flexGrow]="1">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>Type</span>
+              </ng-template>
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <span *ngIf="value" class="font-weight-bold d-block">{{ value ? (value | uppercase) : 'No Entry' }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="createdAt" prop="createdAt" sortable="true" [flexGrow]="2" [minWidth]="100">
+              <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <span (click)="sort()">Created Date</span>
+              </ng-template>
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <span>{{ value | parseDate: 'YYYY-MM-DD HH:mm:ss' }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="objectId" prop="objectId" [flexGrow]="1">
+              <ng-template let-column="column" ngx-datatable-header-template>
+                <span>Actions</span>
+              </ng-template>
+
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <button type="button" class="btn btn-sm btn-outline-primary" (click)="export(value)" tooltip="Download"
+                  placement="top">
+                  <i class="fa fa-download"></i></button>
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="delete(value)" tooltip="Delete"
+                  placement="top">
+                  <i class="fa fa-trash"></i></button>
+              </ng-template>
+
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<ngx-loading [show]="isLoading"></ngx-loading>
+<div id="user-details" class="row" *ngIf="userProgramRole">
+  <div class="header-container col-sm-5 col-md-4 col-lg-3">
+    <app-admin-user-details-summary *ngIf="isUserDataLoaded" [user]="userProgramRole?.user"></app-admin-user-details-summary>
+  </div>
+  <div class="body-container col-sm-7 col-md-8 col-lg-9">
+    <div class="card">
+      <ul class="nav nav-tabs profile-tab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link" 
+            [ngClass]="{'active': isActive('profile')}" 
+            role="tab" 
+            (click)="confirmChangeTab('profile')">
+            Profile
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" 
+            [ngClass]="{'active': isActive('account')}" 
+            role="tab" 
+            (click)="confirmChangeTab('account')">
+            Account
+          </a> 
+        </li>
+      </ul>
+      <div class="tab-content" *ngIf="isUserDataLoaded">
+        <div class="row w-100">
+          <div class="col-md-8 ml-md-auto mr-md-auto">
+            <app-user-profile-form *ngIf="isActive('profile')"
+              [userProfileData]="userProgramRole?.user?.userProfile"
+              (newUserProfileData)="setUserData($event)">
+            </app-user-profile-form>
+            <app-user-account-form *ngIf="isActive('account')"
+              [userData]="userProgramRole?.user" 
+              [isProjectAdmin]="isProjectAdmin" 
+              (newUserAccountData)="setUserData($event)">
+            </app-user-account-form>
+            <hr>
+            <div class="controls float-right">
+              <button class="btn btn-sm btn-primary" 
+                [attr.disabled]="isControlDisabled?'':null"
+                (click)="activeModal('update')">
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #activateModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title pull-left" *ngIf="modalAction !== 'confirmation'">{{ modalAction === 'status' && user.isActivated ? 'Deactivate' : modalAction === 'status' && !user.isActivated ? 'Activate' : (modalAction | titlecase) }} User</h5>
+          <h5 class="modal-title pull-left" *ngIf="modalAction === 'confirmation'">Unsaved Changes</h5>
+          <button type="button" class="close pull-right" (click)="activateModal.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+      <div class="modal-body">
+          <div class="body-title-container">
+            <p *ngIf="modalAction !== 'confirmation'">Are you sure you want to {{ modalAction === 'status' ? 'change the status of' : modalAction }} this user?</p>
+            <p *ngIf="modalAction === 'confirmation'">Unsaved changes will be discarded. Do you want to proceed ?</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" *ngIf="modalAction === 'update'" class="btn btn-sm btn-success" (click)="updateUserData()">Update</button>
+        <button type="button" *ngIf="modalAction === 'confirmation'" class="btn btn-sm btn-success" (click)="setActiveTab(modalTab);activateModal.hide();">Proceed</button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="activateModal.hide()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

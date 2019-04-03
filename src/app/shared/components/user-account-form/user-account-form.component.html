@@ -1,0 +1,75 @@
+<form [formGroup]="userAccountForm" #createUserForm="ngForm" class="custom-form animated fadeIn" novalidate>
+  <div class="form-group row">
+    <label class="col-md-4 form-control-label required">Username</label>
+    <div class="col-md-8">
+        <input class="form-control form-control-sm"
+          formControlName="username"
+          type="text"
+          placeholder="Username"
+          maxlength="50"
+          (keyup)="onFieldChange()"
+          [attr.disabled]="!isProjectAdmin?'':null">
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('username') && (userAccountForm.get('username').hasError('required') ||
+          userAccountForm.get('username').hasError('isWhiteSpaceOnly'))">
+          Username is required
+        </div>
+        <div class="error-msg"
+          *ngIf="isFieldInvalid('username') && userAccountForm.get('username').hasError('usernameTaken')">
+          Username is already taken
+        </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-4 form-control-label required">Email</label>
+    <div class="col-md-8">
+        <input class="form-control form-control-sm"
+          formControlName="email"
+          type="email"
+          maxlength="50"
+          (keyup)="onFieldChange()"
+          placeholder="Email">
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('email') && userAccountForm.get('email').hasError('required')">
+          Email is required
+        </div>
+        <div class="error-msg" 
+          *ngIf="isFieldInvalid('email') && userAccountForm.get('email').hasError('email') && !userAccountForm.get('email').hasError('required')">
+          Please input a valid email
+        </div>
+        <div class="error-msg"
+          *ngIf="isFieldInvalid('email') && userAccountForm.get('email').hasError('emailTaken')">
+          Email is already taken
+        </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-4 form-control-label">New Password</label>
+    <div class="col-md-8">
+        <input class="form-control form-control-sm"
+          formControlName="newPassword" 
+          type="password" 
+          (keyup)="onFieldChange()"
+          placeholder="New Password">
+        <div class="error-msg" *ngIf="isFieldInvalid('newPassword')">
+          Password is required
+        </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-4 form-control-label">Repeat Password</label>
+    <div class="col-md-8">
+        <input class="form-control form-control-sm" 
+          formControlName="repeatPassword" 
+          type="password" 
+          (keyup)="onFieldChange()"
+          placeholder="Repeat Password">
+        <div class="error-msg" *ngIf="isFieldInvalid('repeatPassword')">
+          Please repeat the password
+        </div>
+        <div class="error-msg" *ngIf="!isFieldInvalid('repeatPassword') && isPasswordInvalid()">
+          Password doesn't match
+        </div>
+    </div>
+  </div>
+</form>

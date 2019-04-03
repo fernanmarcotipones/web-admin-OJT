@@ -1,0 +1,102 @@
+<ngx-loading [show]="loading" ></ngx-loading>
+<div id="user-table">
+  <ngx-datatable
+    class="bootstrap"
+    [messages]="{totalMessage:'User(s) Found'}"
+    [rows]="rows"
+    [rowHeight]="'auto'"
+    [columnMode]="'flex'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [externalPaging]="true"
+    [count]="page.totalElements"
+    [offset]="page.pageNumber"
+    [limit]="page.size"
+    [externalSorting]="true"
+    [loadingIndicator]="loading"
+    (sort)="onSort($event)"
+    (page)='setPage($event)' >
+
+    <ngx-datatable-column name="userProfile" prop="userProfile" sortable="true" [flexGrow]="5" [minWidth]="100">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Full Name</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{ (value | userFullName:value) | titlecase }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="username" prop="username" sortable="true" [flexGrow]="5">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()" class="hidden-md-down">Username</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span class="hidden-md-down">{{ value ? value : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="email" prop="email" sortable="true" [flexGrow]="5">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()" class="hidden-md-down">Email</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span class="hidden-md-down">{{ value ? value : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="isVerified" prop="isVerified" sortable="true" [flexGrow]="2">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span class="hidden-md-down" (click)="sort()">Verification</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span class="hidden-md-down font-weight-bold" [ngClass]="value ? 'text-success' : 'text-danger'">{{ value ? 'VERIFIED' : 'NOT VERIFIED' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="isActivated" prop="isActivated" sortable="true" [flexGrow]="2">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span class="hidden-md-down" (click)="sort()">Activation</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span class="hidden-md-down font-weight-bold" [ngClass]="value ? 'text-success' : 'text-danger'">{{ value ? 'ACTIVE' : 'INACTIVE' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="objectId" prop="objectId" [flexGrow]="2">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <span>Actions</span>
+      </ng-template>
+
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <button type="button" class="btn btn-sm btn-outline-info"
+          [routerLink]="['/admin/settings/user-management', value]">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="deactivateUserModal(value)"><i class="fa fa-remove"></i></button>
+      </ng-template>
+
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>
+
+<!-- <div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title pull-left">Delete Project</h5>
+          <button type="button" class="close pull-right" (click)="deleteModal.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+      </div>
+      <div class="modal-body">
+          <div class="body-title-container">
+            <p>Are you sure you want to delete selected project?</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-danger" (click)="deleteProject();">Delete</button>
+        <button type="button" class="btn btn-sm btn-secondary" (click)="deleteModal.hide()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div> -->

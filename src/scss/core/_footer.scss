@@ -1,0 +1,19 @@
+.app-footer {
+  min-height: $footer-height;
+  padding: 0 $spacer;
+  line-height: $footer-height;
+  color: $footer-color;
+  background: $footer-bg;
+  @include borders($footer-borders);
+  
+  .footer-brand {
+    min-height: calc(#{$footer-height} - 10px);
+    display: inline-block;
+    width: 35px;
+    margin-right: 0;
+    background-image: $footer-brand-logo;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+  }
+}
