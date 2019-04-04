@@ -93,6 +93,12 @@
           <option *ngFor='let status of reportStatuses' value="{{ status.value }}"> {{ status.name | titlecase }}</option>
         </select>
       </div>
+      <div *ngIf="filterConfig?.projectStatus" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="projectStatus" (change)="changeFilter()">
+          <option value="">Project Status</option>
+          <option *ngFor='let stat of projectStatuses' value="{{ stat.objectId }}"> {{ stat.name | titlecase }}</option>
+        </select>
+      </div>
       <div *ngIf="filterConfig?.feedbackPoint" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
         <select class="form-control" formControlName="feedbackPoint" (change)="changeFilter()">
           <option value="">Feedback Point</option>
@@ -133,6 +139,15 @@
         <select class="form-control" formControlName="barangay" (change)="changeFilter();" [attr.disabled]="disabledBarangayField?'':null">
           <option value="">Barangay</option>
           <option *ngFor='let brgy of barangays' value="{{ brgy.objectId }}"> {{ brgy.name | titlecase }}</option>
+        </select>
+      </div>
+      <div *ngIf="filterConfig?.formTitle" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <input type="text" formControlName="formTitle" class="form-control" placeholder="Title" (change)="changeFilter()">
+      </div>
+      <div *ngIf="filterConfig?.formQuestionType" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+        <select class="form-control" formControlName="formQuestionType" (change)="changeFilter()">
+          <option value="">Question Types</option>
+          <option *ngFor='let type of formQuestionTypes' value="{{ type.value }}"> {{ type.name | titlecase }}</option>
         </select>
       </div>
     </div>

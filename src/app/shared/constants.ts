@@ -133,6 +133,11 @@ export class Constants {
     { id: 3, code: 'FEEDBACK', name: 'FEEDBACK' }
   ]}
 
+  public static get FORM_QUESTION_TYPES(): any { return [
+    {name: 'FEEDBACK', value: 'FEEDBACK'},
+    {name: 'MONITORING', value: 'MONITORING'},
+  ]}
+
   public static get HAS_FEEDBACK(): any { return [
     {label: 'With Feedback', value: true},
     {label: 'Without Feedback', value: false}

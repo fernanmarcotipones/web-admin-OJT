@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
 import { Form, Page,  PagedData } from '../../models';
 import { APIService } from '../api/api.service';
-import { Constants } from '../../constants';
 
 @Injectable()
 export class FormService {
@@ -24,24 +23,44 @@ export class FormService {
         const query = new this.apiService.Query(this.className);
 
         const titleQuery = new this.apiService.Query(this.className);
-        if (page.filters.title && page.filters.title !== '' ) {
-          titleQuery.matches('title', new RegExp(page.filters.title, 'i'));
+        if (page.filters.formTitle && page.filters.formTitle !== '' ) {
+          titleQuery.matches('title', new RegExp(page.filters.formTitle, 'i'));
         }
-        if (page.filters.status && page.filters.status !== '' ) {
-          query.equalTo('status', page.filters.status);
+        // if (page.filters.status && page.filters.status !== '' ) {
+        //   query.equalTo('status', page.filters.status);
+        // }
+        const questionTypeQuery = new this.apiService.Query(this.className);
+        if (page.filters.formQuestionType && page.filters.formQuestionType !== '' ) {
+          questionTypeQuery.equalTo('questionType', page.filters.formQuestionType);
+        }
+        const projectStatusQuery = new this.apiService.Query('ProjectStatus')
+        if (page.filters.projectStatus && page.filters.projectStatus !== '') {
+          projectStatusQuery.equalTo('objectId', page.filters.projectStatus)
         }
         // search by programme
         const programQ = new this.apiService.Query('Program');
         if (page.filters.program && page.filters.program !== '') {
-          programQ.equalTo('programCode', page.filters.program);
+          programQ.equalTo('objectId', page.filters.program);
         }
-        if (page.filters.title && page.filters.title !== '' ) {
+        if (page.filters.formTitle && page.filters.formTitle !== '' ) {
           query._orQuery([titleQuery]);
+        }
+        if (page.filters.formQuestionType && page.filters.formQuestionType !== '' ) {
+          query._orQuery([questionTypeQuery]);
+        }
+        if (page.filters.projectStatus && page.filters.projectStatus !== '' ) {
+          query.matchesQuery('projectStatus', projectStatusQuery);
         }
         if (page.filters.program && page.filters.program !== '') {
           query.matchesQuery('program', programQ);
         }
 
+        if (page.filters.formQuestionType && page.filters.formQuestionType !== '' &&
+              page.filters.formTitle && page.filters.formTitle !== '' &&
+              page.filters.projectStatus && page.filters.projectStatus !== ''
+      ) {
+          query._andQuery([questionTypeQuery, titleQuery]);
+        }
 
         let count = 0;
         let results = [];
@@ -80,6 +99,7 @@ export class FormService {
         resultQuery.include('title');
         resultQuery.include('program');
         resultQuery.include('status');
+        resultQuery.include('projectStatus');
         resultQuery.skip(start).limit(end);
 
         if (page.sorts.length !== 0) {
@@ -157,7 +177,7 @@ export class FormService {
         query.matchesQuery('program', programQ);
         if (type) { query.equalTo('questionType', type); }
 
-        forms = await query.cache(43200).find();
+        forms = await query.find();
         forms = forms.map(data => data.toJSON());
         resolve(forms);
       } catch (error) {
@@ -175,26 +195,6 @@ export class FormService {
         query.first().then(form => {
           resolve(form.toJSON());
         })
-      } catch (error) {
-        reject(error);
-      }
-    });
-  }
-
-  getByProjectStatusId(objectId): Promise<any[]> {
-    return new Promise( async (resolve, reject) => {
-      try {
-        const projectStatusQuery = new this.apiService.Query('ProjectStatus');
-        projectStatusQuery.equalTo('objectId', objectId);
-
-        const query = new this.apiService.Query(this.className);
-        query.matchesQuery('projectStatus', projectStatusQuery)
-
-        let form = await query.cache(Constants.DEFAULT_CACHED_IN_SECONDS).first();
-        if (form && (form instanceof this.apiService.Object) ) {
-          form = form.toJSON()
-        }
-        resolve(form);
       } catch (error) {
         reject(error);
       }

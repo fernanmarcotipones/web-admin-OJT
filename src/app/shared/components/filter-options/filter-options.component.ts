@@ -12,6 +12,7 @@ import {
   CSOGroupService,
   SearchFilterService,
   UserRoleService,
+  ProjectStatusService,
   APIService
 } from 'app/core';
 import { Constants } from '../../../shared/constants';
@@ -74,6 +75,8 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
   private roles = [];
   private points = [];
 
+  private formQuestionTypes = Constants.FORM_QUESTION_TYPES
+
   // NOTE: using this, onchange event on date range input has bug
   private dateRange: any[];
 
@@ -86,6 +89,7 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
     private programMonitoringFormService: ProgramMonitoringFormService,
     private csoGroupService: CSOGroupService,
     private userRoleService: UserRoleService,
+    private projectStatusService: ProjectStatusService,
     public searchFilterService: SearchFilterService,
     public router: Router,
     private apiService: APIService,
@@ -119,6 +123,8 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
       userVerification: new FormControl(''),
       userActivation: new FormControl(''),
       role: new FormControl(''),
+      formTitle: new FormControl(''),
+      formQuestionType: new FormControl(''),
     });
   }
 
@@ -206,6 +212,12 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
         if (this.defaultFilterValues.role !== '') {
           this.filterForm.controls['role'].setValue(this.defaultFilterValues.role)
         }
+        if (this.defaultFilterValues.formTitle) {
+          this.filterForm.controls['formTitle'].setValue(this.defaultFilterValues.formTitle.trim())
+        }
+        if (this.defaultFilterValues.formQuestionType) {
+          this.filterForm.controls['formQuestionType'].setValue(this.defaultFilterValues.formQuestionType)
+        }
       }
     }
   }
@@ -255,6 +267,18 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
       }
     }
     this.changeFilter();
+  }
+
+  async loadProjectStatuses() {
+    if (this.filterConfig.projectStatus) {
+      this.fetchingProjectStatuses = true;
+      this.filterForm.controls['projectStatus'].setValue('');
+      this.projectStatuses = [];
+      this.projectStatuses = await this.projectStatusService.getByProgramObjectId(
+        this.activeUserProgramRole.program.objectId
+      );
+      this.fetchingProjectStatuses = false;
+    }
   }
 
   async loadCSOGroups() {
@@ -365,6 +389,7 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
         await this.loadProjectFiscalYears();
         await this.loadCSOGroups();
         await this.loadRoles();
+        await this.loadProjectStatuses();
 
         if (this.activeUserProgramRole['program']) {
           if (this.filterConfig.monitoringForm) {
@@ -473,6 +498,8 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
       userActivation: this.filterForm.get('userActivation').value,
       userVerification: this.filterForm.get('userVerification').value,
       role: this.filterForm.get('role').value ? [this.filterForm.get('role').value] : this.roles.map(role => role.objectId),
+      formTitle: this.filterForm.get('formTitle').value,
+      formQuestionType: this.filterForm.get('formQuestionType').value,
     }
     return filterValue;
   }

@@ -19,6 +19,9 @@ export class SearchFilterService {
     public CSOReportSearchFilters = new BehaviorSubject({});
     castCSOReportSearchFilters = this.CSOReportSearchFilters.asObservable();
 
+    public formListSearchFilters = new BehaviorSubject({});
+    castformListSearchFilters = this.formListSearchFilters.asObservable();
+
     constructor() {
 
     }
@@ -41,5 +44,9 @@ export class SearchFilterService {
 
     setCSOReportSearchFilterValues(values: any) {
         this.CSOReportSearchFilters.next(values);
+    }
+
+    setFormListSearchValues(values: any) {
+        this.formListSearchFilters.next(values);
     }
 }

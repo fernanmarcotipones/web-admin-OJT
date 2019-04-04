@@ -19,6 +19,7 @@ import { UserCSOGroupService } from './userCSOGroup.service';
 import { ReporterFormService } from './reporterForm.service';
 import { ProgramMonitoringFormService } from './programMonitoringForm.service';
 import { ProjectMonitoringReportService } from './projectMonitoringReport.service';
+import { ProjectStatusService } from './projectStatus.service';
 import { UserExportService } from './userExport.service';
 
 export * from './user.service';
@@ -41,6 +42,7 @@ export * from './reporterForm.service';
 export * from './programMonitoringForm.service';
 export * from './projectMonitoringReport.service';
 export * from './userExport.service';
+export * from './projectStatus.service';
 
 @NgModule({
   providers: [
@@ -64,6 +66,7 @@ export * from './userExport.service';
     ProgramMonitoringFormService,
     ProjectMonitoringReportService,
     UserExportService,
+    ProjectStatusService,
   ]
 })
 export class DAOModule {
