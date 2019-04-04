@@ -8,18 +8,31 @@
           </div>
           <span>List</span>
         </div>
-        <div class="item-menu col-4 col-sm-3 col-lg-1">
-          <div class="icon">
-            <i class="fa fa-info-circle"></i>
-          </div>
-          <span>Details</span>
-        </div>
       </div>
     </div>
   </div>
   <div class="row animated fast fadeIn after-menu">
     <div id="cso-management-content" class="col-12">
-      <app-admin-cso-table></app-admin-cso-table>
+      <div class="row animated fast fadeIn">
+        <div class="col-12 custom-table-card">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-list-alt top-view"></i> CSO List
+              <div class="card-actions">
+                <a *ngIf="currentUser?.activeUserProgramRole && currentUser?.activeUserProgramRole.role.name === 'ProjectAdmin'"
+                  class="btn-setting cursor-pointer" [queryParamsHandling]="preserve" [routerLink]="['/admin/project-management', 'create']"
+                  tooltip="Add New Project" placement="top">
+                  <i class="icon-plus"></i></a>
+                <a class="btn-setting cursor-pointer" tooltip="Import Project(s)" placement="top"><i class="icon-cloud-download"></i></a>
+                <a class="btn-setting cursor-pointer" tooltip="Export Project(s)" placement="top"><i class="icon-cloud-upload"></i></a>
+              </div>
+            </div>
+            <div class="card-body">
+              <app-admin-cso-table></app-admin-cso-table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
