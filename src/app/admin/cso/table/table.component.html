@@ -1,0 +1,61 @@
+<ngx-loading [show]="loading" ></ngx-loading>
+<div id="user-table">
+  <ngx-datatable
+    class="bootstrap"
+    [messages]="{totalMessage:'User(s) Found'}"
+    [rows]="rows"
+    [rowHeight]="'auto'"
+    [columnMode]="'flex'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [externalPaging]="true"
+    [count]="page.totalElements"
+    [offset]="page.pageNumber"
+    [limit]="page.size"
+    [externalSorting]="true"
+    [loadingIndicator]="loading"
+    (sort)="onSort($event)"
+    (page)='setPage($event)' >
+
+    <ngx-datatable-column name="level" prop="level" sortable="true" [flexGrow]="5" [minWidth]="100">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Level</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{ value ? value.name : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="csoGroup" prop="csoGroup" sortable="true" [flexGrow]="5">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">CSO Group</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span class="hidden-md-down">{{ value ? value.name : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="program" prop="program" sortable="true" [flexGrow]="5">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()" class="hidden-md-down">Program</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span class="hidden-md-down">{{ value ? value.agencyCode : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="objectId" prop="objectId" [flexGrow]="2">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <span>Actions</span>
+      </ng-template>
+
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <button type="button" class="btn btn-sm btn-outline-info">
+          <i class="fa fa-pencil"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-remove"></i></button>
+      </ng-template>
+
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

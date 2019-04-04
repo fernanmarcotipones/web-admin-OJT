@@ -18,7 +18,7 @@ export const routerConfig: Route[] = [
       title: 'Users'
     },
     component: UserListComponent
-  },{
+  }, {
     path: 'my-profile',
     data: {
       title: 'My Profile'

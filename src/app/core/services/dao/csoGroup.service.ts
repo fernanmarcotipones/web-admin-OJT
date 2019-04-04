@@ -37,6 +37,71 @@ export class CSOGroupService {
     });
   }
 
+  searchByCSOProgram(page: Page): Promise<PagedData<any>> {
+    const pagedData = new PagedData<any>();
+    return new Promise(async (resolve, reject) => {
+      try {
+        // get count first
+        const query = new this.apiService.Query('CSOGroupProgram');
+
+
+        let count = 0;
+        let results = [];
+
+        const subscription = query.subscribe();
+        subscription.on('delete', (data) => {
+          count--;
+          page.totalElements = count;
+          page.totalPages = page.totalElements / page.size;
+          pagedData.data = pagedData.data.filter(id => id.objectId !== data.objectId);
+        });
+
+        subscription.on('update', (data) => {
+          const index = pagedData.data.findIndex(obj => obj.objectId === data.toJSON().objectId);
+          pagedData.data[index] = data.toJSON();
+        });
+
+        // get count
+        count = await query.count();
+        page.totalElements = count;
+        page.totalPages = page.totalElements / page.size;
+        const start = page.pageNumber * page.size;
+        const end = Math.min((start + page.size), page.totalElements);
+
+        // get results
+        const resultQuery = query;
+        resultQuery.include('region');
+        resultQuery.include('province');
+        resultQuery.include('municipality');
+        resultQuery.include('barangay');
+        resultQuery.include('level');
+        resultQuery.include('program');
+        resultQuery.include('project');
+        resultQuery.include('csoGroup');
+        resultQuery.skip(start).limit(end);
+
+        if (page.sorts.length !== 0) {
+          if (page.sorts[0].dir === 'asc') {
+            resultQuery.ascending(page.sorts[0].prop);
+          }else {
+            resultQuery.descending(page.sorts[0].prop);
+          }
+        }
+
+        results = await resultQuery.find();
+        results.forEach((res) => {
+          pagedData.data.push(res.toJSON());
+        })
+
+        pagedData.page = page;
+        resolve(pagedData);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   getAllCSOGroup(): Promise<any[]> {
     let csoGroup = [];
     return new Promise(async (resolve, reject) => {
