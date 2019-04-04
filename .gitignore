@@ -22,7 +22,6 @@
 /libpeerconnection.log
 npm-debug.log
 testem.log
-src/environments/environment.ts
 /typings
 
 # e2e
