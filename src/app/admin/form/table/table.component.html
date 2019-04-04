@@ -1,0 +1,81 @@
+<ngx-loading [show]="loading" ></ngx-loading>
+<div id="project-table">
+  <ngx-datatable
+    class="bootstrap"
+    [messages]="{totalMessage:'Form(s) Found'}"
+    [rows]="rows"
+    [rowHeight]="'auto'"
+    [columnMode]="'flex'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [externalPaging]="true"
+    [count]="page.totalElements"
+    [offset]="page.pageNumber"
+    [limit]="page.size"
+    [externalSorting]="true"
+    [loadingIndicator]="loading"
+    (sort)="onSort($event)"
+    (page)='setPage($event)' >
+
+    <ngx-datatable-column name="title" prop="title" sortable="true" [flexGrow]="3" [minWidth]="100">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Name</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{ value ? (value | titlecase) : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="projectStatus" prop="projectStatus" sortable="true" [flexGrow]="2" [minWidth]="100">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Project Status</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{ value ? (value.name | titlecase) : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="questionType" prop="questionType" sortable="true" [flexGrow]="2" [minWidth]="100">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Question Type</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{ value ? (value | titlecase) : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="status" prop="status" sortable="true" [flexGrow]="2" [minWidth]="100">
+      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+        <span (click)="sort()">Status</span>
+      </ng-template>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <span>{{ value ? (value | titlecase) : 'No Entry' }}</span>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="objectId" prop="objectId" [flexGrow]="1">
+      <ng-template let-column="column" ngx-datatable-header-template>
+        <span>Actions</span>
+      </ng-template>
+
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <button type="button"
+        class="btn btn-sm btn-outline-primary"
+        (click)="editForm()"
+        tooltip="Edit Form"
+        placement="top">
+        <i class="fa fa-pencil"></i></button>
+
+        <button type="button"
+        class="btn btn-sm btn-outline-danger"
+        (click)="deleteForm()"
+        tooltip="Delete Form"
+        placement="top">
+        <i class="fa fa-minus-circle"></i></button>
+      </ng-template>
+
+    </ngx-datatable-column>
+
+  </ngx-datatable>
+</div>
+
