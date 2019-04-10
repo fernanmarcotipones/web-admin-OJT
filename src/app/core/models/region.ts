@@ -6,6 +6,7 @@ export class Region {
   public regionCode: string = '';
   public location: any = new Object();
   public geoCode: any = new Object();
+  public order: number;
 
   constructor(data?: object) {
     if (data) { this.assign(data); }
