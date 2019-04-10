@@ -25,6 +25,7 @@
       <div class="card">
         <div class="card-header">
           <i class="fa fa-list-alt top-view"></i> Form List
+          <button [routerLink]="['/admin/form/management']">Add Form</button>
         </div>
         <div class="card-body">
           <app-admin-form-table [activeUserProgramRole]="currentUser?.activeUserProgramRole" [filterValues]="filterValues"
