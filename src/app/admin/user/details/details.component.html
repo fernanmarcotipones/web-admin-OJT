@@ -5,23 +5,32 @@
   </div>
   <div class="body-container col-sm-7 col-md-8 col-lg-9">
     <div class="card">
-      <ul class="nav nav-tabs profile-tab" role="tablist">
+      <h3 class="mx-auto my-3">User Information</h3>
+      <ul class="nav nav-tabs profile-tab d-flex justify-content-around mb-3" role="tablist">
         <li class="nav-item">
-          <a class="nav-link" 
+          <a class="nav-link round-tab" 
             [ngClass]="{'active': isActive('profile')}" 
             role="tab" 
             (click)="confirmChangeTab('profile')">
-            Profile
+            <p class="mx-5 my-0"><i class="fa fa-user m-0"></i> Profile</p>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" 
+          <a class="nav-link round-tab" 
             [ngClass]="{'active': isActive('account')}" 
             role="tab" 
             (click)="confirmChangeTab('account')">
-            Account
-          </a> 
+            <p class="mx-5 my-0 "><i class="fa fa-cog m-0"></i> Account</p>
+          </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link round-tab" 
+          [ngClass]="{'active': isActive('roles')}" 
+          role="tab" 
+          (click)="confirmChangeTab('roles')">
+          <p class="mx-5 my-0"><i class="fa fa-credit-card m-0"></i> Roles</p>
+        </a>
+      </li>
       </ul>
       <div class="tab-content" *ngIf="isUserDataLoaded">
         <div class="row w-100">
