@@ -48,9 +48,10 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
   public objId: any;
   public modalUsage: string;
   public orders: Array<number> = [];
-
   public psgcCodeValue: string;
   public regionCodeValue: string;
+
+  public isRegionAndPsgcMatch: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -100,10 +101,8 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(9),
           Validators.maxLength(9),
-          // this.regionValidators.isPsgcMatch.bind(this),
         ],
-
-        this.regionValidators.psgcCodeTaken.bind(this),
+        this.regionValidators.psgcCodeTaken(objId).bind(this),
       ),
       regionCode: new FormControl(
         '',
@@ -112,9 +111,8 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(2),
           Validators.maxLength(2),
-          this.regionValidators.isRegionMatch.bind(this),
         ],
-        this.regionValidators.regionCodeTaken.bind(this),
+        this.regionValidators.regionCodeTaken(objId).bind(this),
       ),
       location: new FormGroup({
         latitude: new FormControl(
@@ -133,49 +131,12 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.psgcCodeValueChanged(this.regionCodeValue);
-    this.regionCodeValueChanged(this.psgcCodeValue);
   }
 
   regionFormDefaultValidators(control) {
     return (
       this.regionForm.get(control).invalid &&
       this.regionForm.get(control).touched
-    );
-  }
-
-  psgcCodeValueChanged(regionValue) {
-    this.regionCodeValue = regionValue;
-    this.subscriptions.push(
-      this.regionForm
-        .get('psgcCode')
-        .valueChanges.subscribe((psgcCode: string) => {
-          this.regionCodeValueChanged(psgcCode);
-          this.regionValidators.isRegionMatch(psgcCode);
-          if (
-            this.regionCodeValue !== null ||
-            this.regionCodeValue !== undefined
-          ) {
-            const psgcSubstring = psgcCode ? psgcCode.substring(0, 2) : '';
-            if (psgcSubstring !== this.regionCodeValue) {
-              console.log('not match');
-              return { regionCodeNotMatch: true };
-            }
-            console.log('matched!');
-            return null;
-          }
-        }),
-    );
-  }
-
-  regionCodeValueChanged(psgcValue) {
-    this.psgcCodeValue = psgcValue;
-    this.subscriptions.push(
-      this.regionForm
-        .get('regionCode')
-        .valueChanges.subscribe((regionCode: string) => {
-          this.psgcCodeValueChanged(regionCode);
-        }),
     );
   }
 

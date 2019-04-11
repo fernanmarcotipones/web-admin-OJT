@@ -8,7 +8,7 @@ import {
   OnChanges
 } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { Page, RegionService } from 'app/core';
+import { Page, RegionService, NotificationToastrService } from 'app/core';
 import { Constants } from 'app/shared/constants';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 
@@ -35,6 +35,7 @@ export class RegionTableComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private regionService: RegionService,
     private modalService: BsModalService,
+    private notification: NotificationToastrService,
   ) {
     this.page.pageNumber = Constants.DEFAULT_PAGE_NUMBER;
     this.page.size = Constants.DEFAULT_PAGE_SIZE;
@@ -49,7 +50,6 @@ export class RegionTableComponent implements OnInit, OnChanges, OnDestroy {
     this.loading = true;
     if (this.activeUserProgramRole && this.isFilterLoaded) {
       this.regionService.search(this.page).then(res => {
-        console.log(res)
         this.rows = res.data;
         this.page = res.page;
         this.loading = false;
@@ -107,7 +107,10 @@ export class RegionTableComponent implements OnInit, OnChanges, OnDestroy {
   // }
 
   deactivateRegion() {
-    // this.regionService.deactivateRegion(this.objId, { isDeactivated: true });
+    this.notification.alert(
+      'success',
+      `Successfully deactivated ${this.regionName}`,
+    );
     this.closeModal();
   }
 

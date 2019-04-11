@@ -1,4 +1,4 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { FormControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { Parse } from 'parse';
 
 export class RegionValidators {
@@ -45,87 +45,57 @@ export class RegionValidators {
     });
   }
 
-  psgcCodeTaken(control: FormControl): any {
-    let psgcDebounceTime: any;
-    if (control && (control.value !== null || control.value !== undefined)) {
-      clearTimeout(psgcDebounceTime);
-      return new Promise((resolve, reject) => {
-        psgcDebounceTime = setTimeout(async () => {
-          const query = new Parse.Query('Region');
-          if (control.value === '000000000') {
-            resolve({ invalidFormat: true });
-          }
-          this.psgcControl = control;
-
-          query.equalTo('psgcCode', control.value);
-          let result = await query.first();
-          let data = result ? true : false;
-          if (data) {
-            resolve({ psgcCodeTaken: true });
-          } else {
-            resolve(null);
-          }
-        }, 1000);
-      });
-    }
+  psgcCodeTaken(objId: any): ValidatorFn {
+    return (control: FormControl): any => {
+      let psgcDebounceTime: any;
+      if (control && (control.value !== null || control.value !== undefined)) {
+        clearTimeout(psgcDebounceTime);
+        return new Promise((resolve, reject) => {
+          psgcDebounceTime = setTimeout(async () => {
+            const query = new Parse.Query('Region');
+            if (control.value === '000000000') {
+              resolve({ invalidFormat: true });
+            }
+            query.equalTo('psgcCode', control.value);
+            const result = await query.first();
+            const data = result ? true : false;
+            if (result) {
+              if ((data && !objId) || result.id !== objId) {
+                resolve({ psgcCodeTaken: true });
+              } else {
+                resolve(null);
+              }
+            }
+          }, 1000);
+        });
+      }
+    };
   }
 
-  // isRegionMatch(control: FormControl) {
-    // psgc to region checking
-    // if (this.psgcControl && (this.psgcControl.value !== null || this.psgcControl.value !== undefined)) {
-    //   let psgcValue = this.psgcControl.value;
-    //   let psgcSubstring = psgcValue ? psgcValue.substring(0, 2) : '';
-    //   console.log(control.errors)
-    //   if (control.value !== psgcSubstring) {
-    //     return { psgcCodeNotMatch: true }
-    //   }
-    //   return null;
-    // }
-  // }
-
-  // isPsgcMatch(control: FormControl) {
-    // region to psgc checking
-    // if (this.regionControl &&(this.regionControl.value !== null || this.regionControl.value !== undefined)) {
-    //   let regionValue = this.regionControl.value;
-    //   let regionSubstring = regionValue ? regionValue.substring(0, 2) : '';
-    //   if(control.value !== regionSubstring) {
-    //     return { regionCodeNotMatch: true }
-    //   }
-    //   return null;
-    // }
-  // }
-
-  isRegionMatch(psgcValue:string):ValidatorFn {
-    // console.log('psgcVal',psgcValue)
-    return (control: FormControl) => {
-      // console.log('controlValue',control.value)
-      return null;
-    }
+  regionCodeTaken(objId: any): ValidatorFn {
+    return (control: FormControl): any => {
+      let regionDebounceTime: any;
+      if (control && (control.value !== null || control.value !== undefined)) {
+        clearTimeout(regionDebounceTime);
+        return new Promise((resolve, reject) => {
+          regionDebounceTime = setTimeout(async () => {
+            const query = new Parse.Query('Region');
+            if (control.value === '00') {
+              resolve({ invalidFormat: true });
+            }
+            query.equalTo('regionCode', control.value);
+            const result = await query.first();
+            const data = result ? true : false;
+            if (result) {
+              if ((data && !objId) || result.id !== objId) {
+                resolve({ regionCodeTaken: true });
+              } else {
+                resolve(null);
+              }
+            }
+          }, 1000);
+        });
+      }
+    };
   }
-
-  regionCodeTaken(control: FormControl): any {
-    let regionDebounceTime: any;
-    if (control && (control.value !== null || control.value !== undefined)) {
-      clearTimeout(regionDebounceTime);
-      return new Promise((resolve, reject) => {
-        regionDebounceTime = setTimeout(async () => {
-          const query = new Parse.Query('Region');
-          if (control.value === '00') {
-            resolve({ invalidFormat: true });
-          }
-          this.regionControl = control;
-          query.equalTo('regionCode', control.value);
-          const result = await query.first();
-          const data = result ? true : false;
-          if (data) {
-            resolve({ regionCodeTaken: true });
-          } else {
-            resolve(null);
-          }
-        }, 1000);
-      });
-    }
-  }
-
-  
 }

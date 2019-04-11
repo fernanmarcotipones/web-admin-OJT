@@ -1,3 +1,4 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div class="row">
   <div class="col-12 custom-table-card">
     <div class="card">
@@ -92,6 +93,27 @@
                 {{ value ? value : 'N/A' }}
               </ng-template>
             </ngx-datatable-column>
+
+            <!-- <ngx-datatable-column
+              name="isActive"
+              prop="isActive"
+              sortable="true"
+            >
+              <ng-template
+                let-column="column"
+                let-sort="sortFn"
+                ngx-datatable-header-template
+              >
+                <span (click)="sort()">Status</span>
+              </ng-template>
+              <ng-template
+                let-row="row"
+                let-value="value"
+                ngx-datatable-cell-template
+              >
+                {{ value ? value : 'N/A' }}
+              </ng-template>
+            </ngx-datatable-column> -->
 
             <ngx-datatable-column name="objectId" prop="objectId">
               <ng-template
