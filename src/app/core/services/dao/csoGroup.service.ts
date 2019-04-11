@@ -42,11 +42,13 @@ export class CSOGroupService {
     return new Promise(async (resolve, reject) => {
       try {
         // get count first
-        const query = new this.apiService.Query('CSOGroupProgram');
-
+        // const query = new this.apiService.Query('CSOGroupProgram');
+        // console.log('page.filters', page.filters)
+        const query =  await this.createQueryByFilter('CSOGroupProgram', page.filters);
 
         let count = 0;
         let results = [];
+        let uniqueUserIds = [];
 
         const subscription = query.subscribe();
         subscription.on('delete', (data) => {
@@ -61,8 +63,13 @@ export class CSOGroupService {
           pagedData.data[index] = data.toJSON();
         });
 
+        // get count and unique csoGroup ids
+        await query.distinct('csoGroup').then(res => {
+          count = res.length;
+          uniqueUserIds = res;
+        });
+
         // get count
-        count = await query.count();
         page.totalElements = count;
         page.totalPages = page.totalElements / page.size;
         const start = page.pageNumber * page.size;
@@ -87,10 +94,12 @@ export class CSOGroupService {
             resultQuery.descending(page.sorts[0].prop);
           }
         }
-
-        results = await resultQuery.find();
-        results.forEach((res) => {
-          pagedData.data.push(res.toJSON());
+        results = uniqueUserIds.slice(start, end);
+        results.forEach(async csoGroup => {
+          await this.getByObjectId(csoGroup.objectId).then(res => {
+            // const item = res.toJSON();
+            pagedData.data.push(res);
+          })
         })
 
         pagedData.page = page;
@@ -100,6 +109,20 @@ export class CSOGroupService {
         reject(error);
       }
     });
+  }
+
+  createQueryByFilter(className, filters) {
+    const query = new this.apiService.Query(className);
+
+    if (filters.searchCSOKey && filters.searchCSOKey !== '') {
+      const csoQ = new this.apiService.Query('CSOGroup');
+      csoQ.matches('name', new RegExp(filters.searchCSOKey, 'i'));
+      const csoNameQ = new this.apiService.Query(className);
+      csoNameQ.matchesQuery('csoGroup', csoQ);
+      query._orQuery([csoNameQ])
+    }
+
+    return query;
   }
 
   getAllCSOGroup(): Promise<any[]> {
@@ -125,7 +148,7 @@ export class CSOGroupService {
         query.include('level');
         query.include('region');
         query.equalTo('objectId', objectId).limit(1);
-        obj = await query.find();
+        obj = await query.cache(43200).find();
         if (obj.length > 0 ) {
         obj = obj[0].toJSON();
         resolve(obj);
