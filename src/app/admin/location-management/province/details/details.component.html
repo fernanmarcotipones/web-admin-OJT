@@ -4,7 +4,7 @@
     <div class="top-menu col-12">
       <div id="dashboard-menu" class="menu-body">
         <div
-          class="item-menu active-menu col-4 col-sm-3 col-lg-1"
+          class="item-menu col-4 col-sm-3 col-lg-1"
           [routerLink]="['/admin/location-management/region']"
         >
           <div class="icon">
@@ -13,7 +13,7 @@
           <span>Region</span>
         </div>
         <div
-          class="item-menu col-4 col-sm-3 col-lg-1"
+          class="item-menu active-menu col-4 col-sm-3 col-lg-1"
           [routerLink]="['/admin/location-management/province']"
         >
           <div class="icon">
@@ -29,56 +29,63 @@
       <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="region card-header">
+            <div class="province card-header">
               <h2 class="card-title">{{ formUsage }}</h2>
             </div>
             <div class="card-body">
               <div class="container form-container">
                 <div class="row">
                   <div class="col-7">
-                    <form [formGroup]="regionForm">
-                      <div class="row mt-2">
+                    <form [formGroup]="provinceForm">
+                      <div class="row">
                         <div class="col-3">
                           <label class="form-control-label required"
                             >Region Name:</label
                           >
                         </div>
                         <div class="col-9">
-                          <input
-                            type="text"
-                            class="form-control"
-                            formControlName="name"
-                          />
+                          <select class="form-control" formControlName="region" required>
+                            <option value="null">Select Region</option>
+                            <option
+                              *ngFor="let region of regionArray"
+                              value="{{ region.objectId }}"
+                              selected
+                              >{{ region.name }}</option
+                            >
+                          </select>
                           <span
                             class="help-block"
                             *ngIf="
-                              regionFormDefaultValidators('name') &&
-                              regionForm.get('name').errors?.required
+                              provinceForm.get('region').invalid &&
+                              provinceForm.get('region').touched &&
+                              provinceForm.get('region').errors?.required
                             "
                           >
-                            Region name is required
+                            Region is required.
                           </span>
                         </div>
                       </div>
                       <div class="row mt-2">
                         <div class="col-3">
                           <label class="form-control-label required"
-                            >Description:</label
+                            >Province Name:</label
                           >
                         </div>
                         <div class="col-9">
-                          <textarea
+                          <input
                             class="form-control"
-                            formControlName="description"
-                          ></textarea>
+                            type="text"
+                            formControlName="name"
+                          />
                           <span
                             class="help-block"
                             *ngIf="
-                              regionFormDefaultValidators('description') &&
-                              regionForm.get('description').errors?.required
+                              provinceForm.get('name').invalid &&
+                              provinceForm.get('name').touched &&
+                              provinceForm.get('name').errors?.required
                             "
                           >
-                            Description is required
+                            Province Name is required.
                           </span>
                         </div>
                       </div>
@@ -90,28 +97,31 @@
                         </div>
                         <div class="col-9">
                           <input
-                            type="text"
                             class="form-control"
+                            type="text"
                             formControlName="psgcCode"
                           />
                           <div
                             class="form-control-errors"
-                            *ngIf="regionFormDefaultValidators('psgcCode')"
+                            *ngIf="
+                              provinceForm.get('psgcCode').invalid &&
+                              provinceForm.get('psgcCode').touched
+                            "
                           >
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('psgcCode').errors?.required
+                                provinceForm.get('psgcCode').errors?.required
                               "
                             >
-                              PSGC Code is required.</span
-                            >
+                              PSGC Code is required.
+                            </span>
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('psgcCode').errors
-                                  ?.invalidFormat ||
-                                regionForm.get('psgcCode').errors?.pattern
+                                provinceForm.get('psgcCode').errors?.pattern ||
+                                provinceForm.get('psgcCode').errors
+                                  ?.invalidFormat
                               "
                             >
                               Invalid format.
@@ -119,8 +129,9 @@
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('psgcCode').errors?.minlength ||
-                                regionForm.get('psgcCode').errors?.maxlength
+                                provinceForm.get('psgcCode').errors
+                                  ?.minlength &&
+                                provinceForm.get('psgcCode').errors?.maxlength
                               "
                             >
                               PSGC Code must be 9 digits
@@ -128,7 +139,8 @@
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('psgcCode').errors?.psgcCodeTaken
+                                provinceForm.get('psgcCode').errors
+                                  ?.psgcCodeTaken
                               "
                             >
                               PSGC Code must be unique
@@ -139,33 +151,38 @@
                       <div class="row mt-2">
                         <div class="col-3">
                           <label class="form-control-label required"
-                            >Region Code:</label
+                            >Province Code:</label
                           >
                         </div>
                         <div class="col-9">
                           <input
-                            type="text"
                             class="form-control"
-                            formControlName="regionCode"
+                            type="text"
+                            formControlName="provinceCode"
                           />
                           <div
                             class="form-control-errors"
-                            *ngIf="regionFormDefaultValidators('regionCode')"
+                            *ngIf="
+                              provinceForm.get('provinceCode').invalid &&
+                              provinceForm.get('provinceCode').touched
+                            "
                           >
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('regionCode').errors?.required
+                                provinceForm.get('provinceCode').errors
+                                  ?.required
                               "
                             >
-                              Region Code is required.
+                              Province Code is required.
                             </span>
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('regionCode').errors
-                                  ?.invalidFormat ||
-                                regionForm.get('regionCode').errors?.pattern
+                                provinceForm.get('provinceCode').errors
+                                  ?.pattern ||
+                                provinceForm.get('provinceCode').errors
+                                  ?.invalidFormat
                               "
                             >
                               Invalid format.
@@ -173,35 +190,27 @@
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('regionCode').errors
-                                  ?.regionAndPsgcCodeNotMatch
-                              "
-                            >
-                              PSGC Code and Region code don't match!.
-                            </span>
-                            <span
-                              class="help-block"
-                              *ngIf="
-                                regionForm.get('regionCode').errors
+                                provinceForm.get('provinceCode').errors
                                   ?.minlength ||
-                                regionForm.get('regionCode').errors?.maxlength
+                                provinceForm.get('provinceCode').errors
+                                  ?.maxlength
                               "
                             >
-                              Region Code must be 2 digits
+                              Province Code must be 4 digits
                             </span>
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('regionCode').errors
-                                  ?.regionCodeTaken
+                                provinceForm.get('provinceCode').errors
+                                  ?.provinceCodeTaken
                               "
                             >
-                              Region Code must be unique.
+                              Province Code must be unique.
                             </span>
                           </div>
                         </div>
                       </div>
-                      <div formGroupName="location" class="row mt-2">
+                      <div class="row mt-2" formGroupName="location">
                         <div class="col-3">
                           <label class="form-control-label required"
                             >Latitude:</label
@@ -209,24 +218,22 @@
                         </div>
                         <div class="col-9">
                           <input
-                            id="latitude"
-                            type="text"
                             class="form-control"
-                            formControlName="latitude"
-                            (change)="onLatKeyUp($event)"
+                            type="text"
                             [value]="lat ? lat : ''"
+                            formControlName="latitude"
                           />
-
                           <div
                             class="form-control-errors"
                             *ngIf="
-                              regionFormDefaultValidators('location.latitude')
+                              provinceForm.get('location.latitude').invalid &&
+                              provinceForm.get('location.longitude').touched
                             "
                           >
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('location.latitude').errors
+                                provinceForm.get('location.latitude').errors
                                   ?.required
                               "
                             >
@@ -235,8 +242,7 @@
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('location.latitude').errors
-                                  ?.isError
+                                provinceForm.get('location.latitude').isError
                               "
                             >
                               Please enter a valid latitude.
@@ -244,7 +250,7 @@
                           </div>
                         </div>
                       </div>
-                      <div formGroupName="location" class="row mt-2">
+                      <div class="row mt-2" formGroupName="location">
                         <div class="col-3">
                           <label class="form-control-label required"
                             >Longitude:</label
@@ -252,23 +258,22 @@
                         </div>
                         <div class="col-9">
                           <input
-                            id="longitude"
-                            type="text"
                             class="form-control"
-                            formControlName="longitude"
-                            (change)="onLngKeyUp($event)"
+                            type="text"
                             [value]="lng ? lng : ''"
+                            formControlName="longitude"
                           />
                           <div
                             class="form-control-errors"
                             *ngIf="
-                              regionFormDefaultValidators('location.longitude')
+                              provinceForm.get('location.longitude').invalid &&
+                              provinceForm.get('location.longitude').touched
                             "
                           >
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('location.longitude').errors
+                                provinceForm.get('location.longitude').errors
                                   ?.required
                               "
                             >
@@ -277,13 +282,30 @@
                             <span
                               class="help-block"
                               *ngIf="
-                                regionForm.get('location.longitude').errors
-                                  ?.isError
+                                provinceForm.get('location.longitude').isError
                               "
                             >
-                              Please enter a valid longitude.
+                              Please enter a valid Longitude.
                             </span>
                           </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label mt-3"
+                            >Social Media Prohibited:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <label class="social-media-switch">
+                            <input
+                              class="form-control"
+                              type="checkbox"
+                              checked
+                              formControlName="isSocialMediaProhibited"
+                            />
+                            <span class="slider round"></span>
+                          </label>
                         </div>
                       </div>
                     </form>
@@ -296,7 +318,6 @@
                       [zoom]="zoom"
                     >
                       <agm-marker
-                        [label]="''"
                         [latitude]="lat"
                         [longitude]="lng"
                         [markerDraggable]="true"
@@ -315,12 +336,12 @@
                 <div class="controls">
                   <button
                     class="btn btn-sm btn-outline-primary"
-                    [routerLink]="['/admin/location-management/region']"
+                    [routerLink]="['/admin/location-management/province']"
                   >
                     Back
                   </button>
                   <button
-                    [disabled]="regionForm.invalid"
+                    [disabled]="provinceForm.invalid"
                     class="btn btn-sm btn-primary"
                     (click)="openConfirmModal(modal)"
                   >
@@ -350,29 +371,27 @@
   </div>
   <div class="modal-body" *ngIf="!regionInfo">
     <p>
-      Are you sure you want to add <strong>{{ regionName }}</strong> to the
-      regions list?
+      Are you sure you want to add <strong>{{ provinceName }}</strong> to the
+      province list?
     </p>
   </div>
   <div class="modal-body" *ngIf="regionInfo">
-    <h5>Are you sure you want to update {{ regionName }}?</h5>
+    <h5>Are you sure you want to update {{ provinceName }}?</h5>
     <div>
       If you update, the datas under
-      <strong>{{ regionName }}</strong> will be affected.
+      <strong>{{ provinceName }}</strong> will be affected.
     </div>
   </div>
   <div class="modal-footer">
-    <div>
-      <button class="btn btn-sm btn-primary" (click)="confirmModalRef.hide()">
-        Cancel
-      </button>
-      <button
-        class="btn btn-sm btn-outline-danger"
-        (click)="onSaveRegion()"
-        *ngIf="confirmModalRef"
-      >
-        {{ modalAction }}
-      </button>
-    </div>
+    <button class="btn btn-sm btn-primary" (click)="confirmModalRef.hide()">
+      Cancel
+    </button>
+    <button
+      class="btn btn-sm btn-outline-danger"
+      (click)="onSaveProvince()"
+      *ngIf="confirmModalRef"
+    >
+      {{ modalAction }}
+    </button>
   </div>
 </ng-template>

@@ -4,7 +4,7 @@
     <div class="top-menu col-12">
       <div id="region-menu" class="menu-body">
         <div
-          class="item-menu active-menu col-4 col-sm-3 col-lg-1"
+          class="item-menu col-4 col-sm-3 col-lg-1"
           [routerLink]="['/admin/location-management/region']"
         >
           <div class="icon">
@@ -13,7 +13,7 @@
           <span>Region</span>
         </div>
         <div
-          class="item-menu col-4 col-sm-3 col-lg-1"
+          class="item-menu active-menu col-4 col-sm-3 col-lg-1"
           [routerLink]="['/admin/location-management/province']"
         >
           <div class="icon">
@@ -23,8 +23,8 @@
         </div>
         <div class="col-12 col-lg-8">
           <app-filter-options
-            [activeUserProgramRole]="currentUser?.activeUserProgramRole"
-            [filterConfig]="regionFilterConfig"
+            [activeUserProgramRole]="activeUserProgramRole"
+            [filterConfig]="provinceFilterConfig"
             (filterValues)="fetchFilterValues($event)"
             (filterLoaded)="setFilterLoaded($event)"
           ></app-filter-options>
@@ -34,11 +34,11 @@
   </div>
   <div class="row animated fast fadeIn after-menu">
     <div class="card-body">
-      <app-admin-region-table
-        [activeUserProgramRole]="currentUser?.activeUserProgramRole"
+      <app-admin-province-table
+        [activeUserProgramRole]="activeUserProgramRole"
         [filterValues]="filterValues"
         [isFilterLoaded]="isFilterLoaded"
-      ></app-admin-region-table>
+      ></app-admin-province-table>
     </div>
   </div>
 </div>

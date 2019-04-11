@@ -8,7 +8,7 @@ export class Province {
   public location: any = new Object();
   public geoCode: any = new Object();
   public isSocialMediaProhibited: boolean = false;
-
+  
   constructor(data?: object) {
     if (data) { this.assign(data); }
   }
