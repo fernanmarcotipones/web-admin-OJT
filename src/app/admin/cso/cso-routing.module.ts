@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CSOListComponent } from './list/list.component';
 import { CsoComponent } from './cso.component';
+import { DetailsComponent } from './details/details.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,13 @@ const routes: Routes = [
       title: 'CSO'
     },
     component: CSOListComponent
+  },
+  {
+    path: 'cso/details',
+    data: {
+      title: 'CSO'
+    },
+    component: DetailsComponent
   },
 ];
 
