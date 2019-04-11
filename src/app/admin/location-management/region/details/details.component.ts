@@ -130,8 +130,7 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
     this.getMaxOrder();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   regionFormDefaultValidators(control) {
     return (

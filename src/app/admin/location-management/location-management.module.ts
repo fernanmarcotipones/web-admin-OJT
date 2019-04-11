@@ -15,6 +15,12 @@ import { RegionTableComponent } from './region/table/table.component';
 import { RegionDetailsComponent } from './region/details/details.component';
 import { RegionValidators } from './region/details/details.validators';
 
+import { ProvinceComponent } from './province/province.component';
+import { ProvinceDetailsComponent } from './province/details/details.component';
+import { ProvinceListComponent } from './province/list/list.component';
+import { ProvinceTableComponent } from './province/table/table.component';
+import { ProvinceValidators } from './province/details/details.validators';
+
 @NgModule({
   imports: [
     SharedModule,
@@ -27,6 +33,7 @@ import { RegionValidators } from './region/details/details.validators';
   providers: [
     GoogleMapsAPIWrapper,
     RegionValidators,
+    ProvinceValidators,
   ],
   declarations: [
     LocationManagementComponent,
@@ -34,6 +41,10 @@ import { RegionValidators } from './region/details/details.validators';
     RegionListComponent,
     RegionTableComponent,
     RegionDetailsComponent,
+    ProvinceComponent,
+    ProvinceListComponent,
+    ProvinceDetailsComponent,
+    ProvinceTableComponent,
   ],
 })
 export class LocationManagementModule {}

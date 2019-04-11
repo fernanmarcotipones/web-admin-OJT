@@ -4,7 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { RegionDetailsComponent } from './region/details/details.component';
 import { RegionListComponent } from './region/list/list.component';
 
+import { ProvinceDetailsComponent } from './province/details/details.component';
+import { ProvinceListComponent } from './province/list/list.component';
+
 const routes: Routes = [
+  //Region
   {
     path: 'location-management',
     data: {
@@ -33,6 +37,30 @@ const routes: Routes = [
     },
     component: RegionDetailsComponent,
   },
+  // Province
+  {
+    path: 'location-management/province',
+    data: {
+      title: 'Province List'
+    },
+    component: ProvinceListComponent,
+  },
+  {
+    path: 'location-management/province/add',
+    data: {
+      title: 'Add New Province'
+    },
+    component: ProvinceDetailsComponent
+  },
+  {
+    path: 'location-management/province/edit/:objId',
+    data: {
+      title: 'Edit Province'
+    },
+    component: ProvinceDetailsComponent,
+  },
+
+
 ];
 
 @NgModule({

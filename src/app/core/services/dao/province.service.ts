@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs/Rx';
-import { Province, Page,  PagedData } from '../../models';
+import { Province, Page, PagedData } from '../../models';
 import { APIService } from '../api/api.service';
 
 @Injectable()
 export class ProvinceService {
-
   private className = 'Province';
 
-  constructor(private apiService: APIService) { }
+  constructor(private apiService: APIService) {}
 
   /**
    * A method that mocks a paged server response
@@ -21,22 +20,22 @@ export class ProvinceService {
       try {
         // search by title
         const nameQuery = new this.apiService.Query(this.className);
-        if (page.filters.name && page.filters.name !== '' ) {
+        if (page.filters.name && page.filters.name !== '') {
           nameQuery.matches('name', new RegExp(page.filters.name, 'i'));
         }
 
         const regionQ = new this.apiService.Query('Region');
-        if (page.filters.region && page.filters.region !== '') {
-          regionQ.equalTo('regionCode', page.filters.region);
+        if (page.filters.regionId && page.filters.regionId !== '') {
+          regionQ.equalTo('objectId', page.filters.regionId);
         }
 
         // get count first
         const query = new this.apiService.Query(this.className);
 
-        if (page.filters.name && page.filters.name !== '' ) {
+        if (page.filters.name && page.filters.name !== '') {
           query._orQuery([nameQuery]);
         }
-        if (page.filters.region && page.filters.region !== '') {
+        if (page.filters.regionId && page.filters.regionId !== '') {
           query.matchesQuery('region', regionQ);
         }
 
@@ -44,7 +43,7 @@ export class ProvinceService {
         let results = [];
 
         const subscription = query.subscribe();
-        subscription.on('create', (data) => {
+        subscription.on('create', data => {
           count++;
           page.totalElements = count;
           page.totalPages = page.totalElements / page.size;
@@ -53,15 +52,19 @@ export class ProvinceService {
           pagedData.data.push(province);
         });
 
-        subscription.on('delete', (data) => {
+        subscription.on('delete', data => {
           count--;
           page.totalElements = count;
           page.totalPages = page.totalElements / page.size;
-          pagedData.data = pagedData.data.filter(location => location.objectId !== data.objectId);
+          pagedData.data = pagedData.data.filter(
+            location => location.objectId !== data.objectId,
+          );
         });
 
-        subscription.on('update', (data) => {
-          const index = pagedData.data.findIndex(obj => obj.objectId === data.toJSON().objectId);
+        subscription.on('update', data => {
+          const index = pagedData.data.findIndex(
+            obj => obj.objectId === data.toJSON().objectId,
+          );
           pagedData.data[index] = data.toJSON();
         });
 
@@ -70,7 +73,7 @@ export class ProvinceService {
         page.totalElements = count;
         page.totalPages = page.totalElements / page.size;
         const start = page.pageNumber * page.size;
-        const end = Math.min((start + page.size), page.totalElements);
+        const end = Math.min(start + page.size, page.totalElements);
 
         // get results
         const resultQuery = query;
@@ -79,21 +82,27 @@ export class ProvinceService {
         resultQuery.skip(start).limit(end);
 
         if (page.sorts.length !== 0) {
-        switch (page.sorts[0].prop) {
-          case 'region' : {
-            this.sortByColumn(resultQuery, 'regionCode', page.sorts[0].dir)
-          }break
-          default: {
-            this.sortByColumn(resultQuery, page.sorts[0].prop, page.sorts[0].dir)
+          switch (page.sorts[0].prop) {
+            case 'region':
+              {
+                this.sortByColumn(resultQuery, 'regionCode', page.sorts[0].dir);
+              }
+              break;
+            default: {
+              this.sortByColumn(
+                resultQuery,
+                page.sorts[0].prop,
+                page.sorts[0].dir,
+              );
             }
           }
         }
 
         results = await resultQuery.find();
-        results.forEach((provinceForm) => {
+        results.forEach(provinceForm => {
           const province = new Province(provinceForm.toJSON());
           pagedData.data.push(province);
-        })
+        });
 
         pagedData.page = page;
         resolve(pagedData);
@@ -107,7 +116,7 @@ export class ProvinceService {
   sortByColumn(resultQuery, colName, sortType) {
     if (sortType === 'asc') {
       resultQuery.ascending(colName);
-    }else {
+    } else {
       resultQuery.descending(colName);
     }
   }
@@ -137,9 +146,9 @@ export class ProvinceService {
         regionQ.equalTo('objectId', objectId);
 
         const query = new this.apiService.Query('Province');
-        query.matchesQuery('region', regionQ)
+        query.matchesQuery('region', regionQ);
         query.ascending('name');
-        provinces = await query.cache(43200).find();
+        provinces = await query.find();
         provinces = provinces.map(data => data.toJSON());
         resolve(provinces);
       } catch (error) {
@@ -153,9 +162,9 @@ export class ProvinceService {
     let provinces = [];
     return new Promise(async (resolve, reject) => {
       try {
-        const query = new new this.apiService.Query(this.className);
+        const query = new this.apiService.Query(this.className);
         query.ascending('name');
-        provinces = await query.cache(43200).find();
+        provinces = await query.find();
         provinces = provinces.map(data => data.toJSON());
         resolve(provinces);
       } catch (error) {
@@ -175,11 +184,39 @@ export class ProvinceService {
     query.include('region');
     query.include('location');
     query.include('geoCode');
-    query.equalTo('objectId', objectId).limit(1)
+    query.equalTo('objectId', objectId).limit(1);
     query.find().then(res => {
-        subject.next({type: 'result', result: res})
+      subject.next({ type: 'result', result: res });
     });
 
     return subject;
+  }
+
+  createItem(item: any): Promise<any[]> {
+    const className = new this.apiService.Query(this.className);
+    return new Promise(async (resolve, reject) => {
+      try {
+        this.apiService.create(className, item);
+      } catch (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
+  }
+
+  deleteItem(id: string): Promise<any[]> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        this.getById(id)
+          .first()
+          .subscribe(res => {
+            this.apiService.delete(res.result[0]);
+          });
+        resolve();
+      } catch (err) {
+        console.log(err);
+        reject(err);
+      }
+    });
   }
 }
