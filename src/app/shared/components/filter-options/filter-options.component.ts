@@ -98,6 +98,7 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
       referenceNumber: new FormControl(''),
       name: new FormControl(''),
       searchKey: new FormControl(''),
+      searchCSOKey: new FormControl(''),
       userSearchKey: new FormControl(''),
       projectType: new FormControl(''),
       projectSubType: new FormControl(''),
@@ -196,6 +197,9 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
         }
         if (this.defaultFilterValues.userSearchKey) {
           this.filterForm.controls['userSearchKey'].setValue(this.defaultFilterValues.userSearchKey.trim())
+        }
+        if (this.defaultFilterValues.searchCSOKey) {
+          this.filterForm.controls['searchCSOKey'].setValue(this.defaultFilterValues.searchCSOKey.trim())
         }
         if (this.defaultFilterValues.userActivation !== '') {
           this.filterForm.controls['userActivation'].setValue(this.defaultFilterValues.userActivation)
@@ -467,6 +471,7 @@ export class FilterOptionsComponent implements OnInit, OnChanges {
       name: this.filterForm.get('name').value,
       searchKey: this.filterForm.get('searchKey').value.trim(),
       userSearchKey: this.filterForm.get('userSearchKey').value.trim(),
+      searchCSOKey: this.filterForm.get('searchCSOKey').value.trim(),
       csoGroup: this.filterForm.get('csoGroup').value,
       dateRange: this.dateRange,
       hasFeedback: this.filterForm.get('hasFeedback').value,

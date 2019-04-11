@@ -2,12 +2,20 @@
   <div class="row row-menu">
     <div class="top-menu col-12">
       <div id="dashboard-menu" class="menu-body">
-        <div class="item-menu col-4 col-sm-3 col-lg-1 active-menu">
+        <div class="item-menu col-12 col-sm-12 col-md-1 col-lg-1 active-menu">
           <div class="icon">
             <i class="fa fa-table" aria-hidden="true"></i>
           </div>
           <span>List</span>
         </div>
+        <div class="col-12 col-sm-12 col-md-11 col-lg-11">
+            <app-filter-options 
+            [activeUserProgramRole]="currentUser?.activeUserProgramRole" 
+            [filterConfig]="csoFilterConfig"
+            [defaultFilterValues]="defaultFilterValues"
+            (filterValues)="fetchFilterValues($event)"
+            (filterLoaded)="setFilterLoaded($event)"></app-filter-options>
+          </div>
       </div>
     </div>
   </div>
@@ -28,7 +36,8 @@
               </div>
             </div>
             <div class="card-body">
-              <app-admin-cso-table></app-admin-cso-table>
+              <app-admin-cso-table [activeUserProgramRole]="currentUser?.activeUserProgramRole" [filterValues]="filterValues"
+              [isFilterLoaded]="isFilterLoaded"></app-admin-cso-table>
             </div>
           </div>
         </div>
