@@ -5,6 +5,7 @@ import { FormRoutingModule} from './form-routing.module';
 
 import { FormListComponent } from './list/list.component';
 import { FormTableComponent } from './table/table.component';
+import { ManagementComponent } from './management/management.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { FormTableComponent } from './table/table.component';
   declarations: [
     FormListComponent,
     FormTableComponent,
+    ManagementComponent,
   ],
   entryComponents: [
     FormListComponent,

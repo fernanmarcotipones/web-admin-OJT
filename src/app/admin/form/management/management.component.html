@@ -1,0 +1,41 @@
+<ngx-loading [show]="false"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="row row-menu">
+    <div class="top-menu col-12">
+      <div id="dashboard-menu" class="menu-body">
+        <div class="item-menu col-4 col-sm-3 col-lg-1">
+          <div class="icon">
+            <i class="fa fa-table"></i>
+          </div>
+          <span>Forms</span>
+        </div>
+        <div class="item-menu active-menu col-4 col-sm-3 col-lg-1">
+            <div class="icon" [routerLink]="['/admin/form/management']">
+              <i class="fa fa-plus"></i>
+            </div>
+            <span>Add New Form</span>
+            </div>
+        <div class="col-12 col-lg-10">
+          <app-filter-options [activeUserProgramRole]="currentUser?.activeUserProgramRole"
+            [filterConfig]="formFilterConfig" [defaultFilterValues]="defaultFilterValues"
+            (filterValues)="fetchFilterValues($event)" (filterLoaded)="setFilterLoaded($event)"></app-filter-options>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fast fadeIn after-menu">
+    <div class="body-container col-7">
+      <div class="card">
+        <div class="card-body">
+        </div>
+      </div>
+    </div>
+    <div class="body-container col-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="text-center">FORM PREVIEW</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
