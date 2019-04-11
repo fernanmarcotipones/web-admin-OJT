@@ -1,0 +1,35 @@
+<ngx-loading [show]="false"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="row row-menu">
+    <div class="top-menu col-12">
+      <div id="region-menu" class="menu-body">
+        <div
+          class="item-menu active-menu col-4 col-sm-3 col-lg-1"
+          [routerLink]="['/admin/location-management/region']"
+        >
+          <div class="icon">
+            <i class="fa fa-map-pin"></i>
+          </div>
+          <span>Region</span>
+        </div>
+        <div class="col-12 col-lg-8">
+          <app-filter-options
+            [activeUserProgramRole]="currentUser?.activeUserProgramRole"
+            [filterConfig]="regionFilterConfig"
+            (filterValues)="fetchFilterValues($event)"
+            (filterLoaded)="setFilterLoaded($event)"
+          ></app-filter-options>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fast fadeIn after-menu">
+    <div class="card-body">
+      <app-admin-region-table
+        [activeUserProgramRole]="currentUser?.activeUserProgramRole"
+        [filterValues]="filterValues"
+        [isFilterLoaded]="isFilterLoaded"
+      ></app-admin-region-table>
+    </div>
+  </div>
+</div>

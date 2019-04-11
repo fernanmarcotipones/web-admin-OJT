@@ -4,6 +4,7 @@ import { IndexModule } from './index/index.module';
 import { UserModule } from './user/user.module';
 import { FormModule } from './form/form.module';
 import { CsoModule } from './cso/cso.module';
+import { LocationManagementModule } from './location-management/location-management.module';
 
 @NgModule({
   imports: [
@@ -11,6 +12,7 @@ import { CsoModule } from './cso/cso.module';
     UserModule,
     FormModule,
     CsoModule,
+    LocationManagementModule
   ],
   declarations: []
 })
