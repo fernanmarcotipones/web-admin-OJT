@@ -1,21 +1,28 @@
+
 <div class="animated fadeIn">
   <div class="row row-menu">
     <div class="top-menu col-12">
       <div id="dashboard-menu" class="menu-body">
-        <div class="item-menu col-12 col-sm-12 col-md-1 col-lg-1 active-menu">
+        <div class="item-menu col-6 col-sm-6 col-md-1 col-lg-1 active-menu">
           <div class="icon">
             <i class="fa fa-table" aria-hidden="true"></i>
           </div>
           <span>List</span>
         </div>
-        <div class="col-12 col-sm-12 col-md-11 col-lg-11">
-            <app-filter-options 
-            [activeUserProgramRole]="currentUser?.activeUserProgramRole" 
-            [filterConfig]="csoFilterConfig"
-            [defaultFilterValues]="defaultFilterValues"
-            (filterValues)="fetchFilterValues($event)"
-            (filterLoaded)="setFilterLoaded($event)"></app-filter-options>
+        <div class="item-menu col-6 col-sm-6 col-md-1 col-lg-1" [routerLink]="['/admin/cso/details']">
+          <div class="icon">
+              <i class="fa fa-file-text-o" aria-hidden="true" ></i>
           </div>
+          <span>Details</span>
+        </div>
+        <div class="col-12 col-sm-12 col-md-10 col-lg-10">
+          <app-filter-options 
+          [activeUserProgramRole]="currentUser?.activeUserProgramRole" 
+          [filterConfig]="csoFilterConfig"
+          [defaultFilterValues]="defaultFilterValues"
+          (filterValues)="fetchFilterValues($event)"
+          (filterLoaded)="setFilterLoaded($event)"></app-filter-options>
+        </div>
       </div>
     </div>
   </div>
@@ -23,7 +30,7 @@
     <div id="cso-management-content" class="col-12">
       <div class="row animated fast fadeIn">
         <div class="col-12 custom-table-card">
-          <div class="card">
+          <div class="card" id="cso-group-card">
             <div class="card-header">
               <i class="fa fa-list-alt top-view"></i> CSO List
               <div class="card-actions">

@@ -1,0 +1,40 @@
+
+<div class="animated fadeIn">
+  <div class="row row-menu">
+    <div class="top-menu col-12">
+      <div id="dashboard-menu" class="menu-body">
+        <div class="item-menu col-4 col-sm-3 col-lg-1" [routerLink]="['/admin/cso']"
+        >
+          <div class="icon">
+            <i class="fa fa-table" aria-hidden="true"></i>
+          </div>
+          <span>List</span>
+        </div>
+
+        <div class="item-menu col-4 col-sm-3 col-lg-1 active-menu" [routerLink]="['/admin/cso/details']" >
+          <div class="icon">
+            <i class="fa fa-file-text-o" aria-hidden="true" ></i>
+          </div>
+          <span>Details</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fast fadeIn after-menu">
+    <div id="cso-management-content" class="col-12">
+      <div class="row animated fast fadeIn">
+        <div class="col-12 custom-table-card">
+          <div class="card" id="cso-group-card">
+            <div class="card-header" id="cso-group-header">
+               <h6>CSO Group</h6>
+             
+            </div>
+            <div class="card-body">
+              <app-cso-group-form></app-cso-group-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

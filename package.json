@@ -69,6 +69,7 @@
     "@types/node": "8.0.20",
     "angular-ga": "^1.0.0",
     "codelyzer": "4.2.1",
+    "eslint": "^5.16.0",
     "jasmine-core": "2.7.0",
     "jasmine-spec-reporter": "4.2.0",
     "karma": "1.7.0",
