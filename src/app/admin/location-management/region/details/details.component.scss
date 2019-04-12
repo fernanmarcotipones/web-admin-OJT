@@ -1,0 +1,91 @@
+.card {
+  .region.card-header {
+    background-color: red;
+
+    .card-title {
+      margin: 0;
+      color: white;
+      text-align: center;
+    }
+  }
+
+  .container,.form-container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 100%;
+  }
+
+  @media (min-width: 1200px) {
+    .container,.form-container {
+      max-width: 1500px;
+    }
+  }
+
+  .form-control {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    &:disabled {
+      background-color: #e4eff5;
+      cursor: not-allowed;
+    }
+  }
+
+  span.help-block {
+    color: red;
+    display: block;
+  }
+
+  textarea {
+    resize: none;
+    height: 50px;
+    max-height: 50px;
+  }
+
+  input.ng-invalid.ng-touched,
+  textarea.ng-invalid.ng-touched {
+    border-bottom: 1px solid red;
+  }
+
+  .map {
+    background-color: antiquewhite;
+    height: 100%;
+    width: 100%;
+  }
+
+  .map-unrendered {
+    height: 400px;
+    background-color: antiquewhite;
+
+    > p {
+      margin: 0;
+      text-align: center;
+    }
+  }
+
+  .controls {
+    float: right;
+
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin: 20px 0;
+
+      &:disabled,
+      &[disabled] {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+.modal-footer {
+  float: right;
+  .btn-sm {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}

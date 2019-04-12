@@ -1,0 +1,161 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="row">
+  <div class="col-12 custom-table-card">
+    <div class="card">
+      <div class="card-header">
+        <i class="fa fa-list-alt top-view"></i> Province List
+        <div class="card-actions">
+          <a
+            class="btn-setting cursor-pointer"
+            [routerLink]="['/admin/location-management/province/add']"
+            tooltip="Add Province"
+            placement="top"
+          >
+            <i class="icon-plus"></i
+          ></a>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="location-table">
+          <ngx-loading [show]="loading"></ngx-loading>
+          <ngx-datatable
+            class="bootstrap"
+            [messages]="{ totalMessage: 'Provinces(s) found' }"
+            [rows]="rows"
+            [rowHeight]="'auto'"
+            [columnMode]="'force'"
+            [headerHeight]="50"
+            [footerHeight]="50"
+            [externalPaging]="true"
+            [count]="page.totalElements"
+            [offset]="page.pageNumber"
+            [limit]="page.size"
+            [externalSorting]="true"
+            [loadingIndicator]="loading"
+            (sort)="onSort($event)"
+            (page)="setPage($event)"
+          >
+            <ngx-datatable-column name="name" prop="name" sortable="true">
+              <ng-template
+                let-column="column"
+                let-sort="sortFn"
+                ngx-datatable-header-template
+              >
+                <span (click)="sort()">Name</span>
+              </ng-template>
+              <ng-template
+                let-row="row"
+                let-value="value"
+                ngx-datatable-cell-template
+              >
+                <span>{{ value }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="provinceCode" prop="provinceCode">
+              <ng-template
+                let-column="column"
+                let-sort="sortFn"
+                ngx-datatable-header-template
+              >
+                Province Code
+              </ng-template>
+              <ng-template
+                let-row="row"
+                let-value="value"
+                ngx-datatable-cell-template
+              >
+                <span>{{ value }}</span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column
+              name="psgcCode"
+              prop="psgcCode"
+              sortable="true"
+            >
+              <ng-template
+                let-column="column"
+                let-sort="sortFn"
+                ngx-datatable-header-template
+              >
+                PSGC Code
+              </ng-template>
+              <ng-template
+                let-row="row"
+                let-value="value"
+                ngx-datatable-cell-template
+              >
+                {{ value ? value : 'N/A' }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="objectId" prop="objectId">
+              <ng-template
+                let-column="column"
+                let-sort="sortFn"
+                ngx-datatable-header-template
+              >
+                Action
+              </ng-template>
+              <ng-template
+                let-row="row"
+                let-value="value"
+                let-rowIndex="rowIndex"
+                ngx-datatable-cell-template
+              >
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                  [routerLink]="[
+                    '/admin/location-management/province/edit',
+                    value
+                  ]"
+                >
+                  <i class="fa fa-pencil"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="openModal(deactivateModal, rowIndex, value)"
+                >
+                  <i class="fa fa-minus-circle"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #deactivateModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm Deactivation</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="confirmDeleteModalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h5>Are you sure you want to deactivate {{ provinceName }}?</h5>
+    <div>
+      If you deactivate, the datas under
+      <strong>{{ provinceName }}</strong> will be affected.
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      class="btn btn-sm btn-outline-primary"
+      (click)="confirmDeleteModalRef.hide()"
+    >
+      Cancel
+    </button>
+    <button class="btn btn-sm btn-danger" (click)="deactivateProvince()">
+      Deactivate
+    </button>
+  </div>
+</ng-template>

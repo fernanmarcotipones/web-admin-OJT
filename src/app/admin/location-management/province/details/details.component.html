@@ -1,0 +1,397 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="row row-menu">
+    <div class="top-menu col-12">
+      <div id="dashboard-menu" class="menu-body">
+        <div
+          class="item-menu col-4 col-sm-3 col-lg-1"
+          [routerLink]="['/admin/location-management/region']"
+        >
+          <div class="icon">
+            <i class="fa fa-map-pin"></i>
+          </div>
+          <span>Region</span>
+        </div>
+        <div
+          class="item-menu active-menu col-4 col-sm-3 col-lg-1"
+          [routerLink]="['/admin/location-management/province']"
+        >
+          <div class="icon">
+            <i class="fa fa-globe"></i>
+          </div>
+          <span>Province</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fast fadeIn after-menu">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="province card-header">
+              <h2 class="card-title">{{ formUsage }}</h2>
+            </div>
+            <div class="card-body">
+              <div class="container form-container">
+                <div class="row">
+                  <div class="col-7">
+                    <form [formGroup]="provinceForm">
+                      <div class="row">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Region Name:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <select class="form-control" formControlName="region" required>
+                            <option value="null">Select Region</option>
+                            <option
+                              *ngFor="let region of regionArray"
+                              value="{{ region.objectId }}"
+                              selected
+                              >{{ region.name }}</option
+                            >
+                          </select>
+                          <span
+                            class="help-block"
+                            *ngIf="
+                              provinceForm.get('region').invalid &&
+                              provinceForm.get('region').touched &&
+                              provinceForm.get('region').errors?.required
+                            "
+                          >
+                            Region is required.
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Province Name:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="name"
+                          />
+                          <span
+                            class="help-block"
+                            *ngIf="
+                              provinceForm.get('name').invalid &&
+                              provinceForm.get('name').touched &&
+                              provinceForm.get('name').errors?.required
+                            "
+                          >
+                            Province Name is required.
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >PSGC Code:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="psgcCode"
+                          />
+                          <div
+                            class="form-control-errors"
+                            *ngIf="
+                              provinceForm.get('psgcCode').invalid &&
+                              provinceForm.get('psgcCode').touched
+                            "
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('psgcCode').errors?.required
+                              "
+                            >
+                              PSGC Code is required.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('psgcCode').errors?.pattern ||
+                                provinceForm.get('psgcCode').errors
+                                  ?.invalidFormat
+                              "
+                            >
+                              Invalid format.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('psgcCode').errors
+                                  ?.minlength &&
+                                provinceForm.get('psgcCode').errors?.maxlength
+                              "
+                            >
+                              PSGC Code must be 9 digits
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('psgcCode').errors
+                                  ?.psgcCodeTaken
+                              "
+                            >
+                              PSGC Code must be unique
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Province Code:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            class="form-control"
+                            type="text"
+                            formControlName="provinceCode"
+                          />
+                          <div
+                            class="form-control-errors"
+                            *ngIf="
+                              provinceForm.get('provinceCode').invalid &&
+                              provinceForm.get('provinceCode').touched
+                            "
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('provinceCode').errors
+                                  ?.required
+                              "
+                            >
+                              Province Code is required.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('provinceCode').errors
+                                  ?.pattern ||
+                                provinceForm.get('provinceCode').errors
+                                  ?.invalidFormat
+                              "
+                            >
+                              Invalid format.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('provinceCode').errors
+                                  ?.minlength ||
+                                provinceForm.get('provinceCode').errors
+                                  ?.maxlength
+                              "
+                            >
+                              Province Code must be 4 digits
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('provinceCode').errors
+                                  ?.provinceCodeTaken
+                              "
+                            >
+                              Province Code must be unique.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2" formGroupName="location">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Latitude:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            class="form-control"
+                            type="text"
+                            [value]="lat ? lat : ''"
+                            formControlName="latitude"
+                          />
+                          <div
+                            class="form-control-errors"
+                            *ngIf="
+                              provinceForm.get('location.latitude').invalid &&
+                              provinceForm.get('location.longitude').touched
+                            "
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('location.latitude').errors
+                                  ?.required
+                              "
+                            >
+                              Latitude is required.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('location.latitude').isError
+                              "
+                            >
+                              Please enter a valid latitude.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2" formGroupName="location">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Longitude:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            class="form-control"
+                            type="text"
+                            [value]="lng ? lng : ''"
+                            formControlName="longitude"
+                          />
+                          <div
+                            class="form-control-errors"
+                            *ngIf="
+                              provinceForm.get('location.longitude').invalid &&
+                              provinceForm.get('location.longitude').touched
+                            "
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('location.longitude').errors
+                                  ?.required
+                              "
+                            >
+                              Longitude is required.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                provinceForm.get('location.longitude').isError
+                              "
+                            >
+                              Please enter a valid Longitude.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label mt-3"
+                            >Social Media Prohibited:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <label class="social-media-switch">
+                            <input
+                              class="form-control"
+                              type="checkbox"
+                              checked
+                              formControlName="isSocialMediaProhibited"
+                            />
+                            <span class="slider round"></span>
+                          </label>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-5" *ngIf="lat && lng">
+                    <agm-map
+                      style="height: 500px"
+                      [latitude]="lat"
+                      [longitude]="lng"
+                      [zoom]="zoom"
+                    >
+                      <agm-marker
+                        [latitude]="lat"
+                        [longitude]="lng"
+                        [markerDraggable]="true"
+                        (dragEnd)="markerDragEnd($event)"
+                      >
+                      </agm-marker>
+                    </agm-map>
+                  </div>
+                  <div class="col-5 map-unrendered" *ngIf="!lat && !lng">
+                    <ngx-loading [show]="loading"></ngx-loading>
+                    <p>
+                      Map takes time to load, Check your internet connection
+                    </p>
+                  </div>
+                </div>
+                <div class="controls">
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    [routerLink]="['/admin/location-management/province']"
+                  >
+                    Back
+                  </button>
+                  <button
+                    [disabled]="provinceForm.invalid"
+                    class="btn btn-sm btn-primary"
+                    (click)="openConfirmModal(modal)"
+                  >
+                    {{ buttonAction }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm {{ modalUsage }}</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="confirmModalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="!regionInfo">
+    <p>
+      Are you sure you want to add <strong>{{ provinceName }}</strong> to the
+      province list?
+    </p>
+  </div>
+  <div class="modal-body" *ngIf="regionInfo">
+    <h5>Are you sure you want to update {{ provinceName }}?</h5>
+    <div>
+      If you update, the datas under
+      <strong>{{ provinceName }}</strong> will be affected.
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-primary" (click)="confirmModalRef.hide()">
+      Cancel
+    </button>
+    <button
+      class="btn btn-sm btn-outline-danger"
+      (click)="onSaveProvince()"
+      *ngIf="confirmModalRef"
+    >
+      {{ modalAction }}
+    </button>
+  </div>
+</ng-template>

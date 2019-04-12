@@ -24,6 +24,9 @@
       <div *ngIf="filterConfig?.userSearchKey" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
         <input type="text" formControlName="userSearchKey" class="form-control" placeholder="Name/Username/Email" (change)="changeFilter()">
       </div>
+      <div *ngIf="filterConfig?.searchCSOKey" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
+          <input type="text" formControlName="searchCSOKey" class="form-control" placeholder="CSO Name" (change)="changeFilter()">
+        </div>
       <div *ngIf="filterConfig?.hasFeedback" class="input-group col-xs-12 col-sm-6 col-md-4 col-lg-2">
         <select class="form-control" formControlName="hasFeedback" (change)="changeFilter();">
           <option value="">Feedback</option>

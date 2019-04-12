@@ -14,7 +14,9 @@ import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
+import {MatSlideToggleModule, MatCheckboxModule} from '@angular/material'
 
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,10 +25,10 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-
+    MatSlideToggleModule, MatCheckboxModule,
     CoreModule,
     SharedModule,
-
+    ReactiveFormsModule,
     AppRoutingModule,
 
     AgmCoreModule.forRoot(

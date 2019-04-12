@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Page, CSOGroupService, CSOGroup } from 'app/core';
 import { Constants } from 'app/shared/constants';
 
@@ -7,8 +7,9 @@ import { Constants } from 'app/shared/constants';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnChanges {
 
+  @Input() activeUserProgramRole: any;
   @Input() filterValues: any;
   @Input() isFilterLoaded: boolean;
 
@@ -27,15 +28,22 @@ export class TableComponent implements OnInit {
     this.search();
   }
 
-  loadCSO() {
-    this.loading = true;
-    this.CSOGroupService.searchByCSOProgram(this.page).then(pagedData => {
-      this.page = pagedData.page;
-      this.rows = pagedData.data;
-      this.loading = false;
-    });
+  async loadCSO() {
+    if (this.isFilterLoaded) {
+      this.loading = true;
+      await this.CSOGroupService.searchByCSOProgram(this.page).then(pagedData => {
+        this.page = pagedData.page;
+        this.rows = pagedData.data;
+        this.loading = false;
+      });
+    }
   }
 
+  ngOnChanges(changes) {
+    if (this.activeUserProgramRole && this.isFilterLoaded) {
+      this.search();
+    }
+  }
   setPage(pageInfo) {
     this.page.pageNumber = pageInfo.offset;
     this.loadCSO();

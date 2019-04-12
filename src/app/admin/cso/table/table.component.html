@@ -1,8 +1,8 @@
 <ngx-loading [show]="loading" ></ngx-loading>
-<div id="user-table">
+<div id="CSOGroup-table">
   <ngx-datatable
     class="bootstrap"
-    [messages]="{totalMessage:'User(s) Found'}"
+    [messages]="{totalMessage:'CSOGroup Found'}"
     [rows]="rows"
     [rowHeight]="'auto'"
     [columnMode]="'flex'"
@@ -17,30 +17,30 @@
     (sort)="onSort($event)"
     (page)='setPage($event)' >
 
-    <ngx-datatable-column name="level" prop="level" sortable="true" [flexGrow]="5" [minWidth]="100">
+    <ngx-datatable-column name="name" prop="name" sortable="true" [flexGrow]="5" [minWidth]="100">
       <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-        <span (click)="sort()">Level</span>
+        <span (click)="sort()">CSO Name</span>
       </ng-template>
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <span>{{ value ? value.name : 'No Entry' }}</span>
+        <span>{{ value ? value : 'No Entry' }}</span>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="csoGroup" prop="csoGroup" sortable="true" [flexGrow]="5">
+    <ngx-datatable-column name="description" prop="description" sortable="true" [flexGrow]="5">
       <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-        <span (click)="sort()">CSO Group</span>
+        <span (click)="sort()">Description</span>
       </ng-template>
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <span class="hidden-md-down">{{ value ? value.name : 'No Entry' }}</span>
+        <span class="hidden-md-down">{{ value ? value : 'No Entry' }}</span>
       </ng-template>
     </ngx-datatable-column>
 
-    <ngx-datatable-column name="program" prop="program" sortable="true" [flexGrow]="5">
+    <ngx-datatable-column name="privacy" prop="privacy" sortable="true" [flexGrow]="5">
       <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-        <span (click)="sort()" class="hidden-md-down">Program</span>
+        <span (click)="sort()">Privacy</span>
       </ng-template>
       <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <span class="hidden-md-down">{{ value ? value.agencyCode : 'No Entry' }}</span>
+        <span class="hidden-md-down">{{ value ? value : 'No Entry' }}</span>
       </ng-template>
     </ngx-datatable-column>
 

@@ -1,0 +1,378 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="row row-menu">
+    <div class="top-menu col-12">
+      <div id="dashboard-menu" class="menu-body">
+        <div
+          class="item-menu active-menu col-4 col-sm-3 col-lg-1"
+          [routerLink]="['/admin/location-management/region']"
+        >
+          <div class="icon">
+            <i class="fa fa-map-pin"></i>
+          </div>
+          <span>Region</span>
+        </div>
+        <div
+          class="item-menu col-4 col-sm-3 col-lg-1"
+          [routerLink]="['/admin/location-management/province']"
+        >
+          <div class="icon">
+            <i class="fa fa-globe"></i>
+          </div>
+          <span>Province</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fast fadeIn after-menu">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="region card-header">
+              <h2 class="card-title">{{ formUsage }}</h2>
+            </div>
+            <div class="card-body">
+              <div class="container form-container">
+                <div class="row">
+                  <div class="col-7">
+                    <form [formGroup]="regionForm">
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Region Name:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="name"
+                          />
+                          <span
+                            class="help-block"
+                            *ngIf="
+                              regionFormDefaultValidators('name') &&
+                              regionForm.get('name').errors?.required
+                            "
+                          >
+                            Region name is required
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Description:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <textarea
+                            class="form-control"
+                            formControlName="description"
+                          ></textarea>
+                          <span
+                            class="help-block"
+                            *ngIf="
+                              regionFormDefaultValidators('description') &&
+                              regionForm.get('description').errors?.required
+                            "
+                          >
+                            Description is required
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >PSGC Code:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="psgcCode"
+                          />
+                          <div
+                            class="form-control-errors"
+                            *ngIf="regionFormDefaultValidators('psgcCode')"
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('psgcCode').errors?.required
+                              "
+                            >
+                              PSGC Code is required.</span
+                            >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('psgcCode').errors
+                                  ?.invalidFormat ||
+                                regionForm.get('psgcCode').errors?.pattern
+                              "
+                            >
+                              Invalid format.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('psgcCode').errors?.minlength ||
+                                regionForm.get('psgcCode').errors?.maxlength
+                              "
+                            >
+                              PSGC Code must be 9 digits
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('psgcCode').errors?.psgcCodeTaken
+                              "
+                            >
+                              PSGC Code must be unique
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Region Code:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="regionCode"
+                          />
+                          <div
+                            class="form-control-errors"
+                            *ngIf="regionFormDefaultValidators('regionCode')"
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('regionCode').errors?.required
+                              "
+                            >
+                              Region Code is required.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('regionCode').errors
+                                  ?.invalidFormat ||
+                                regionForm.get('regionCode').errors?.pattern
+                              "
+                            >
+                              Invalid format.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('regionCode').errors
+                                  ?.regionAndPsgcCodeNotMatch
+                              "
+                            >
+                              PSGC Code and Region code don't match!.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('regionCode').errors
+                                  ?.minlength ||
+                                regionForm.get('regionCode').errors?.maxlength
+                              "
+                            >
+                              Region Code must be 2 digits
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('regionCode').errors
+                                  ?.regionCodeTaken
+                              "
+                            >
+                              Region Code must be unique.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div formGroupName="location" class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Latitude:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            id="latitude"
+                            type="text"
+                            class="form-control"
+                            formControlName="latitude"
+                            (change)="onLatKeyUp($event)"
+                            [value]="lat ? lat : ''"
+                          />
+
+                          <div
+                            class="form-control-errors"
+                            *ngIf="
+                              regionFormDefaultValidators('location.latitude')
+                            "
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('location.latitude').errors
+                                  ?.required
+                              "
+                            >
+                              Latitude is required.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('location.latitude').errors
+                                  ?.isError
+                              "
+                            >
+                              Please enter a valid latitude.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div formGroupName="location" class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required"
+                            >Longitude:</label
+                          >
+                        </div>
+                        <div class="col-9">
+                          <input
+                            id="longitude"
+                            type="text"
+                            class="form-control"
+                            formControlName="longitude"
+                            (change)="onLngKeyUp($event)"
+                            [value]="lng ? lng : ''"
+                          />
+                          <div
+                            class="form-control-errors"
+                            *ngIf="
+                              regionFormDefaultValidators('location.longitude')
+                            "
+                          >
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('location.longitude').errors
+                                  ?.required
+                              "
+                            >
+                              Longitude is required.
+                            </span>
+                            <span
+                              class="help-block"
+                              *ngIf="
+                                regionForm.get('location.longitude').errors
+                                  ?.isError
+                              "
+                            >
+                              Please enter a valid longitude.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="col-5" *ngIf="lat && lng">
+                    <agm-map
+                      style="height: 500px"
+                      [latitude]="lat"
+                      [longitude]="lng"
+                      [zoom]="zoom"
+                    >
+                      <agm-marker
+                        [label]="''"
+                        [latitude]="lat"
+                        [longitude]="lng"
+                        [markerDraggable]="true"
+                        (dragEnd)="markerDragEnd($event)"
+                      >
+                      </agm-marker>
+                    </agm-map>
+                  </div>
+                  <div class="col-5 map-unrendered" *ngIf="!lat && !lng">
+                    <ngx-loading [show]="loading"></ngx-loading>
+                    <p>
+                      Map takes time to load, Check your internet connection
+                    </p>
+                  </div>
+                </div>
+                <div class="controls">
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    [routerLink]="['/admin/location-management/region']"
+                  >
+                    Back
+                  </button>
+                  <button
+                    [disabled]="regionForm.invalid"
+                    class="btn btn-sm btn-primary"
+                    (click)="openConfirmModal(modal)"
+                  >
+                    {{ buttonAction }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm {{ modalUsage }}</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="confirmModalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" *ngIf="!regionInfo">
+    <p>
+      Are you sure you want to add <strong>{{ regionName }}</strong> to the
+      regions list?
+    </p>
+  </div>
+  <div class="modal-body" *ngIf="regionInfo">
+    <h5>Are you sure you want to update {{ regionName }}?</h5>
+    <div>
+      If you update, the datas under
+      <strong>{{ regionName }}</strong> will be affected.
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div>
+      <button class="btn btn-sm btn-primary" (click)="confirmModalRef.hide()">
+        Cancel
+      </button>
+      <button
+        class="btn btn-sm btn-outline-danger"
+        (click)="onSaveRegion()"
+        *ngIf="confirmModalRef"
+      >
+        {{ modalAction }}
+      </button>
+    </div>
+  </div>
+</ng-template>

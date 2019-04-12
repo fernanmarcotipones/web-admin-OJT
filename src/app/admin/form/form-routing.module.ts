@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Route } from '@angular/router';
 
 import { FormListComponent } from './list/list.component';
+import { ManagementComponent } from './management/management.component';
 
 export const routerConfig: Route[] = [
   {
@@ -17,6 +18,13 @@ export const routerConfig: Route[] = [
       title: 'Form'
     },
     component: FormListComponent
+  },
+  {
+    path: 'form/management',
+    data: {
+      title: 'Form Management'
+    },
+    component: ManagementComponent
   },
 ];
 
