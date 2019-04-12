@@ -1,0 +1,63 @@
+<div class="col-md-8 ml-md-auto mr-md-auto">
+  <form [formGroup]="CreatingFormGroup" class="custom-form animated fadeIn text-center" novalidate>
+    <div class="form-group row">
+        <label class="col-md-4 form-control-label required">Source:</label>
+        <input placeholder="URL/ID" type="text" class="form-control form-control-sm col-md-8 border-dark">
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 form-control-label required">Title:</label>
+        <input type="text" class="form-control form-control-sm col-md-8 border-dark">
+    </div>
+    <div class="form-group row">
+      <label class="col-md-4 ">Description:</label>
+      <textarea class = " col-md-8 border-dark"></textarea>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 form-control-label required">Question Type:</label>
+        <div class="col-md-8">
+          <select [formControl]="selectedQuestionType" id="QuestionType" type="text" class="custom-select custom-select-md col-12 border-dark">
+            <option>Profile</option>
+            <option>Survey</option>
+          </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 form-control-label required">Program:</label>
+        <div class="col-md-8">
+          <select disabled id="QuestionType" type="text" class="custom-select custom-select-md col-12 border-dark">
+            <option>DILG- Assistance to Municipalities</option>
+            <option>Profile</option>
+            <option>Survey</option>
+          </select>
+        </div>
+    </div>
+<app-admin-form-list-management-field-profile-survey *ngIf="showOptions"></app-admin-form-list-management-field-profile-survey>
+<div class="form-group row">
+    <label class="col-md-4 form-control-label required">Status:</label>
+    <div class="col-md-8">
+      <select id="QuestionType" type="text" class="custom-select custom-select-md col-12 border-dark">
+        <option>Set Status</option>
+        <option>Profile</option>
+        <option>Survey</option>
+      </select>
+    </div>
+</div>
+
+<button>Save</button>
+  </form>
+</div>
+
+<!-- <label>Source:</label><input type="text">
+<label>Ttle:</label><input type="text">
+<label>Description:</label><input type="text">
+<select [(ngModel)]="selectedQuestionType">
+  <label>Question Type</label>
+  <option>Choose Question Type</option>
+  <option value="Secret">Secret</option>
+  <option value="Secret">Secret2</option>
+</select>
+<select>
+  <label>Program</label>
+  <option>DILG- Assistance to Municipalities</option>
+  <option>Secret</option>
+</select> -->

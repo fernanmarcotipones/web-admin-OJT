@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-management',
+  selector: 'app-admin-form-management',
   templateUrl: './management.component.html',
   styleUrls: ['./management.component.scss']
 })
