@@ -1,4 +1,9 @@
 #user-details {
+    .round-tab
+    {
+        border-radius: 12px;
+    }
+
     .card {
         border:0;
         border-radius: 10px;
@@ -7,7 +12,17 @@
         min-height: 400px;
     }
     .body-container {
+        // color: #FFF;
+        .card {
+            background-color: #FF0010;
+            
+            .nav, > h3
+            {
+                color: #FFF;
+            }
+        }
         .nav.nav-tabs{
+            border-bottom: 0;
             .nav-item {
                 @media (max-width: 575px) {
                     flex-grow: 1;
@@ -16,14 +31,17 @@
                 .nav-link {
                     border:0;
                     transition: all 0.2s ease;
-                    &.active,&:hover{
+                    &.active:hover{
                         color: #FF0010;
                     }
                     &.active {
                         border-bottom: 2px solid #FF0010;
+                        color: #FF0010;
+                        border: 0;
                         font-weight: 500;
                     }
                     &:hover {
+                        color: #FFF;
                         cursor: pointer;
                     }
                 }
