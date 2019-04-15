@@ -97,23 +97,23 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
       name: new FormControl('', Validators.required),
       psgcCode: new FormControl(
         '',
-        [
+        Validators.compose([
           Validators.required,
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(9),
           Validators.maxLength(9),
-        ],
-        this.provinceValidators.psgcCodeTaken(objId).bind(this),
+        ]),
+        this.provinceValidators.psgcCodeValidator.bind(this),
       ),
       provinceCode: new FormControl(
         '',
-        [
+        Validators.compose([
           Validators.required,
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(4),
           Validators.maxLength(4),
-        ],
-        this.provinceValidators.provinceCodeTaken(objId).bind(this),
+        ]),
+        this.provinceValidators.provinceCodeValidator.bind(this),
       ),
       location: new FormGroup({
         latitude: new FormControl(
@@ -147,7 +147,7 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  provinceFormDefaultValidators(control) {
+  provinceFormDefaultValidators(control: any) {
     return (
       this.provinceForm.get(control).invalid &&
       this.provinceForm.get(control).touched
@@ -185,6 +185,9 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
   }
 
   async loadEditItems(info) {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.provinceValidators.objId = params.get('objId');
+    })
     this.loading = true;
     this.provinceInfo = info;
     this.modalAction = 'Update';
