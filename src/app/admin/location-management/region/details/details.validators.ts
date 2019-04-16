@@ -1,4 +1,4 @@
-import { FormControl, ValidatorFn } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Parse } from 'parse';
 
 export class RegionValidators {
