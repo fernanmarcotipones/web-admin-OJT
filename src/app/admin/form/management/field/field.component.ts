@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-form-management-field',
@@ -7,15 +7,28 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./field.component.scss']
 })
 export class FieldComponent implements OnInit {
-  optionValidate: Boolean;
-  selectedQuestionType = new FormControl('');
-  get showOptions(){
-    this.optionValidate = (this.selectedQuestionType.value === 'Profile') || (this.selectedQuestionType.value === 'Survey')
-    return this.optionValidate
+  showProgramField: Boolean;
+  formDetailsGroup = this.fb.group({
+  source: [''],
+  formTitle: [''],
+  description: [''],
+  selectedQuestionType: [''],
+  selectedProgramType: [''],
+  selectedProgramStatus: [''],
+  selectedProjectStatus: [''],
+  status: ['']
+  })
+  constructor(private fb: FormBuilder) {
+   }
+   showProgramProjectStatus(selected){
+    if (selected === 'Profile' || selected === 'Survey') {
+      this.showProgramField = true;
+    }
+    else {
+      this.showProgramField = false;
+    }
   }
-  constructor() { }
-
   ngOnInit() {
   }
-
 }
+

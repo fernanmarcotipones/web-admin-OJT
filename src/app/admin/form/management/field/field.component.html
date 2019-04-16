@@ -1,63 +1,76 @@
-<div class="col-md-8 ml-md-auto mr-md-auto">
-  <form [formGroup]="CreatingFormGroup" class="custom-form animated fadeIn text-center" novalidate>
+<div class="col-12 col-md-10 ml-md-auto mr-md-auto mb-3">
+  <form [formGroup]="formDetailsGroup" class="custom-form animated fadeIn" novalidate>
     <div class="form-group row">
-        <label class="col-md-4 form-control-label required">Source:</label>
-        <input placeholder="URL/ID" type="text" class="form-control form-control-sm col-md-8 border-dark">
+      <label class="col-md-3 form-control-label required">Source:</label>
+      <input formControlName="source" placeholder="URL/ID" type="text"
+        class="form-control form-control-sm col-md-9">
     </div>
     <div class="form-group row">
-        <label class="col-md-4 form-control-label required">Title:</label>
-        <input type="text" class="form-control form-control-sm col-md-8 border-dark">
+      <label class="col-md-3 form-control-label required">Title:</label>
+      <input formControlName="formTitle" type="text" class="form-control form-control-sm col-md-9">
     </div>
     <div class="form-group row">
-      <label class="col-md-4 ">Description:</label>
-      <textarea class = " col-md-8 border-dark"></textarea>
+      <label class="col-md-3">Description:</label>
+      <textarea formControlName="description" class="col-md-9"></textarea>
     </div>
     <div class="form-group row">
-        <label class="col-md-4 form-control-label required">Question Type:</label>
-        <div class="col-md-8">
-          <select [formControl]="selectedQuestionType" id="QuestionType" type="text" class="custom-select custom-select-md col-12 border-dark">
-            <option>Profile</option>
-            <option>Survey</option>
+      <label class="col-md-3 form-control-label required">Question Type:</label>
+      <div class="col-md-9 p-0">
+        <select (change)="showProgramProjectStatus($event.target.value)" formControlName="selectedQuestionType" id="QuestionType"
+          type="text" class="custom-select custom-select-md col-12">
+          <option>Profile</option>
+          <option>Set Status</option>
+          <option>Survey</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-3 form-control-label required">Program:</label>
+      <div class="col-md-9 p-0">
+        <select formControlName="selectedProgramType" id="QuestionType" type="text"
+          class="custom-select custom-select-lg col-12">
+          <option>DILG- Assistance to Municipalities</option>
+          <option>Profile</option>
+          <option>Survey</option>
+        </select>
+      </div>
+    </div>
+    <div *ngIf="showProgramField">
+      <div class="form-group row animated fast fadeIn">
+        <label class="col-md-3 form-control-label required">Program Status:</label>
+        <div class="col-md-9 p-0">
+          <select formControlName="selectedProgramStatus" id="QuestionType" type="text"
+            class="custom-select custom-select-md col-4">
+            <option>Select Program Status</option>
+            <option>Secret</option>
           </select>
         </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-4 form-control-label required">Program:</label>
-        <div class="col-md-8">
-          <select disabled id="QuestionType" type="text" class="custom-select custom-select-md col-12 border-dark">
-            <option>DILG- Assistance to Municipalities</option>
-            <option>Profile</option>
-            <option>Survey</option>
+      </div>
+      <div class="form-group row animated fast fadeIn">
+        <label class="col-md-3 form-control-label required">Project Status:</label>
+        <div class="col-md-9 p-0">
+          <select formControlName="selectedProjectStatus" id="QuestionType" type="text"
+            class="custom-select custom-select-md col-4">
+            <option>Select Project Status</option>
+            <option>Secret</option>
           </select>
         </div>
+      </div>
     </div>
-<app-admin-form-list-management-field-profile-survey *ngIf="showOptions"></app-admin-form-list-management-field-profile-survey>
-<div class="form-group row">
-    <label class="col-md-4 form-control-label required">Status:</label>
-    <div class="col-md-8">
-      <select id="QuestionType" type="text" class="custom-select custom-select-md col-12 border-dark">
-        <option>Set Status</option>
-        <option>Profile</option>
-        <option>Survey</option>
-      </select>
+    <div class="form-group row">
+      <label class="col-md-3 form-control-label required">Status:</label>
+      <div class="col-md-9 p-0">
+        <select formControlName="status" id="QuestionType" type="text"
+          class="custom-select custom-select-md col-12">
+          <option>Set Status</option>
+          <option>Profile</option>
+          <option>Survey</option>
+        </select>
+      </div>
     </div>
-</div>
 
-<button>Save</button>
+    <div class="form-group text-right">
+      <button class="btn btn-md btn-primary">Save</button>
+    </div>
   </form>
 </div>
-
-<!-- <label>Source:</label><input type="text">
-<label>Ttle:</label><input type="text">
-<label>Description:</label><input type="text">
-<select [(ngModel)]="selectedQuestionType">
-  <label>Question Type</label>
-  <option>Choose Question Type</option>
-  <option value="Secret">Secret</option>
-  <option value="Secret">Secret2</option>
-</select>
-<select>
-  <label>Program</label>
-  <option>DILG- Assistance to Municipalities</option>
-  <option>Secret</option>
-</select> -->

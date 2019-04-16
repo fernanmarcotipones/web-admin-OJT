@@ -7,7 +7,6 @@ import { FormListComponent } from './list/list.component';
 import { FormTableComponent } from './table/table.component';
 import { ManagementComponent } from './management/management.component';
 import { FieldComponent } from './management/field/field.component';
-import { ProfileSurveyComponent } from './management/field/profile-survey/profile-survey.component';
 
 @NgModule({
   imports: [
@@ -20,7 +19,6 @@ import { ProfileSurveyComponent } from './management/field/profile-survey/profil
     FormTableComponent,
     ManagementComponent,
     FieldComponent,
-    ProfileSurveyComponent,
   ],
   entryComponents: [
     FormListComponent,
