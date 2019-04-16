@@ -58,6 +58,11 @@
     </div>
   </fieldset>
 
+  <!-- TODO: Convert to ngx-datatable -->
+  <!-- <ngx-datatable
+    class="bootstrap"
+  ></ngx-datatable> -->
+
   <table class="table table-responsive mb-4">
     <thead class="thead-dark">
         <tr>
@@ -76,14 +81,28 @@
             <td class="d-none d-lg-table-cell">N/A</td>
             <td>N/A</td>
             <td>
+                <!-- <mat-slide-toggle></mat-slide-toggle> -->
                 <label class="switch mx-auto">
                     <input type="checkbox" id="aToggle">
                     <span class="slider round"></span>
                 </label>
             </td>
             <td>
-                <button type="button" class="btn bg-success text-white my-1 rounded"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn bg-danger text-white my-1 rounded-circle"><i class="fa fa-minus"></i></button>
+                <!-- <ng-template let-row="row" let-value="value" ngx-datatable-cell-template> -->
+                    <button type="button"
+                    class="btn btn-sm btn-outline-primary"
+                    (click)="editForm()"
+                    tooltip="Edit Form"
+                    placement="top">
+                    <i class="fa fa-pencil"></i></button>
+            
+                    <button type="button"
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteForm()"
+                    tooltip="Delete Form"
+                    placement="top">
+                    <i class="fa fa-minus-circle"></i></button>
+                  <!-- </ng-template> -->
             </td>
         </tr>
         <tr>
@@ -98,8 +117,19 @@
                 </label>
             </td>
             <td>
-                <button type="button" class="btn bg-success text-white my-1 rounded"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn bg-danger text-white my-1 rounded-circle"><i class="fa fa-minus"></i></button>
+                <button type="button"
+                class="btn btn-sm btn-outline-primary"
+                (click)="editForm()"
+                tooltip="Edit Form"
+                placement="top">
+                <i class="fa fa-pencil"></i></button>
+        
+                <button type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="deleteForm()"
+                tooltip="Delete Form"
+                placement="top">
+                <i class="fa fa-minus-circle"></i></button>
             </td>
         </tr>
         <tr>
@@ -114,8 +144,19 @@
                 </label>
             </td>
             <td>
-                <button type="button" class="btn bg-success text-white my-1 rounded"><i class="fa fa-pencil"></i></button>
-                <button type="button" class="btn bg-danger text-white my-1 rounded-circle"><i class="fa fa-minus"></i></button>
+                <button type="button"
+                class="btn btn-sm btn-outline-primary"
+                (click)="editForm()"
+                tooltip="Edit Form"
+                placement="top">
+                <i class="fa fa-pencil"></i></button>
+        
+                <button type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="deleteForm()"
+                tooltip="Delete Form"
+                placement="top">
+                <i class="fa fa-minus-circle"></i></button>
             </td>
         </tr>
     </tbody>

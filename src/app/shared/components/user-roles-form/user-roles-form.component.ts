@@ -1,5 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+
+import { MatSlideToggleModule, MatCheckboxModule } from '@angular/material';
+// import { SharedModule } from '@shared/shared.module';
 import { UserRoleService } from 'app/core';
 
 @Component({
@@ -9,7 +12,7 @@ import { UserRoleService } from 'app/core';
 })
 export class UserRolesFormComponent implements OnInit {
   @Input() userRolesData;
-  @Output() newUserRolesData: EventEmitter<Object> = new EventEmitter<Object>();;
+  @Output() newUserRolesData: EventEmitter<Object> = new EventEmitter<Object>();
 
   userRolesForm: FormGroup;
 

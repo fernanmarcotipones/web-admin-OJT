@@ -11,6 +11,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { PipesModule } from '../../pipes/pipes.module'
 
 import { UserRolesFormComponent } from './user-roles-form.component';
+import { MatSlideToggleModule, MatCheckboxModule } from '@angular/material';
 
 @NgModule({
   imports: [CommonModule,
@@ -31,7 +32,11 @@ import { UserRolesFormComponent } from './user-roles-form.component';
   ],
   declarations: [UserRolesFormComponent],
   entryComponents: [UserRolesFormComponent],
-  exports: [UserRolesFormComponent]
+  exports: [
+    UserRolesFormComponent,
+    MatSlideToggleModule,
+    MatCheckboxModule
+  ]
 })
 export class UserRolesFormComponentModule {
 }

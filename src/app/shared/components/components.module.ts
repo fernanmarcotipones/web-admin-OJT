@@ -19,7 +19,7 @@ export * from './user-account-form/user-account-form.component.module';
     UserExportsComponentModule,
     UserAccountFormComponentModule,
     UserProfileFormComponentModule,
-    UserRolesFormComponentModule
+    UserRolesFormComponentModule,
   ],
 })
 export class ComponentsModule {
