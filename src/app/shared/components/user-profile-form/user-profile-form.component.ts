@@ -25,6 +25,11 @@ export class UserProfileFormComponent implements OnInit {
       middleName: new FormControl('', [UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
       occupation: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
       mobileNumber: new FormControl('', [Validators.required, UserProfileFormValidators.validateMobileNumber], this.isMobileNumberTaken.bind(this)),
+      streetName: new FormControl('', [Validators.required, UserProfileFormValidators.validateWhiteSpaceOnly]),
+      streetNumber: new FormControl('', [Validators.required, UserProfileFormValidators.validateNumberOnly]),
+      region: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
+      province: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
+      municipality: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
     });
   }
 
@@ -38,6 +43,7 @@ export class UserProfileFormComponent implements OnInit {
     Object.keys(data).map(key => {
       if (this.userProfileForm.controls[key]) {
         this.userProfileForm.controls[key].patchValue(data[key]);
+        console.log(this.userProfileForm.controls[key]);
       }
     });
     this.currentMobileNumber = data['mobileNumber'];
