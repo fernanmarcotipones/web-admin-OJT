@@ -19,7 +19,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { RegionService, APIService, NotificationToastrService } from 'app/core';
 import { Region } from 'app/core/models';
 import { Constants } from 'app/shared/constants';
-
 import { RegionValidators } from './details.validators';
 
 @Component({
@@ -50,8 +49,6 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
   public orders: Array<number> = [];
   public psgcCodeValue: string;
   public regionCodeValue: string;
-
-  public isRegionAndPsgcMatch: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -96,23 +93,23 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
       description: new FormControl('', Validators.required),
       psgcCode: new FormControl(
         '',
-        [
+        Validators.compose([
           Validators.required,
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(9),
           Validators.maxLength(9),
-        ],
-        this.regionValidators.psgcCodeTaken(objId).bind(this),
+        ]),
+        this.regionValidators.psgcCodeValidator.bind(this),
       ),
       regionCode: new FormControl(
         '',
-        [
+        Validators.compose([
           Validators.required,
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(2),
           Validators.maxLength(2),
-        ],
-        this.regionValidators.regionCodeTaken(objId).bind(this),
+        ]),
+        this.regionValidators.regionValidator.bind(this),
       ),
       location: new FormGroup({
         latitude: new FormControl(
@@ -127,12 +124,12 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
         ),
       }),
     });
-    this.getMaxOrder();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  regionFormDefaultValidators(control) {
+  regionFormDefaultValidators(control: any) {
     return (
       this.regionForm.get(control).invalid &&
       this.regionForm.get(control).touched
@@ -186,18 +183,13 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  async getMaxOrder() {
-    let orders;
+  async onAddRegion() {
+    const form = this.regionForm.controls;
+    let orders = [];
     await this.regionService.getAll().then(res => {
       orders = res.map(item => item.order);
-    });
-    this.orders = orders;
-    return Math.max(...orders);
-  }
-
-  onAddRegion() {
-    const form = this.regionForm.controls;
-    const maxOrder = Math.max(...this.orders);
+    })
+    const maxOrder = Math.max(...orders);
     this.regionItems = new Region();
     this.regionItems.name = form.name.value;
     this.regionItems.description = form.description.value;
@@ -208,7 +200,6 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
       form.location.value.longitude,
     );
     this.regionItems.order = maxOrder + 1;
-    console.log(this.regionItems);
     this.regionService.createItem(this.regionItems);
     this.notification.alert(
       'success',
@@ -219,6 +210,9 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
   }
 
   async loadEditItems(info) {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.regionValidators.objId = params.get('objId');
+    })
     this.loading = true;
     this.regionInfo = info;
     this.modalAction = 'Update';
@@ -246,7 +240,7 @@ export class RegionDetailsComponent implements OnInit, OnDestroy {
     this.apiService.update(this.objId, data);
     this.notification.alert(
       'success',
-      `Successfully edited ${this.regionForm.controls.name.value}`,
+      `Successfully updated ${this.regionForm.controls.name.value}`,
     );
     this.regionForm.reset();
     this.closeModal();
