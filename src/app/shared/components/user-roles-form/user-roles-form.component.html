@@ -3,56 +3,57 @@
   <fieldset class="program-roles border border-dark container mb-4">
     <legend class="p-1">Program Roles</legend>
     <div class="form-group row ml-2">
-        <div class="col">
-            <select class="form-control form-control-sm col" formControlName="role" name="role" id="select-roles">
+        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-1">
+            <select class="form-control form-control-sm col" formControlName="role" name="role" id="select-roles" aria-placeholder="Roles">
                 <option value="Roles">Roles</option>
                 <option value="OWO">OWO</option>
                 <option value="UWU">UWU</option>
             </select>
         </div>
-        <div class="col">
-            <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access">
+        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
+            <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" aria-placeholder="Access">
                 <option value="Roles">Access Level</option>
                 <option value="OWO">OWO</option>
                 <option value="UWU">UWU</option>
             </select>
         </div>
-        <div class="col">
-            <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso">
+        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-3">
+            <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso" aria-placeholder="CSO">
                 <option value="Roles">CSO Group</option>
                 <option value="OWO">OWO</option>
                 <option value="UWU">UWU</option>
             </select>
         </div>
-        <div class="col d-flex justify-content-around">
-            <label class="switch mx-auto">
-                <input type="checkbox" id="aToggle">
-                <span class="slider round"></span>
-            </label>
-        </div>
+        
         <div class="w-100"></div>
-        <div class="col">
-            <select class="form-control form-control-sm col" formControlName="region" name="region" id="select-region">
+        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-5">
+            <select class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" aria-placeholder="Region">
                 <option value="Roles">Region</option>
                 <option value="OWO">OWO</option>
                 <option value="UWU">UWU</option>
             </select>
         </div>
-        <div class="col">
-            <select class="form-control form-control-sm col" formControlName="province" name="province" id="select-province">
+        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-6">
+            <select class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" aria-placeholder="Province">
                 <option value="Roles">Province</option>
                 <option value="OWO">OWO</option>
                 <option value="UWU">UWU</option>
             </select>
         </div>
-        <div class="col">
-            <select class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality">
+        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-7">
+            <select class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
                 <option value="Roles">Municipality</option>
                 <option value="OWO">OWO</option>
                 <option value="UWU">UWU</option>
             </select>
         </div>
-        <div class="col d-flex justify-content-around">
+        <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-lg-4 order-9">
+            <label class="switch mx-auto">
+                <input type="checkbox" id="aToggle">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-10">
             <button type="button" class="btn bg-success text-white rounded-circle"><i class="fa fa-plus"></i></button>
         </div>
     </div>
@@ -89,19 +90,20 @@
             </td>
             <td>
                 <!-- <ng-template let-row="row" let-value="value" ngx-datatable-cell-template> -->
-                    <button type="button"
+                <button type="button"
                     class="btn btn-sm btn-outline-primary"
                     (click)="editForm()"
                     tooltip="Edit Form"
                     placement="top">
                     <i class="fa fa-pencil"></i></button>
             
-                    <button type="button"
+                <button type="button"
                     class="btn btn-sm btn-outline-danger"
                     (click)="deleteForm()"
                     tooltip="Delete Form"
                     placement="top">
-                    <i class="fa fa-minus-circle"></i></button>
+                    <i class="fa fa-minus-circle"></i>
+                </button>
                   <!-- </ng-template> -->
             </td>
         </tr>
@@ -118,18 +120,20 @@
             </td>
             <td>
                 <button type="button"
-                class="btn btn-sm btn-outline-primary"
-                (click)="editForm()"
-                tooltip="Edit Form"
-                placement="top">
-                <i class="fa fa-pencil"></i></button>
+                    class="btn btn-sm btn-outline-primary"
+                    (click)="editForm()"
+                    tooltip="Edit Form"
+                    placement="top">
+                    <i class="fa fa-pencil"></i>
+                </button>
         
                 <button type="button"
-                class="btn btn-sm btn-outline-danger"
-                (click)="deleteForm()"
-                tooltip="Delete Form"
-                placement="top">
-                <i class="fa fa-minus-circle"></i></button>
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteForm()"
+                    tooltip="Delete Form"
+                    placement="top">
+                    <i class="fa fa-minus-circle"></i>
+                </button>
             </td>
         </tr>
         <tr>
@@ -145,18 +149,20 @@
             </td>
             <td>
                 <button type="button"
-                class="btn btn-sm btn-outline-primary"
-                (click)="editForm()"
-                tooltip="Edit Form"
-                placement="top">
-                <i class="fa fa-pencil"></i></button>
+                    class="btn btn-sm btn-outline-primary"
+                    (click)="editForm()"
+                    tooltip="Edit Form"
+                    placement="top">
+                    <i class="fa fa-pencil"></i>
+                </button>
         
                 <button type="button"
-                class="btn btn-sm btn-outline-danger"
-                (click)="deleteForm()"
-                tooltip="Delete Form"
-                placement="top">
-                <i class="fa fa-minus-circle"></i></button>
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="deleteForm()"
+                    tooltip="Delete Form"
+                    placement="top">
+                    <i class="fa fa-minus-circle"></i>
+                </button>
             </td>
         </tr>
     </tbody>
