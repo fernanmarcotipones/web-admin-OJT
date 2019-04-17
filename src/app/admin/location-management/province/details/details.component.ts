@@ -15,7 +15,6 @@ import {
 import { Location } from '@angular/common';
 import { Parse } from 'parse';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-
 import {
   RegionService,
   ProvinceService,
@@ -74,7 +73,7 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
       } else {
         this.phLat = Constants.DEFAULT_MAP_CENTER_LATITUDE;
         this.phLng = Constants.DEFAULT_MAP_CENTER_LONGITUDE;
-        this.loading = true;
+        // this.loading = true;
         if (navigator) {
           navigator.geolocation.getCurrentPosition(pos => {
             this.lng = pos.coords.longitude ? pos.coords.longitude : this.phLat;
@@ -86,34 +85,40 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
               },
             });
             this.zoom = 15;
-            this.loading = false;
+            // this.loading = false;
           });
         }
       }
     });
 
     this.provinceForm = this.fb.group({
-      region: new FormControl(null, Validators.required),
       name: new FormControl('', Validators.required),
+      region: new FormControl(
+        null,
+        Validators.compose([
+          Validators.required
+        ]),
+        this.provinceValidators.regionValidator.bind(this),
+      ),
       psgcCode: new FormControl(
         '',
-        [
+        Validators.compose([
           Validators.required,
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(9),
           Validators.maxLength(9),
-        ],
-        this.provinceValidators.psgcCodeTaken(objId).bind(this),
+        ]),
+        this.provinceValidators.psgcCodeValidator.bind(this),
       ),
       provinceCode: new FormControl(
         '',
-        [
+        Validators.compose([
           Validators.required,
           Validators.pattern('^[0-9]*$'),
           Validators.minLength(4),
           Validators.maxLength(4),
-        ],
-        this.provinceValidators.provinceCodeTaken(objId).bind(this),
+        ]),
+        this.provinceValidators.provinceCodeValidator.bind(this),
       ),
       location: new FormGroup({
         latitude: new FormControl(
@@ -136,7 +141,7 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async getProvinceById(id) {
     this.subscriptions.push(
@@ -147,7 +152,7 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  provinceFormDefaultValidators(control) {
+  provinceFormDefaultValidators(control: any) {
     return (
       this.provinceForm.get(control).invalid &&
       this.provinceForm.get(control).touched
@@ -161,7 +166,6 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
 
   onAddProvince() {
     const form = this.provinceForm.controls;
-    this.provinceItems = new Province();
     this.regionService.getById(form.region.value).subscribe(res => {
       const region = res.result[0];
       this.provinceItems.region = region;
@@ -174,7 +178,7 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
       );
       this.provinceItems.isSocialMediaProhibited =
         form.isSocialMediaProhibited.value;
-      this.provinceService.createItem(this.provinceItems);
+      // this.provinceService.createItem(this.provinceItems);
       this.notification.alert(
         'success',
         `Successfully added ${form.name.value}`,
@@ -185,6 +189,9 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
   }
 
   async loadEditItems(info) {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.provinceValidators.objId = params.get('objId');
+    })
     this.loading = true;
     this.provinceInfo = info;
     this.modalAction = 'Update';
