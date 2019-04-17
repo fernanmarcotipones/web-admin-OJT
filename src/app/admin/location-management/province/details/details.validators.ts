@@ -39,10 +39,10 @@ export class ProvinceValidators extends Validators {
 
             // validates if region is equal to psgc
             if (this.regionPsgcCode && psgcCode) {
-              const psgcSubs = psgcSubstring ? psgcSubstring.substring(0, 2) : '';
+              const psgcSubstr = psgcSubstring ? psgcSubstring.substring(0, 2) : '';
               const regionPsgcSubstring = this.regionPsgcCode ? this.regionPsgcCode.substring(0, 2) : '';
-              if (regionPsgcSubstring !== psgcSubs) {
-                console.log('region and psgc not match!')
+              if (regionPsgcSubstring !== psgcSubstr) {
+                console.log('region and psgc not match!');
                 resolve({ regionAndPsgcCodeNotMatch: true })
               }
             } // failed....
@@ -125,9 +125,7 @@ export class ProvinceValidators extends Validators {
       if (control.value >= -90 && control.value <= 90) {
         return null;
       }
-      return {
-        isError: true,
-      };
+      return { isError: true };
     }
   }
 
@@ -136,9 +134,7 @@ export class ProvinceValidators extends Validators {
       if (control.value >= -180 && control.value <= 180) {
         return null;
       }
-      return {
-        isError: true,
-      };
+      return { isError: true };
     }
   }
 }

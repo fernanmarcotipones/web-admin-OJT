@@ -73,7 +73,7 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
       } else {
         this.phLat = Constants.DEFAULT_MAP_CENTER_LATITUDE;
         this.phLng = Constants.DEFAULT_MAP_CENTER_LONGITUDE;
-        // this.loading = true;
+        this.loading = true;
         if (navigator) {
           navigator.geolocation.getCurrentPosition(pos => {
             this.lng = pos.coords.longitude ? pos.coords.longitude : this.phLat;
@@ -85,7 +85,7 @@ export class ProvinceDetailsComponent implements OnInit, OnDestroy {
               },
             });
             this.zoom = 15;
-            // this.loading = false;
+            this.loading = false;
           });
         }
       }
