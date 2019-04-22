@@ -5,6 +5,7 @@ import { AsideDirectiveModule } from './aside/aside.directive.module';
 import { NavDropdownDirectiveModule } from './nav-dropdown/nav-dropdown.module';
 import { SidebarDirectiveModule } from './sidebar/sidebar.module';
 
+
 @NgModule({
   exports: [
     MapDirectiveModule,
