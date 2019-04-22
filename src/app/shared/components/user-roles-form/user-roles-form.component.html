@@ -5,46 +5,40 @@
       <div class="form-group row ml-2">
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-1">
               <select class="form-control form-control-sm col" formControlName="role" name="role" id="select-roles" aria-placeholder="Roles">
-                  <option value="Roles">Roles</option>
-                  <option value="OWO">OWO</option>
-                  <option value="UWU">UWU</option>
+                  <option value="" disabled selected>Roles</option>
+                  <option *ngFor="let role of roles" [ngValue]="role">{{ role.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
               <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" aria-placeholder="Access">
-                  <option value="Roles">Access Level</option>
-                  <option value="OWO">OWO</option>
-                  <option value="UWU">UWU</option>
+                <option value="" disabled selected>Access Level</option>
+                <option *ngFor="let level of levels" [ngValue]="levels">{{ level.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-3">
               <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso" aria-placeholder="CSO">
-                  <option value="Roles">CSO Group</option>
-                  <option value="OWO">OWO</option>
-                  <option value="UWU">UWU</option>
+                <option value="" disabled selected>CSO Group</option>
+                <option *ngFor="let group of csoGroups" [ngValue]="csoGroups">{{ group.name }}</option>
               </select>
           </div>
           
           <div class="w-100"></div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-5">
               <select class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" aria-placeholder="Region">
-                  <option value="Roles">Region</option>
-                  <option value="OWO">OWO</option>
-                  <option value="UWU">UWU</option>
-              </select>
+                <option value="" disabled selected>Region</option>
+                <option *ngFor="let region of regions" [ngValue]="regions">{{ region.name }}</option>
+            </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-6">
               <select class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" aria-placeholder="Province">
-                  <option value="Roles">Province</option>
-                  <option value="OWO">OWO</option>
-                  <option value="UWU">UWU</option>
+                <option value="" disabled selected>Province</option>
+                <option *ngFor="let province of provinces" [ngValue]="provinces">{{ province.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-7">
               <select class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
-                  <option value="Roles">Municipality</option>
-                  <option value="OWO">OWO</option>
-                  <option value="UWU">UWU</option>
+                <option value="" disabled selected>Municipalities</option>
+                <option *ngFor="let municipality of municipalities" [ngValue]="municipalities">{{ municipality.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-lg-4 order-9">
@@ -64,17 +58,23 @@
       class="material"
       [rows]="rows"
       [rowHeight]="'auto'"
+      [headerHeight]="50"
       [columnMode]="'force'"
       [headerHeight]="50"
       [footerHeight]="50"
       [externalPaging]="true"
-      [count]="   "
-      [offset]="page.pageNumber"
-      [limit]="page.size"
+      [limit]="5"
       [externalSorting]="true"
       [loadingIndicator]="loading"
       (sort)="onSort($event)"
       (page)='setPage($event)' >
+
+        <!-- <ngx-datatable-column *ngFor="let lable of labels" name="label.name" [prop]="label.prop">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                
+            </ng-template>
+        </ngx-datatable-column> -->
+
       <ngx-datatable-column name="role" prop="role" sortable="true" [flexGrow]="2" minWidth="100">
           <ng-template let-column="column" ngx-datatable-header-template>
               <span>Role</span>
