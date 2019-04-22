@@ -1,6 +1,6 @@
 export class AccessLevel {
     csoAgencyProgram: string;
-    csoInterLevels:  string;
+    csoAccessLevel:  string;
     region: string;
     province: string;
     municipality: string;

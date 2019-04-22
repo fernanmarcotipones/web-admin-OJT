@@ -6,7 +6,9 @@ select{
         padding: 15px 5px 15px 10px;
     }
 }
-
+// thead{
+//     border-bottom: 2px solid black;
+// }
 
 .save{
     border:0;
@@ -15,13 +17,6 @@ select{
     opacity: 0.7;
 }
 
-.dropdowns-container{
-    width: 90%;
-    height:auto;
-    border:2px solid black;
-    padding: 10px 0px;
-
-}
 .button-container, .table-container{
     width: 90%;
 }
@@ -35,7 +30,7 @@ td, th,td{
 
 }
 thead{
-    border-bottom: 2px solid black;
+    // border-bottom: 2px solid black;
     // background: red;
     // border-radius: 10px;
 }

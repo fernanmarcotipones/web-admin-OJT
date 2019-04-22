@@ -31,7 +31,7 @@
       </div>
     </div>
   </form>
-{{csoGroupForm.value | json}}
+<!-- {{csoGroupForm.value | json}} -->
 <form [formGroup]="csoAccessLevelForm">
   <div class="row-fluid d-flex justify-content-center pb-3" id="dd-container">
     <div class="col-10 card pt-3 pb-2">
@@ -51,35 +51,30 @@
           <select class="custom-select custom-select-md cso-group-input" formControlName="csoAccessLevel" (change)="selectedAccessLevel($event.target.value)">
             <option value="" hidden>Program Access Level</option>
             <option *ngFor="let accesslevel of accesslevels" value="{{ accesslevel.name }}"> {{ accesslevel.name }} </option>
-            <!-- <option value="national">National</option>
-            <option value="regional">Regional</option>
-            <option value="provincial">Provincial</option>
-            <option value="municipal">Municipal</option>
-            <option value="barangay">Barangay</option> -->
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center">
           <select class="custom-select custom-select-md cso-group-input" formControlName="region" (change)="selectedRegion($event.target.value)">
             <option value="" hidden>Region</option>
-            <option *ngFor="let region of regions" value="{{ region.objectId }}">{{ region.name }}</option>
+            <option *ngFor="let region of regions" value="{{ region.objectId }},{{ region.name }}">{{ region.name }}</option>
           </select>
        </div>
       <div class="row-fluid d-flex justify-content-center">
           <select class="custom-select custom-select-md cso-group-input" formControlName="province" (change)="selectedProvince($event.target.value)">
             <option value="" hidden>Province</option>
-            <option *ngFor="let province of provinces" value="{{ province.objectId }}">{{ province.name }}</option>
+            <option *ngFor="let province of provinces" value="{{ province.objectId }},{{ province.name }}">{{ province.name }}</option>
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center">
           <select class="custom-select custom-select-md cso-group-input" formControlName="municipality" (change)="selectedMunicipality($event.target.value)">
             <option value="" hidden>Municipality</option>
-            <option *ngFor="let municipality of municipalities" value="{{ municipality.objectId }}">{{ municipality.name }}</option>
+            <option *ngFor="let municipality of municipalities" value="{{ municipality.objectId }},{{ municipality.name }}">{{ municipality.name }}</option>
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center">
-          <select class="custom-select custom-select-md cso-group-input" formControlName="barangay">
+          <select class="custom-select custom-select-md cso-group-input" formControlName="barangay" (change)="selectedBarangay($event.target.value)" >
             <option value="" hidden>Barangay</option>
-            <option *ngFor="let barangay of barangays" value="{{ barangay.objectId }}">{{barangay.name}}</option>
+            <option *ngFor="let barangay of barangays" value="{{ barangay.objectId }},{{ barangay.name }}">{{barangay.name}}</option>
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-end">
@@ -88,11 +83,11 @@
     </div>
   </div>  
 </form>
-<p>WEW: {{ csoAccessLevelForm.value | json }}</p>
+<!-- <p>Access Levels: {{ csoAccessLevelForm.value | json }}</p>  -->
   <div class="row-fluid d-flex justify-content-center">
-      <div class="col-10 d-flex justify-content-center">
+      <div class="col-10 card pt-3 pb-2">
        <table class="w-100">
-          <thead>
+          <thead class="card-header mb-3">
             <th>Agency</th>
             <th>Program Code</th>
             <th>Access Level</th>
@@ -105,7 +100,7 @@
               <td>{{saved.csoAgencyProgram}}</td>
               <td>AM</td>
               <td>{{saved.csoAccessLevel}}</td>
-              <td><strong>{{saved.region}}</strong> {{saved.province}}, {{saved.municipality}}, {{saved.barangay}}</td>
+              <td><strong>{{saved.region[1]}}</strong> {{saved.province[1]}}, {{saved.municipality[1]}}, {{saved.barangay[1]}}</td>
               <td>
                 <div class="cso-group-input">
                   <mat-slide-toggle class = "tp-margin">

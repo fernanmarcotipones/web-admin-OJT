@@ -18,17 +18,23 @@ export class CsoGroupFormComponent implements OnInit {
   selectedAcessLevel: string = '';
   regionSelected: string = '';
   provinceSelected:string = '';
+  barangaySelected:string = '';
   municipalitySelected: string ='';
   accessLevelSelected: string ='';
-  
+
+  splittedRegion = [];
+  splittedProvince = [];
+  splittedMunicipality = [];
+  splittedBarangay = [];
+
+
+  public accesslevels = [];
   public regions = [];
   public provinces = [];
   public municipalities = [];
   public barangays = [];
-  public accesslevels = [];
 
   saveds = SavedAccessLevels;
-
 
   csoGroupForm = new FormGroup({
     csoGroupName: new FormControl(''),
@@ -39,7 +45,7 @@ export class CsoGroupFormComponent implements OnInit {
 
   csoAccessLevelForm = new FormGroup({
     csoAgencyProgram: new FormControl(''),
-    csoAccessLevel: new FormControl(''),
+    csoAccessLevel: new FormControl('National'),
     region: new FormControl(''),
     province: new FormControl(''),
     municipality: new FormControl(''),
@@ -52,25 +58,55 @@ export class CsoGroupFormComponent implements OnInit {
     private barangayService: BarangayService,
     private programService: ProgramService,
     private accessLevelService: ProgramAccessLevelService) {
-    
    }
 
 
   ngOnInit() {
-    // this.loadAgencies();
     this.loadAccessLevels();
-
   }
   selectedAccessLevel(selected: any){
     this.accessLevelSelected = selected;
-    if(this.accessLevelSelected != "National"){ // Di na magloload region kapag national lang
-      this.loadRegions();
+    switch(this.accessLevelSelected){
+      case "National":
+      this.csoAccessLevelForm.controls['region'].setValue('');
+      this.csoAccessLevelForm.controls['province'].setValue('');
+      this.csoAccessLevelForm.controls['municipality'].setValue('');
+      this.csoAccessLevelForm.controls['barangay'].setValue('');
+      this.regions = []; //TO CLEAR THE ARRAYLIST TO AVOID BUGS(yung lumang sublocations nagshoshow pag nagpalitan yung location)
+      this.provinces = [];
+      this.municipalities = [];
+      this.barangays = [];
+      break;
+      case "Regional":
+        this.loadRegions();
+        this.csoAccessLevelForm.controls['province'].setValue('');
+        this.csoAccessLevelForm.controls['municipality'].setValue('');
+        this.csoAccessLevelForm.controls['barangay'].setValue('');
+        this.provinces = [];
+        this.municipalities = [];
+        this.barangays = [];
+      break;
+      case "Provincial":
+       this.loadRegions();
+        this.csoAccessLevelForm.controls['municipality'].setValue('');
+        this.csoAccessLevelForm.controls['barangay'].setValue('');
+        this.municipalities = [];
+        this.barangays = [];
+      break;
+      case "Municipal":
+        this.loadRegions();      
+        this.csoAccessLevelForm.controls['barangay'].setValue('');
+        this.barangays = [];
+      break;
+      case "Barangay":
+        this.loadRegions();      
+      break;
     } 
   }
 
   selectedRegion(selected: any){
     this.regionSelected = selected; // get selected option
-    console.log(this.regionSelected);
+    this.splittedRegion = this.regionSelected.split(','); // MAKE AN ARRAY USING THE VALUE OF OPTION
     this.csoAccessLevelForm.controls['province'].setValue('');
     this.csoAccessLevelForm.controls['municipality'].setValue('');
     this.csoAccessLevelForm.controls['barangay'].setValue('');
@@ -78,18 +114,22 @@ export class CsoGroupFormComponent implements OnInit {
   }
   selectedProvince(selected: any){
     this.provinceSelected = selected; // get selected option
-    console.log(this.provinceSelected);
-    this.loadMunicipalities();
+    this.splittedProvince = this.provinceSelected.split(','); // MAKE AN ARRAY USING THE VALUE OF OPTION
     this.csoAccessLevelForm.controls['municipality'].setValue('');
     this.csoAccessLevelForm.controls['barangay'].setValue('');
+    this.loadMunicipalities();  
   }
   selectedMunicipality(selected: any){
     this.municipalitySelected = selected; // get selected option
+    this.splittedMunicipality = this.municipalitySelected.split(','); // MAKE AN ARRAY USING THE VALUE OF OPTION
     this.loadBarangays();
     this.csoAccessLevelForm.controls['barangay'].setValue('');
   }
-
- 
+  selectedBarangay(selected: any){
+    this.barangaySelected = selected; // get selected option
+    this.splittedBarangay = this.barangaySelected.split(','); // MAKE AN ARRAY USING THE VALUE OF OPTION
+  }
+  
   async loadAccessLevels() {
     this.accesslevels = await this.accessLevelService.getAll();
   }
@@ -97,23 +137,35 @@ export class CsoGroupFormComponent implements OnInit {
     this.regions = await this.regionService.getAll();
   }
   async loadProvinces(){
-    this.provinces = await this.provinceService.getByRegionObjectId(this.regionSelected);
+    this.provinces = await this.provinceService.getByRegionObjectId(this.splittedRegion[0]);
   }
   async loadMunicipalities(){
-    this.municipalities = await this.municipalityService.getByProvinceObjectId(this.provinceSelected);
+    this.municipalities = await this.municipalityService.getByProvinceObjectId(this.splittedProvince[0]);
   }
   async loadBarangays(){
-    this.barangays = await this.barangayService.getByMunicipalityObjectId(this.municipalitySelected);
+    this.barangays = await this.barangayService.getByMunicipalityObjectId(this.splittedMunicipality[0]);
   }
 
   onAddAccessLevel(){
-    this.csoAccessLevelForm.controls['csoAgencyProgram'].setValue('testing'); //for testing
-    SavedAccessLevels.push(this.csoAccessLevelForm.value);
+    this.csoAccessLevelForm.controls['region'].setValue(this.splittedRegion); 
+    this.csoAccessLevelForm.controls['province'].setValue(this.splittedProvince); 
+    this.csoAccessLevelForm.controls['municipality'].setValue(this.splittedMunicipality); 
+    this.csoAccessLevelForm.controls['barangay'].setValue(this.splittedBarangay); 
+    this.csoAccessLevelForm.controls['csoAgencyProgram'].setValue('DPWH'); //for testing
+    SavedAccessLevels.push(this.csoAccessLevelForm.value); //push data to database
+
+    //to clear form
     this.csoAccessLevelForm.controls['csoAccessLevel'].setValue('');
-    this.csoAccessLevelForm.controls['region'].setValue(null);
+    this.csoAccessLevelForm.controls['region'].setValue('');
     this.csoAccessLevelForm.controls['province'].setValue('');
     this.csoAccessLevelForm.controls['municipality'].setValue('');
-    this.csoAccessLevelForm.controls['barangay'].setValue('');
+    this.csoAccessLevelForm.controls['barangay'].setValue(''); 
+    
+    //to clear past value
+    this.regions = [];
+    this.provinces = [];
+    this.municipalities = [];
+    this.barangays = [];
   }
   onSubmit() {
     // TODO: Use EventEmitter with form value
