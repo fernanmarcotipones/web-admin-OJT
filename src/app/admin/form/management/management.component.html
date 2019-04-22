@@ -33,10 +33,17 @@
         </div>
         <div class="col-12 col-lg-5 mb-2">
           <div class="card-body">
-            <h5 class="text-center">FORM PREVIEW</h5>
+            <div id="myForm" [ngStyle]="{'background-image': 'url(' + formPreviewThumbnail + ')','background-size': '100% 100%'}"
+              class="card align-middle">
+              <div class="text-center vertical">
+              <i class="fa fa-wpforms bigIcon color-success"></i>
+              <div class="position">
+                  <h4>Form preview will show here</h4>
+              </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>

@@ -1,14 +1,30 @@
 #management-view {
     .card {
         border:0;
-        border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 0 0 1px rgba(0,0,0,0.1);
-        min-height: 500px;
+        min-height: 400px;
     }
     .card-body {
-        border: 1px solid black;
         margin-top: 10px;
-        min-height: 480px;
+        border:0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+        min-height: 400px;
     }
+    .vertical{
+        margin-top: 25%;
+    }
+}
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+ }
+
+.bigIcon { font-size: 150px;
+opacity: .4;}
+
+.position {
+    margin-top:-80px;
 }
