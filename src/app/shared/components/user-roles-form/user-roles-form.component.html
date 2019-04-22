@@ -1,170 +1,253 @@
-<form [formGroup]="userRolesForm" action="" class="custom-form animated fadeIn">
-  <h1 class="text-center">Roles and Permissions</h1>
-  <fieldset class="program-roles border border-dark container mb-4">
-    <legend class="p-1">Program Roles</legend>
-    <div class="form-group row ml-2">
-        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-1">
-            <select class="form-control form-control-sm col" formControlName="role" name="role" id="select-roles" aria-placeholder="Roles">
-                <option value="Roles">Roles</option>
-                <option value="OWO">OWO</option>
-                <option value="UWU">UWU</option>
-            </select>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
-            <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" aria-placeholder="Access">
-                <option value="Roles">Access Level</option>
-                <option value="OWO">OWO</option>
-                <option value="UWU">UWU</option>
-            </select>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-3">
-            <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso" aria-placeholder="CSO">
-                <option value="Roles">CSO Group</option>
-                <option value="OWO">OWO</option>
-                <option value="UWU">UWU</option>
-            </select>
-        </div>
-        
-        <div class="w-100"></div>
-        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-5">
-            <select class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" aria-placeholder="Region">
-                <option value="Roles">Region</option>
-                <option value="OWO">OWO</option>
-                <option value="UWU">UWU</option>
-            </select>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-6">
-            <select class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" aria-placeholder="Province">
-                <option value="Roles">Province</option>
-                <option value="OWO">OWO</option>
-                <option value="UWU">UWU</option>
-            </select>
-        </div>
-        <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-7">
-            <select class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
-                <option value="Roles">Municipality</option>
-                <option value="OWO">OWO</option>
-                <option value="UWU">UWU</option>
-            </select>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-lg-4 order-9">
-            <label class="switch mx-auto">
-                <input type="checkbox" id="aToggle">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-10">
-            <button type="button" class="btn bg-success text-white rounded-circle"><i class="fa fa-plus"></i></button>
-        </div>
-    </div>
-  </fieldset>
-
-  <!-- TODO: Convert to ngx-datatable -->
-  <!-- <ngx-datatable
-    class="bootstrap"
-  ></ngx-datatable> -->
-
-  <table class="table table-responsive mb-4">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Role</th>
-            <th scope="col">Access Level</th>
-            <th scope="col" class="d-none d-lg-table-cell">CSO Group</th>
-            <th scope="col">Location</th>
-            <th scope="col">Status</th>
-            <th scope="col">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Project Admin</td>
-            <td>National</td>
-            <td class="d-none d-lg-table-cell">N/A</td>
-            <td>N/A</td>
-            <td>
-                <!-- <mat-slide-toggle></mat-slide-toggle> -->
-                <label class="switch mx-auto">
-                    <input type="checkbox" id="aToggle">
-                    <span class="slider round"></span>
-                </label>
-            </td>
-            <td>
-                <!-- <ng-template let-row="row" let-value="value" ngx-datatable-cell-template> -->
-                <button type="button"
-                    class="btn btn-sm btn-outline-primary"
-                    (click)="editForm()"
-                    tooltip="Edit Form"
-                    placement="top">
-                    <i class="fa fa-pencil"></i></button>
-            
-                <button type="button"
-                    class="btn btn-sm btn-outline-danger"
-                    (click)="deleteForm()"
-                    tooltip="Delete Form"
-                    placement="top">
-                    <i class="fa fa-minus-circle"></i>
-                </button>
-                  <!-- </ng-template> -->
-            </td>
-        </tr>
-        <tr>
-            <td>CSO Admin</td>
-            <td>Regional</td>
-            <td class="d-none d-lg-table-cell">MAPAD</td>
-            <td>Region I</td>
-            <td>
-                <label class="switch mx-auto">
-                    <input type="checkbox" id="aToggle">
-                    <span class="slider round"></span>
-                </label>
-            </td>
-            <td>
-                <button type="button"
-                    class="btn btn-sm btn-outline-primary"
-                    (click)="editForm()"
-                    tooltip="Edit Form"
-                    placement="top">
-                    <i class="fa fa-pencil"></i>
-                </button>
-        
-                <button type="button"
-                    class="btn btn-sm btn-outline-danger"
-                    (click)="deleteForm()"
-                    tooltip="Delete Form"
-                    placement="top">
-                    <i class="fa fa-minus-circle"></i>
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td>CSO Admin</td>
-            <td>Regional</td>
-            <td class="d-none d-lg-table-cell">MAPAD</td>
-            <td>Region I</td>
-            <td>
-                <label class="switch mx-auto">
-                    <input type="checkbox" id="aToggle">
-                    <span class="slider round"></span>
-                </label>
-            </td>
-            <td>
-                <button type="button"
-                    class="btn btn-sm btn-outline-primary"
-                    (click)="editForm()"
-                    tooltip="Edit Form"
-                    placement="top">
-                    <i class="fa fa-pencil"></i>
-                </button>
-        
-                <button type="button"
-                    class="btn btn-sm btn-outline-danger"
-                    (click)="deleteForm()"
-                    tooltip="Delete Form"
-                    placement="top">
-                    <i class="fa fa-minus-circle"></i>
-                </button>
-            </td>
-        </tr>
-    </tbody>
-  </table>
-</form>
+<form [formGroup]="userRolesForm" #createUserRolesForm="ngForm" class="custom-form animated fadeIn">
+    <h1 class="text-center">Roles and Permissions</h1>
+    <fieldset class="form-group program-roles border border-dark container mb-4">
+      <legend class="p-1">Program Roles</legend>
+      <div class="form-group row ml-2">
+          <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-1">
+              <select class="form-control form-control-sm col" formControlName="role" name="role" id="select-roles" aria-placeholder="Roles">
+                  <option value="Roles">Roles</option>
+                  <option value="OWO">OWO</option>
+                  <option value="UWU">UWU</option>
+              </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
+              <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" aria-placeholder="Access">
+                  <option value="Roles">Access Level</option>
+                  <option value="OWO">OWO</option>
+                  <option value="UWU">UWU</option>
+              </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-3">
+              <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso" aria-placeholder="CSO">
+                  <option value="Roles">CSO Group</option>
+                  <option value="OWO">OWO</option>
+                  <option value="UWU">UWU</option>
+              </select>
+          </div>
+          
+          <div class="w-100"></div>
+          <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-5">
+              <select class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" aria-placeholder="Region">
+                  <option value="Roles">Region</option>
+                  <option value="OWO">OWO</option>
+                  <option value="UWU">UWU</option>
+              </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-6">
+              <select class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" aria-placeholder="Province">
+                  <option value="Roles">Province</option>
+                  <option value="OWO">OWO</option>
+                  <option value="UWU">UWU</option>
+              </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-7">
+              <select class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
+                  <option value="Roles">Municipality</option>
+                  <option value="OWO">OWO</option>
+                  <option value="UWU">UWU</option>
+              </select>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-lg-4 order-9">
+              <label class="switch mx-auto">
+                  <input type="checkbox" id="aToggle">
+                  <span class="slider round"></span>
+              </label>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-10">
+              <button type="button" class="btn bg-success text-white rounded-circle"><i class="fa fa-plus"></i></button>
+          </div>
+      </div>
+    </fieldset>
+  
+    <!-- TODO: Convert to ngx-datatable -->
+    <ngx-datatable
+      class="material"
+      [rows]="rows"
+      [rowHeight]="'auto'"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [externalPaging]="true"
+      [count]="   "
+      [offset]="page.pageNumber"
+      [limit]="page.size"
+      [externalSorting]="true"
+      [loadingIndicator]="loading"
+      (sort)="onSort($event)"
+      (page)='setPage($event)' >
+      <ngx-datatable-column name="role" prop="role" sortable="true" [flexGrow]="2" minWidth="100">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span>Role</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <span>{{row.role}}}</span>
+            </ng-template>
+      </ngx-datatable-column>
+  
+      <ngx-datatable-column name="access" prop="access" sortable="true" [flexGrow]="1" minWidth="100">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span>Access Level</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <span>National</span>
+          </ng-template>
+      </ngx-datatable-column>
+  
+      <ngx-datatable-column name="cso" prop="cso" sortable="true" [flexGrow]="1" minWidth="100">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span>CSO Group</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <span>N/A</span>
+          </ng-template>
+      </ngx-datatable-column>
+  
+      <ngx-datatable-column name="location" prop="location" sortable="true" [flexGrow]="1" minWidth="100">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span>Location</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <span>N/A</span>
+          </ng-template>
+      </ngx-datatable-column>
+  
+      <ngx-datatable-column name="status" prop="status" sortable="true" [flexGrow]="1" minWidth="100">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span>Status</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <label class="switch mx-auto">
+                  <input type="checkbox" id="aToggle">
+                  <span class="slider round"></span>
+              </label>
+          </ng-template>
+      </ngx-datatable-column>
+  
+      <ngx-datatable-column name="actions" prop="actions" sortable="true" [flexGrow]="2" minWidth="100">
+          <ng-template let-column="column" ngx-datatable-header-template>
+              <span>Actions</span>
+          </ng-template>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <button type="button"
+                  class="btn btn-sm btn-outline-primary py-xs-5"
+                  (click)="editForm()"
+                  tooltip="Edit Form"
+                  placement="top">
+                  <i class="fa fa-pencil"></i></button>
+          
+              <button type="button"
+                  class="btn btn-sm btn-outline-danger py-xs-5"
+                  (click)="deleteForm()"
+                  tooltip="Delete Form"
+                  placement="top">
+                  <i class="fa fa-minus-circle"></i>
+              </button>
+          </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  
+    <!-- <table class="table table-responsive mb-4">
+      <thead class="thead-dark">
+          <tr>
+              <th scope="col">Role</th>
+              <th scope="col">Access Level</th>
+              <th scope="col" class="d-none d-lg-table-cell">CSO Group</th>
+              <th scope="col">Location</th>
+              <th scope="col">Status</th>
+              <th scope="col">Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>Project Admin</td>
+              <td>National</td>
+              <td class="d-none d-lg-table-cell">N/A</td>
+              <td>N/A</td>
+              <td>
+                  <mat-slide-toggle></mat-slide-toggle>
+                  <label class="switch mx-auto">
+                      <input type="checkbox" id="aToggle">
+                      <span class="slider round"></span>
+                  </label>
+              </td>
+              <td>
+                  <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <button type="button"
+                      class="btn btn-sm btn-outline-primary py-xs-5"
+                      (click)="editForm()"
+                      tooltip="Edit Form"
+                      placement="top">
+                      <i class="fa fa-pencil"></i></button>
+              
+                  <button type="button"
+                      class="btn btn-sm btn-outline-danger py-xs-5"
+                      (click)="deleteForm()"
+                      tooltip="Delete Form"
+                      placement="top">
+                      <i class="fa fa-minus-circle"></i>
+                  </button>
+                    </ng-template>
+              </td>
+          </tr>
+          <tr>
+              <td>CSO Admin</td>
+              <td>Regional</td>
+              <td class="d-none d-lg-table-cell">MAPAD</td>
+              <td>Region I</td>
+              <td>
+                  <label class="switch mx-auto">
+                      <input type="checkbox" id="aToggle">
+                      <span class="slider round"></span>
+                  </label>
+              </td>
+              <td>
+                  <button type="button"
+                      class="btn btn-sm btn-outline-primary"
+                      (click)="editForm()"
+                      tooltip="Edit Form"
+                      placement="top">
+                      <i class="fa fa-pencil"></i>
+                  </button>
+          
+                  <button type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="deleteForm()"
+                      tooltip="Delete Form"
+                      placement="top">
+                      <i class="fa fa-minus-circle"></i>
+                  </button>
+              </td>
+          </tr>
+          <tr>
+              <td>CSO Admin</td>
+              <td>Regional</td>
+              <td class="d-none d-lg-table-cell">MAPAD</td>
+              <td>Region I</td>
+              <td>
+                  <label class="switch mx-auto">
+                      <input type="checkbox" id="aToggle">
+                      <span class="slider round"></span>
+                  </label>
+              </td>
+              <td>
+                  <button type="button"
+                      class="btn btn-sm btn-outline-primary"
+                      (click)="editForm()"
+                      tooltip="Edit Form"
+                      placement="top">
+                      <i class="fa fa-pencil"></i>
+                  </button>
+          
+                  <button type="button"
+                      class="btn btn-sm btn-outline-danger"
+                      (click)="deleteForm()"
+                      tooltip="Delete Form"
+                      placement="top">
+                      <i class="fa fa-minus-circle"></i>
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+    </table> -->
+  </form>
+  
