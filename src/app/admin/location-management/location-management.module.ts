@@ -20,6 +20,9 @@ import { ProvinceDetailsComponent } from './province/details/details.component';
 import { ProvinceListComponent } from './province/list/list.component';
 import { ProvinceTableComponent } from './province/table/table.component';
 import { ProvinceValidators } from './province/details/details.validators';
+import { DetailsComponent } from './municipality/details/details.component';
+import { ListComponent } from './municipality/list/list.component';
+import { TableComponent } from './municipality/table/table.component';
 
 @NgModule({
   imports: [
@@ -45,6 +48,10 @@ import { ProvinceValidators } from './province/details/details.validators';
     ProvinceListComponent,
     ProvinceDetailsComponent,
     ProvinceTableComponent,
+    MunicipalityComponent,
+    DetailsComponent,
+    ListComponent,
+    TableComponent,
   ],
 })
 export class LocationManagementModule {}

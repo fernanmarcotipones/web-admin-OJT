@@ -6,9 +6,11 @@ import { RegionListComponent } from './region/list/list.component';
 
 import { ProvinceDetailsComponent } from './province/details/details.component';
 import { ProvinceListComponent } from './province/list/list.component';
+import { ListComponent } from './municipality/list/list.component';
+import { DetailsComponent } from './municipality/details/details.component';
 
 const routes: Routes = [
-  //Region
+  // Region
   {
     path: 'location-management',
     data: {
@@ -59,6 +61,28 @@ const routes: Routes = [
     },
     component: ProvinceDetailsComponent,
   },
+  // Municipality
+  {
+    path: 'location-management/municipality',
+    data: {
+      title: 'Municipality List'
+    },
+    component: ListComponent,
+  },
+  {
+    path: 'location-management/municipality/add',
+    data: {
+      title: 'Add New Municipality'
+    },
+    component: DetailsComponent,
+  },
+  {
+    path: 'location-management/municipality/edit/:objId',
+    data: {
+      title: 'Edit Municipality'
+    },
+    component: DetailsComponent,
+  },
 
 
 ];
@@ -67,4 +91,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LocationManagmentRoutingModule {}
+export class LocationManagmentRoutingModule { }
