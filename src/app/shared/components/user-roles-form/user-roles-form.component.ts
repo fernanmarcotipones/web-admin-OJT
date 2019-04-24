@@ -1,7 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, group } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
-import { Constants } from 'app/shared/constants';
+import { UserRolesFormValidators } from './user-roles-form.validators'
 
 import { MatSlideToggleModule, MatCheckboxModule } from '@angular/material';
 // import { SharedModule } from '@shared/shared.module';
@@ -31,10 +30,7 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
   @Output() newUserRolesData: EventEmitter<Object> = new EventEmitter<Object>();
 
   userRolesForm: FormGroup;
-  public page = new Page();
-  // public rows = new Array<UserProgramRole>();
 
-  // public labels = ['Role', 'Access Level', 'CSO Group', 'Location', 'Status', 'Actions'];
   public roles;
   public csoGroups;
   public levels;
@@ -56,26 +52,25 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     private formService: FormService,
   ) {
     this.userRolesForm = fb.group({
-      role: new FormControl('', [Validators.required]),
-      access: new FormControl('', [Validators.required]),
-      cso: new FormControl('', [Validators.required]),
-      region: new FormControl('', [Validators.required]),
-      province: new FormControl('', [Validators.required]),
-      municipality: new FormControl('', [Validators.required])
+      role: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
+      access: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
+      cso: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
+      region: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
+      province: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
+      municipality: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
+      status: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull])
     });
-    // this.page.pageNumber = Constants.DEFAULT_PAGE_NUMBER;
-    // this.page.size = Constants.DEFAULT_PAGE_SIZE;
   }
 
   ngOnInit() {
     if (this.userRolesData) {
       this.setUserRolesForm(this.userRolesData);
     }
-    this.setDropdowns();
+    this.fetchDropdownOptions();
   }
 
   ngOnChanges (changes) {
-    this.setDropdowns();
+    this.fetchDropdownOptions();
   }
 
   setUserRolesForm(data) {
@@ -86,7 +81,12 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     });
   }
 
-  setDropdowns() {
+  // TODO: Push Values
+  public pushValues() {
+    console.log(this.userRolesForm.controls.role.value);
+  }
+
+  fetchDropdownOptions() {
     this.allUserRoles();
     this.allAccessLevels();
     this.allCSOGroups();
@@ -136,13 +136,4 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     this.levels = levelList;
     return levelList;
   }
-
-  onFieldChange() {
-    // const value = this.trimFormValues();
-  }
-
-  trimFormValues() {
-    // const values = {};
-  }
-
 }
