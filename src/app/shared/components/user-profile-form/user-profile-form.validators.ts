@@ -2,6 +2,7 @@ import { FormControl, Validators } from '@angular/forms';
 
 const mobileRegex = new RegExp(/^(9|09|\+639)\d{9}$/);
 const alphabetRegex = new RegExp(/^[a-zA-Z ]*$/);
+const numberRegex = new RegExp(/^[0-9]*$/);
 
 export class UserProfileFormValidators extends Validators {
   static validateMobileNumber(control: FormControl) {
@@ -9,6 +10,16 @@ export class UserProfileFormValidators extends Validators {
     if (mobileNumber && mobileNumber.length > 0) {
       const isValid = mobileRegex.test(mobileNumber);
       return !isValid ? { isMobileInvalid: true } : null;
+    } else {
+      return null;
+    }
+  }
+
+  static validateNumberOnly(control: FormControl) {
+    const number = control.value;
+    if (number && number.length > 0) {
+      const isValied = numberRegex.test(number);
+      return !isValied ? {isNotNumberOnly: true } : null;
     } else {
       return null;
     }
