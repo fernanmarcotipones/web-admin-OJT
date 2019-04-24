@@ -31,12 +31,19 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
 
   userRolesForm: FormGroup;
 
+  // Fetched Options Holder
   public roles;
   public csoGroups;
   public levels;
   public municipalities;
   public provinces;
   public regions;
+
+  // Booleans
+  public isNational = false;
+  public enableRegional = false;
+  public enableProvincial = false;
+  public enableMunicipal = false;
 
   constructor(
     public fb: FormBuilder,
@@ -93,6 +100,36 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     this.allRegions();
     this.allProvinces();
     this.allMunicipalities();
+  }
+
+  onFieldChange() {
+    const accessValue = this.userRolesForm.controls.access.value.name;
+    if (accessValue === 'National') {
+      this.resetBooleans();
+      this.isNational = true;
+      console.log(this.userRolesForm.controls.access.value.name);
+    } else if (accessValue === 'Regional') {
+      this.resetBooleans();
+      this.enableRegional = true;
+    } else if (accessValue === 'Provincial') {
+      this.resetBooleans();
+      this.enableRegional = true;
+      this.enableProvincial = true;
+    } else if (accessValue === 'Municipal' || accessValue === 'Barangay') {
+      this.resetBooleans();
+      this.enableRegional = true;
+      this.enableProvincial = true;
+      this.enableMunicipal = true;
+    } else {
+      this.resetBooleans();
+    }
+  }
+
+  resetBooleans() {
+    this.isNational = false;
+    this.enableRegional = false;
+    this.enableProvincial = false;
+    this.enableMunicipal = false;
   }
 
   async allCSOGroups() {

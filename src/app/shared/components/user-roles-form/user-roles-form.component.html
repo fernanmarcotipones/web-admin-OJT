@@ -10,35 +10,35 @@
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
-              <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" aria-placeholder="Access">
+              <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" (change)="onFieldChange()" aria-placeholder="Access">
                 <option value="" disabled selected>Access Level</option>
-                <option *ngFor="let level of levels" [ngValue]="levels">{{ level.name }}</option>
+                <option *ngFor="let level of levels" [ngValue]="level">{{ level.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-3">
               <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso" aria-placeholder="CSO">
                 <option value="" disabled selected>CSO Group</option>
-                <option *ngFor="let group of csoGroups" [ngValue]="csoGroups">{{ group.name }}</option>
+                <option *ngFor="let group of csoGroups" [ngValue]="group">{{ group.name }}</option>
               </select>
           </div>
           
           <div class="w-100"></div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-5">
-              <select class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" aria-placeholder="Region">
+              <select *ngIf="!isNational && enableRegional" class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" aria-placeholder="Region">
                 <option value="" disabled selected>Region</option>
-                <option *ngFor="let region of regions" [ngValue]="regions">{{ region.name }}</option>
+                <option *ngFor="let region of regions" [ngValue]="region">{{ region.name }}</option>
             </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-6">
-              <select class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" aria-placeholder="Province">
+              <select *ngIf="!isNational && enableProvincial" class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" aria-placeholder="Province">
                 <option value="" disabled selected>Province</option>
-                <option *ngFor="let province of provinces" [ngValue]="provinces">{{ province.name }}</option>
+                <option *ngFor="let province of provinces" [ngValue]="province">{{ province.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-7">
-              <select class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
+              <select *ngIf="!isNational && enableMunicipal" class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
                 <option value="" disabled selected>Municipalities</option>
-                <option *ngFor="let municipality of municipalities" [ngValue]="municipalities">{{ municipality.name }}</option>
+                <option *ngFor="let municipality of municipalities" [ngValue]="municipality">{{ municipality.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-sm-6 my-2 d-flex justify-content-around order-lg-4 order-9">
