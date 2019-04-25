@@ -2,24 +2,17 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter, group } from
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { UserRolesFormValidators } from './user-roles-form.validators'
 
-import { MatSlideToggleModule, MatCheckboxModule } from '@angular/material';
-// import { SharedModule } from '@shared/shared.module';
 import {
   CSOGroupService,
-  FormService,
   MunicipalityService,
   ProgramAccessLevelService,
   ProgramService,
   ProvinceService,
   RegionService,
   UserService,
-  UserProgramRole,
   UserProgramRoleService,
-  UserRoleService,
-  Page,
-  Form
+  UserRoleService
 } from 'app/core';
-import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from '@angular/cdk/overlay/typings/overlay-directives';
 
 @Component({
   selector: 'app-user-roles-form',
@@ -63,8 +56,7 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     public regionService: RegionService,
     public userService: UserService,
     public userProgramRoleService: UserProgramRoleService,
-    public userRoleService: UserRoleService,
-    private formService: FormService,
+    public userRoleService: UserRoleService
   ) {
     this.userRolesForm = fb.group({
       role: new FormControl('', this.validators),
@@ -81,11 +73,11 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     if (this.userRolesData) {
       this.setUserRolesForm(this.userRolesData);
     }
-    this.fetchDropdownOptions();
+    this.fetchInitialOptions();
   }
 
   ngOnChanges (changes) {
-    this.fetchDropdownOptions();
+    this.fetchInitialOptions();
   }
 
   setUserRolesForm(data) {
@@ -98,17 +90,14 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
 
   // TODO: Push Values
   public pushValues() {
-    console.log(this.userRolesForm.controls.role.value);
-    console.log(this.provinceService.getByRegionCode('REGION I').then(data => data));
+    console.log('Pushed');
   }
 
-  fetchDropdownOptions() {
-    this.allUserRoles();
-    this.allAccessLevels();
-    this.allCSOGroups();
-    this.allRegions();
-    this.allProvinces();
-    this.allMunicipalities();
+  fetchInitialOptions() {
+    this.fetchUserRoles();
+    this.fetchAccessLevels();
+    this.fetchCSOGroups();
+    this.fetchRegions();
   }
 
   onAccessFieldChange() {
@@ -128,13 +117,32 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
         switch (accessValue) {
           case 'Regional':
             this.isRegional = true;
-            this.insertValidators(controls.region);
+            this.insertValidators(this.userRolesForm.controls.region);
+            this.resetFormControlValues(this.userRolesForm.controls.region);
             break;
           case 'Provincial':
             this.isProvincial = true;
+            this.insertValidators(
+              this.userRolesForm.controls.region,
+              this.userRolesForm.controls.province
+            );
+            this.resetFormControlValues(
+              this.userRolesForm.controls.region,
+              this.userRolesForm.controls.province
+            );
             break;
           case 'Municipal' || 'Barangay':
             this.isMunicipal = true;
+            this.insertValidators(
+              this.userRolesForm.controls.region,
+              this.userRolesForm.controls.province,
+              this.userRolesForm.controls.municipality
+            );
+            this.resetFormControlValues(
+              this.userRolesForm.controls.region,
+              this.userRolesForm.controls.province,
+              this.userRolesForm.controls.municipality
+            );
             break;
         }
         break;
@@ -143,11 +151,12 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
 
   onRegionalFieldChange() {
     const controls = this.userRolesForm.controls;
-    const regionValue = controls.region.value.name;
-    const notNull = this.isNotNull(regionValue);
+    const regionValue = controls.region.value;
+    const notNull = this.isNotNull(regionValue.name);
 
     if (!(this.isNational || this.isRegional)) {
       if (notNull) {
+        this.fetchProvinces(regionValue.regionCode);
         this.enableProvincial = true;
       }
     }
@@ -155,11 +164,12 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
 
   onProvincialFieldChange() {
     const controls = this.userRolesForm.controls;
-    const provinceValue = controls.province.value.name;
-    const notNull = this.isNotNull(provinceValue);
+    const provinceValue = controls.province.value;
+    const notNull = this.isNotNull(provinceValue.name);
 
     if (!(this.isNational || this.isRegional || this.isProvincial)) {
       if (notNull) {
+        this.fetchMunicipalities(provinceValue.provinceCode);
         this.enableMunicipal = true;
       }
     }
@@ -188,53 +198,59 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     controls.municipality.setValidators([]);
   }
 
-  isNotNull (val) {
-    if (typeof(val) === 'string') {
-      return val != null || val !== '';
-    } else {
-      return val != null;
+  resetFormControlValues(...controls: AbstractControl[]) {
+    for (const control of controls) {
+      control.setValue('');
     }
   }
 
-  async allCSOGroups() {
-    const csoList: any = await this.csoGroupService.getAllCSOGroup().then(data => data);
-    console.log(csoList);
-    this.csoGroups = csoList;
-    return csoList;
-  }
-
-  async allMunicipalities() {
-    const municipalityList: any = await this.municipalityService.getAll().then(data => data);
-    console.log(municipalityList);
-    this.municipalities = municipalityList;
-    return municipalityList;
-  }
-
-  async allProvinces() {
-    const provinceList: any = await this.provinceService.getAll().then(data => data);
-    console.log(provinceList);
-    this.provinces = provinceList;
-    return provinceList;
-  }
-
-  async allRegions() {
-    const regionList: any = await this.regionService.getAll().then(data => data);
-    console.log(regionList);
-    this.regions = regionList;
-    return regionList;
-  }
-
-  async allUserRoles() {
+  async fetchUserRoles() {
     const roleList: any = await this.userRoleService.getAllUserRoles().then(data => data);
     console.log(roleList);
     this.roles = roleList;
     return roleList;
   }
 
-  async allAccessLevels() {
+  async fetchAccessLevels() {
     const levelList: any = await this.programAccessLevelService.getAll().then(data => data);
     console.log(levelList);
     this.levels = levelList;
     return levelList;
+  }
+
+  async fetchCSOGroups() {
+    const csoList: any = await this.csoGroupService.getAllCSOGroup().then(data => data);
+    console.log(csoList);
+    this.csoGroups = csoList;
+    return csoList;
+  }
+
+  async fetchRegions() {
+    const regionList: any = await this.regionService.getAll().then(data => data);
+    console.log(regionList);
+    this.regions = regionList;
+    return regionList;
+  }
+
+  async fetchProvinces(regionCode) {
+    const provinceList: any = await this.provinceService.getByRegionCode(regionCode).then(data => data);
+    console.log(provinceList);
+    this.provinces = provinceList;
+    return provinceList;
+  }
+
+  async fetchMunicipalities(provinceCode) {
+    const municipalityList: any = await this.municipalityService.getByProvinceCode(provinceCode).then(data => data);
+    console.log(municipalityList);
+    this.municipalities = municipalityList;
+    return municipalityList;
+  }
+
+  isNotNull (val) {
+    if (typeof(val) === 'string') {
+      return val != null || val !== '';
+    } else {
+      return val != null;
+    }
   }
 }
