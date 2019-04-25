@@ -74,7 +74,7 @@ export class RegionService {
           );
         });
 
-        subscription.on('update', data => {
+        subscription.on('update', data => { 
           const index = pagedData.data.findIndex(
             obj => obj.objectId === data.toJSON().objectId,
           );

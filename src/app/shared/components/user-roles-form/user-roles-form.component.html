@@ -10,7 +10,7 @@
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
-              <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" (change)="onFieldChange()" aria-placeholder="Access">
+              <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" (change)="onAccessFieldChange()" aria-placeholder="Access">
                 <option value="" disabled selected>Access Level</option>
                 <option *ngFor="let level of levels" [ngValue]="level">{{ level.name }}</option>
               </select>
@@ -24,19 +24,19 @@
           
           <div class="w-100"></div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-5">
-              <select *ngIf="!isNational && enableRegional" class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" aria-placeholder="Region">
+              <select *ngIf="enableRegional" class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" (change)="onRegionalFieldChange()" aria-placeholder="Region">
                 <option value="" disabled selected>Region</option>
                 <option *ngFor="let region of regions" [ngValue]="region">{{ region.name }}</option>
             </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-6">
-              <select *ngIf="!isNational && enableProvincial" class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" aria-placeholder="Province">
+              <select *ngIf="enableProvincial" class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" (change)="onProvincialFieldChange()"  aria-placeholder="Province">
                 <option value="" disabled selected>Province</option>
                 <option *ngFor="let province of provinces" [ngValue]="province">{{ province.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-7">
-              <select *ngIf="!isNational && enableMunicipal" class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
+              <select *ngIf="enableMunicipal" class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
                 <option value="" disabled selected>Municipalities</option>
                 <option *ngFor="let municipality of municipalities" [ngValue]="municipality">{{ municipality.name }}</option>
               </select>

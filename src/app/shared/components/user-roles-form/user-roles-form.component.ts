@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, group } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { UserRolesFormValidators } from './user-roles-form.validators'
 
 import { MatSlideToggleModule, MatCheckboxModule } from '@angular/material';
@@ -19,6 +19,7 @@ import {
   Page,
   Form
 } from 'app/core';
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY } from '@angular/cdk/overlay/typings/overlay-directives';
 
 @Component({
   selector: 'app-user-roles-form',
@@ -41,9 +42,16 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
 
   // Booleans
   public isNational = false;
+  public isRegional = false;
+  public isProvincial = false;
+  public isMunicipal = false;
+
   public enableRegional = false;
   public enableProvincial = false;
   public enableMunicipal = false;
+
+  // Select Box Validators
+  validators = [Validators.required, UserRolesFormValidators.validateNoNull];
 
   constructor(
     public fb: FormBuilder,
@@ -59,13 +67,13 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     private formService: FormService,
   ) {
     this.userRolesForm = fb.group({
-      role: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
-      access: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
-      cso: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
-      region: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
-      province: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
-      municipality: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull]),
-      status: new FormControl('', [Validators.required, UserRolesFormValidators.validateNoNull])
+      role: new FormControl('', this.validators),
+      access: new FormControl('', this.validators),
+      cso: new FormControl('', this.validators),
+      region: new FormControl('', []),
+      province: new FormControl('', []),
+      municipality: new FormControl('', []),
+      status: new FormControl('', [])
     });
   }
 
@@ -91,6 +99,7 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
   // TODO: Push Values
   public pushValues() {
     console.log(this.userRolesForm.controls.role.value);
+    console.log(this.provinceService.getByRegionCode('REGION I').then(data => data));
   }
 
   fetchDropdownOptions() {
@@ -102,34 +111,89 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     this.allMunicipalities();
   }
 
-  onFieldChange() {
-    const accessValue = this.userRolesForm.controls.access.value.name;
-    if (accessValue === 'National') {
-      this.resetBooleans();
-      this.isNational = true;
-      console.log(this.userRolesForm.controls.access.value.name);
-    } else if (accessValue === 'Regional') {
-      this.resetBooleans();
-      this.enableRegional = true;
-    } else if (accessValue === 'Provincial') {
-      this.resetBooleans();
-      this.enableRegional = true;
-      this.enableProvincial = true;
-    } else if (accessValue === 'Municipal' || accessValue === 'Barangay') {
-      this.resetBooleans();
-      this.enableRegional = true;
-      this.enableProvincial = true;
-      this.enableMunicipal = true;
-    } else {
-      this.resetBooleans();
+  onAccessFieldChange() {
+    const controls = this.userRolesForm.controls;
+    const accessValue = controls.access.value.name;
+
+    this.resetBooleans();
+    this.resetValidators();
+    switch (accessValue) {
+      case 'National':
+        this.isNational = true;
+        break;
+      case '':
+        break;
+      default:
+        this.enableRegional = true;
+        switch (accessValue) {
+          case 'Regional':
+            this.isRegional = true;
+            this.insertValidators(controls.region);
+            break;
+          case 'Provincial':
+            this.isProvincial = true;
+            break;
+          case 'Municipal' || 'Barangay':
+            this.isMunicipal = true;
+            break;
+        }
+        break;
+    }
+  }
+
+  onRegionalFieldChange() {
+    const controls = this.userRolesForm.controls;
+    const regionValue = controls.region.value.name;
+    const notNull = this.isNotNull(regionValue);
+
+    if (!(this.isNational || this.isRegional)) {
+      if (notNull) {
+        this.enableProvincial = true;
+      }
+    }
+  }
+
+  onProvincialFieldChange() {
+    const controls = this.userRolesForm.controls;
+    const provinceValue = controls.province.value.name;
+    const notNull = this.isNotNull(provinceValue);
+
+    if (!(this.isNational || this.isRegional || this.isProvincial)) {
+      if (notNull) {
+        this.enableMunicipal = true;
+      }
     }
   }
 
   resetBooleans() {
     this.isNational = false;
+    this.isRegional = false;
+    this.isProvincial = false;
+    this.isMunicipal = false;
     this.enableRegional = false;
     this.enableProvincial = false;
     this.enableMunicipal = false;
+  }
+
+  insertValidators(...controls: AbstractControl[]) {
+    for (const control of controls) {
+      control.setValidators(this.validators);
+    }
+  }
+
+  resetValidators() {
+    const controls = this.userRolesForm.controls;
+    controls.region.setValidators([]);
+    controls.province.setValidators([]);
+    controls.municipality.setValidators([]);
+  }
+
+  isNotNull (val) {
+    if (typeof(val) === 'string') {
+      return val != null || val !== '';
+    } else {
+      return val != null;
+    }
   }
 
   async allCSOGroups() {
