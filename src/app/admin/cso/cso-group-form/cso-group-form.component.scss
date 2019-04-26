@@ -6,6 +6,9 @@ select{
         padding: 15px 5px 15px 10px;
     }
 }
+.form-control:invalid{
+    // border-color: red;
+}
 // thead{
 //     border-bottom: 2px solid black;
 // }
@@ -23,11 +26,15 @@ select{
 
 table{
     border-collapse: collapse;
+    border-top:0px;
 }
 td, th,td{
     padding:5px;
     text-align: center;
 
+}
+.borderless td, .borderless th {
+    border: none;
 }
 thead{
     // border-bottom: 2px solid black;
@@ -41,6 +48,9 @@ thead{
 }
 .save:disabled{
     opacity:0.5;
+}
+.errorbox{
+ width:80%;
 }
 // .card > div:first-child{
 //     margin-top:15px;
