@@ -29,9 +29,6 @@ export class CsoGroupFormComponent implements OnInit {
   splittedMunicipality = [];
   splittedBarangay = [];
 
-  // objectIdIndex:number = 0;
-  // objectNameIndex:number = 1;
-
   public accesslevels = [];
   public regions = [];
   public provinces = [];
@@ -60,7 +57,7 @@ export class CsoGroupFormComponent implements OnInit {
   });
 
   csoAccessLevelForm = new FormGroup({
-    csoAgencyProgram: new FormControl('DPWH Testing'),
+    csoAgencyProgram: new FormControl(''),
     csoAccessLevel: new FormControl('',Validators.required),
     region: new FormControl(''),
     province: new FormControl(''),
@@ -105,7 +102,47 @@ export class CsoGroupFormComponent implements OnInit {
       value: value,
       isFormInvalid: !this.csoGroupForm.valid
     }
-    // this.newUserProfileData.emit(data);
+  }
+
+  clearLocationArray(){
+    //to clear past values (avoid bugs)
+    this.regions = [];
+    this.provinces = [];
+    this.municipalities = [];
+    this.barangays = [];
+  }
+
+  resetSelectFields(){
+    //para di agad bumubungad yung error message
+    this.csoAccessLevelForm.controls['csoAccessLevel'].reset();
+    this.csoAccessLevelForm.controls['region'].reset();
+    this.csoAccessLevelForm.controls['province'].reset();
+    this.csoAccessLevelForm.controls['municipality'].reset();
+    this.csoAccessLevelForm.controls['barangay'].reset();
+  }
+
+  setValueOfSelectToEmpty(){
+    //to clear form
+    this.csoAccessLevelForm.controls['region'].setValue('');
+    this.csoAccessLevelForm.controls['province'].setValue('');
+    this.csoAccessLevelForm.controls['municipality'].setValue('');
+    this.csoAccessLevelForm.controls['barangay'].setValue(''); 
+  }
+
+  clearSplittedLocationArray(){
+    //to clear past values (avoid bugs)
+    this.splittedRegion = [];
+    this.splittedProvince = [];
+    this.splittedMunicipality = [];
+    this.splittedBarangay = []; 
+  }
+
+  removeLocationValidators(){
+    //to remove validators
+    this.csoAccessLevelForm.controls['region'].setValidators([]);
+    this.csoAccessLevelForm.controls['province'].setValidators([]);
+    this.csoAccessLevelForm.controls['municipality'].setValidators([]);
+    this.csoAccessLevelForm.controls['barangay'].setValidators([]);
   }
 
   selectedAccessLevel(selected: any){
@@ -120,6 +157,7 @@ export class CsoGroupFormComponent implements OnInit {
       this.setValueOfSelectToEmpty();
    
       this.clearLocationArray();
+      this.clearSplittedLocationArray();
 
       this.showDivs = {
         showRegionDiv:false,
@@ -245,7 +283,6 @@ export class CsoGroupFormComponent implements OnInit {
   selectedBarangay(selected: any){
     this.barangaySelected = selected; // get selected option
     this.splittedBarangay = this.barangaySelected.split(','); // MAKE AN ARRAY USING THE VALUE OF OPTION
-
   }
   
   async loadAccessLevels() {
@@ -264,54 +301,11 @@ export class CsoGroupFormComponent implements OnInit {
     this.barangays = await this.barangayService.getByMunicipalityObjectId(this.splittedMunicipality[0]);
   }
 
-  clearLocationArray(){
-    //to clear past values (avoid bugs)
-    this.regions = [];
-    this.provinces = [];
-    this.municipalities = [];
-    this.barangays = [];
-  }
-
-  resetSelectFields(){
-    //para di agad bumubungad yung error message
-    this.csoAccessLevelForm.controls['csoAccessLevel'].reset();
-    this.csoAccessLevelForm.controls['region'].reset();
-    this.csoAccessLevelForm.controls['province'].reset();
-    this.csoAccessLevelForm.controls['municipality'].reset();
-    this.csoAccessLevelForm.controls['barangay'].reset();
-  }
-
-  setValueOfSelectToEmpty(){
-    //to clear form
-    // this.csoAccessLevelForm.controls['csoAccessLevel'].setValue('');
-    this.csoAccessLevelForm.controls['region'].setValue('');
-    this.csoAccessLevelForm.controls['province'].setValue('');
-    this.csoAccessLevelForm.controls['municipality'].setValue('');
-    this.csoAccessLevelForm.controls['barangay'].setValue(''); 
-  }
-
-  clearSplittedLocationArray(){
-    //to clear past values (avoid bugs)
-    this.splittedRegion = [];
-    this.splittedProvince = [];
-    this.splittedMunicipality = [];
-    this.splittedBarangay = []; 
-  }
-
-  removeLocationValidators(){
-    //to remove validators
-    this.csoAccessLevelForm.controls['region'].setValidators([]);
-    this.csoAccessLevelForm.controls['province'].setValidators([]);
-    this.csoAccessLevelForm.controls['municipality'].setValidators([]);
-    this.csoAccessLevelForm.controls['barangay'].setValidators([]);
-  }
-
   //ADD ACCESS LEVEL BUTTON FUNCTION
   saveAccessLevel(){
 
     this.clearLocationArray();
 
-    this.csoAccessLevelForm.controls['csoAgencyProgram'].setValue('DPWH sample'); 
     this.csoAccessLevelForm.controls['csoAccessLevel'].setValue(this.accessLevelSelected); 
     this.csoAccessLevelForm.controls['region'].setValue(this.splittedRegion); 
     this.csoAccessLevelForm.controls['province'].setValue(this.splittedProvince); 
@@ -341,6 +335,5 @@ export class CsoGroupFormComponent implements OnInit {
     // console.log(this.csoGroupForm.value);
   }
   
- 
 
 }

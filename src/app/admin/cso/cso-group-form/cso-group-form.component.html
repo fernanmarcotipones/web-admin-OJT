@@ -60,7 +60,7 @@
         <div class="col-md-8">
           <select class="custom-select custom-select-md w-100 cso-group-input" formControlName="csoPrivacy">
             <option value="" selected="selected" hidden>Privacy</option>
-            <option value="private" >Private</option>
+            <option value="private">Private</option>
             <option value="open">Open</option>
           </select>
           <div class="error-msg" 
@@ -162,8 +162,8 @@
             <th>Actions</th>
           </thead>
           <tbody>
-            <tr *ngFor="let saved of saveds">
-              <td>{{ saved.csoAgencyProgram }}</td>
+            <tr *ngFor="let saved of saveds;  let i = index">
+              <td>DPWH(sample)</td>
               <td>AM(sample)</td>
               <td>{{ saved.csoAccessLevel }}</td>
               <td><strong>{{ saved.region[1] }}</strong> {{ saved.province[1] }} {{ saved.municipality[1] }} {{ saved.barangay[1] }}</td>
