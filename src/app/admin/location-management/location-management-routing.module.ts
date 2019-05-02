@@ -6,8 +6,8 @@ import { RegionListComponent } from './region/list/list.component';
 
 import { ProvinceDetailsComponent } from './province/details/details.component';
 import { ProvinceListComponent } from './province/list/list.component';
-import { ListComponent } from './municipality/list/list.component';
-import { DetailsComponent } from './municipality/details/details.component';
+import { MunicipalityListComponent } from './municipality/list/list.component';
+import { MunicipalityDetailsComponent } from './municipality/details/details.component';
 
 const routes: Routes = [
   // Region
@@ -67,21 +67,21 @@ const routes: Routes = [
     data: {
       title: 'Municipality List'
     },
-    component: ListComponent,
+    component: MunicipalityListComponent,
   },
   {
     path: 'location-management/municipality/add',
     data: {
       title: 'Add New Municipality'
     },
-    component: DetailsComponent,
+    component: MunicipalityDetailsComponent,
   },
   {
     path: 'location-management/municipality/edit/:objId',
     data: {
       title: 'Edit Municipality'
     },
-    component: DetailsComponent,
+    component: MunicipalityDetailsComponent,
   },
 
 

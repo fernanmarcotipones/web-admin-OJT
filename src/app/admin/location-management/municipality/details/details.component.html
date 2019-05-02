@@ -1,3 +1,183 @@
-<p>
-  details works!
-</p>
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="animated fadeIn">
+  <div class="row row-menu">
+    <div class="top-menu col-12">
+      <div id="dashboard-menu" class="menu-body">
+        <div class="item-menu col-4 col-sm-3 col-lg-1" [routerLink]="['/admin/location-management/region']">
+          <div class="icon">
+            <i class="fa fa-map-pin"></i>
+          </div>
+          <span>Region</span>
+        </div>
+        <div class="item-menu col-4 col-sm-3 col-lg-1"
+          [routerLink]="['/admin/location-management/province']">
+          <div class="icon">
+            <i class="fa fa-globe"></i>
+          </div>
+          <span>Province</span>
+        </div>
+        <div class="item-menu active-menu col-4 col-sm-3 col-lg-1"
+          [routerLink]="['/admin/location-management/municipality']">
+          <div class="icon">
+            <i class="fa fa-globe"></i>
+          </div>
+          <span>Municipality</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row animated fast fadeIn after-menu">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="municipality card-header">
+              <h2 class="card-title">Add New Municipality</h2>
+            </div>
+            <div class="card-body">
+              <div class="container form-container">
+                <div class="row">
+                  <div class="col-7">
+                    <form [formGroup]="municipalityForm">
+                      <div class="row">
+                        <div class="col-3">
+                          <label class="form-control-label required">Region Name:</label>
+                        </div>
+                        <div class="col-9">
+                          <select class="form-control" >
+                            <option value="null">Select Region</option>
+                          </select>
+                          <span class="help-block">
+                            <!-- Region is required. -->
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required">Province Name:</label>
+                        </div>
+                        <div class="col-9">
+                          <select class="form-control"  >
+                            <option value="null">Select Province</option>
+                          </select>
+                          <span class="help-block">
+                            <!-- Province is required. -->
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required">Municipality Name:</label>
+                        </div>
+
+                        <div class="col-9">
+                          <input class="form-control" type="text"  />
+                          <span class="help-block">
+                            <!-- Municipality Name is required. -->
+                          </span>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required">PSGC Code:</label>
+                        </div>
+                        <div class="col-9">
+                          <input class="form-control" type="text"  />
+                          <div class="form-control-errors">
+                            <span class="help-block">
+                              <!-- PSGC Code is required. -->
+                            </span>
+                            <span class="help-block">
+                              <!-- Invalid format. -->
+                            </span>
+                            <span class="help-block">
+                              <!-- PSGC Code must be 9 digits -->
+                            </span>
+                            <span class="help-block">
+                              <!-- PSGC Code must be unique -->
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-3">
+                          <label class="form-control-label required">Municipality Code:</label>
+                        </div>
+                        <div class="col-9">
+                          <input class="form-control" type="text" />
+                          <div class="form-control-errors">
+                            <span class="help-block">
+                              <!-- Province Code is required. -->
+                            </span>
+                            <span class="help-block">
+                              <!-- Invalid format. -->
+                            </span>
+                            <span class="help-block">
+                              <!-- Province Code must be 4 digits -->
+                            </span>
+                            <span class="help-block">
+                              <!-- Province Code must be unique. -->
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2" >
+                        <div class="col-3">
+                          <label class="form-control-label required">Latitude:</label>
+                        </div>
+                        <div class="col-9">
+                          <input class="form-control" type="text"/>
+                          <div class="form-control-errors">
+                            <span class="help-block">
+                              <!-- Latitude is required. -->
+                            </span>
+                            <span class="help-block">
+                              <!-- Please enter a valid latitude. -->
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-2" f>
+                        <div class="col-3">
+                          <label class="form-control-label required">Longitude:</label>
+                        </div>
+                        <div class="col-9">
+                          <input class="form-control" />
+                          <div class="form-control-errors">
+                            <span class="help-block">
+                              <!-- Longitude is required. -->
+                            </span>
+                            <span class="help-block">
+                              <!-- Please enter a valid Longitude. -->
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </form>
+                  </div>
+                  <div class="col-5">
+                    <p>
+                      Map takes time to load, Check your internet connection
+                    </p>
+                  </div>
+                </div>
+                <div class="controls">
+                  <button class="btn btn-sm btn-outline-primary">
+                    Back
+                  </button>
+                  <button class="btn btn-sm btn-primary">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
