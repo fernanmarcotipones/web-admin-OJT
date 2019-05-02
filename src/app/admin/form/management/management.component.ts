@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./management.component.scss']
 })
 export class ManagementComponent implements OnInit {
-  public formPreviewThumbnail = '/assets/img/form-preview-placeholder.jpg';
+  // public defaultFormPreviewImg = '/assets/img/form-preview.jpg';
   constructor() { }
 
   ngOnInit() {
