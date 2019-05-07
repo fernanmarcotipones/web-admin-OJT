@@ -9,4 +9,13 @@ export class UserAccountFormValidators extends Validators {
       return null;
     }
   }
+
+  // static validateEqual(control: FormControl) {
+  //   const value = control.value;
+  //   if (value && value.length > 0) {
+  //     return value ? null : { isWhiteSpaceOnly: true };
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }

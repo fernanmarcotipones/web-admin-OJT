@@ -1,5 +1,6 @@
 <form [formGroup]="userProfileForm" #createUserForm="ngForm" class="custom-form animated fadeIn" novalidate>
     <div class="form-group row">
+    <h3 class="col-md-12 my-3 text-dark text-center">Profile Information</h3>
       <label class="col-md-4 form-control-label required">First Name</label>
       <div class="col-md-8">
         <input 
@@ -105,4 +106,112 @@
         </div>
       </div>
     </div>
+
+    <div class="form-group row">
+        <h3 class="col-md-12 my-3 text-dark text-center">Address Information</h3>
+          <label class="col-md-4 form-control-label required">Street Name</label>
+          <div class="col-md-8">
+            <input 
+              class="form-control form-control-sm" 
+              formControlName="streetName" 
+              type="text" 
+              maxlength="50"
+              (keyup)="onFieldChange()"
+              placeholder="Street Name">
+            <div class="error-msg" 
+              *ngIf="isFieldInvalid('streetName') && userProfileForm.get('streetName').hasError('required')">
+              Street name is required
+            </div>
+            <div class="error-msg" 
+              *ngIf="!userProfileForm.get('streetName').hasError('required') && 
+              (userProfileForm.get('streetName').hasError('isNotAlphabetOnly') || 
+              userProfileForm.get('streetName').hasError('isWhiteSpaceOnly'))">
+              Please input a valid Street name
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 form-control-label">Street Number</label>
+          <div class="col-md-8">
+            <input class="form-control form-control-sm" 
+              formControlName="streetNumber" 
+              type="text" 
+              maxlength="50"
+              (keyup)="onFieldChange()"
+              placeholder="Street Number">
+            <div class="error-msg" 
+              *ngIf="isFieldInvalid('streetName') && userProfileForm.get('streetNumber').hasError('required')">
+              Street Number is required
+            </div>
+            <div class="error-msg" 
+              *ngIf="!userProfileForm.get('streetNumber').hasError('required') && 
+              (userProfileForm.get('streetNumber').hasError('isNotAlphabetOnly') || 
+              userProfileForm.get('streetNumber').hasError('isWhiteSpaceOnly'))">
+              Please input a valid Street Number
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 form-control-label required">Region</label>
+          <div class="col-md-8">
+            <input class="form-control form-control-sm" 
+              formControlName="region" 
+              type="text" 
+              maxlength="50"
+              (keyup)="onFieldChange()"
+              placeholder="Region">
+            <div class="error-msg" 
+              *ngIf="isFieldInvalid('region') && userProfileForm.get('region').hasError('required')">
+              Region is required  
+            </div>
+            <div class="error-msg" 
+              *ngIf="!userProfileForm.get('region').hasError('required') && 
+              (userProfileForm.get('region').hasError('isNotAlphabetOnly') || 
+              userProfileForm.get('region').hasError('isWhiteSpaceOnly'))">
+              Please input a valid region
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 form-control-label required">Province</label>
+          <div class="col-md-8">
+            <input class="form-control form-control-sm" 
+              formControlName="province" 
+              type="text" 
+              maxlength="50"
+              (keyup)="onFieldChange()"
+              placeholder="Province">
+            <div class="error-msg" 
+              *ngIf="isFieldInvalid('province') && userProfileForm.get('province').hasError('required')">
+              Province is required  
+            </div>
+            <div class="error-msg" 
+              *ngIf="!userProfileForm.get('province').hasError('required') && 
+              (userProfileForm.get('province').hasError('isNotAlphabetOnly') || 
+              userProfileForm.get('province').hasError('isWhiteSpaceOnly'))">
+              Please input a valid province
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4 form-control-label required">Municipality</label>
+          <div class="col-md-8">
+            <input 
+              class="form-control form-control-sm" 
+              formControlName="municipality" 
+              type="text" 
+              maxlength="13"
+              (keyup)="onFieldChange()"
+              placeholder="Municipality">
+            <div class="error-msg" 
+              *ngIf="isFieldInvalid('municipality') && userProfileForm.get('municipality').hasError('required')">
+              Municipality is required  
+            </div>
+            <div class="error-msg" 
+              *ngIf="isFieldInvalid('municipality') && !userProfileForm.get('municipality').hasError('required') && 
+              userProfileForm.get('municipality').hasError('isMunicipalityInvalid')">
+              Please input a valid municipality
+            </div>
+          </div>
+        </div>
   </form>
