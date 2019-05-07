@@ -44,7 +44,11 @@
                           >
                         </div>
                         <div class="col-9">
-                          <select class="form-control" formControlName="region" required>
+                          <select
+                            class="form-control"
+                            formControlName="region"
+                            required
+                          >
                             <option value="null">Select Region</option>
                             <option
                               *ngFor="let region of regionArray"
@@ -56,8 +60,7 @@
                           <span
                             class="help-block"
                             *ngIf="
-                              provinceForm.get('region').invalid &&
-                              provinceForm.get('region').touched &&
+                              provinceFormDefaultValidators('region') &&
                               provinceForm.get('region').errors?.required
                             "
                           >
@@ -80,8 +83,7 @@
                           <span
                             class="help-block"
                             *ngIf="
-                              provinceForm.get('name').invalid &&
-                              provinceForm.get('name').touched &&
+                              provinceFormDefaultValidators('name') &&
                               provinceForm.get('name').errors?.required
                             "
                           >
@@ -97,16 +99,13 @@
                         </div>
                         <div class="col-9">
                           <input
-                            class="form-control"
                             type="text"
+                            class="form-control"
                             formControlName="psgcCode"
                           />
                           <div
                             class="form-control-errors"
-                            *ngIf="
-                              provinceForm.get('psgcCode').invalid &&
-                              provinceForm.get('psgcCode').touched
-                            "
+                            *ngIf="provinceFormDefaultValidators('psgcCode')"
                           >
                             <span
                               class="help-block"
@@ -114,14 +113,14 @@
                                 provinceForm.get('psgcCode').errors?.required
                               "
                             >
-                              PSGC Code is required.
-                            </span>
+                              PSGC Code is required.</span
+                            >
                             <span
                               class="help-block"
                               *ngIf="
-                                provinceForm.get('psgcCode').errors?.pattern ||
                                 provinceForm.get('psgcCode').errors
-                                  ?.invalidFormat
+                                  ?.invalidFormat ||
+                                provinceForm.get('psgcCode').errors?.pattern
                               "
                             >
                               Invalid format.
@@ -130,7 +129,7 @@
                               class="help-block"
                               *ngIf="
                                 provinceForm.get('psgcCode').errors
-                                  ?.minlength &&
+                                  ?.minlength ||
                                 provinceForm.get('psgcCode').errors?.maxlength
                               "
                             >
@@ -163,8 +162,7 @@
                           <div
                             class="form-control-errors"
                             *ngIf="
-                              provinceForm.get('provinceCode').invalid &&
-                              provinceForm.get('provinceCode').touched
+                              provinceFormDefaultValidators('provinceCode')
                             "
                           >
                             <span
@@ -186,6 +184,9 @@
                               "
                             >
                               Invalid format.
+                            </span>
+                            <span class="help-block" *ngIf="provinceForm.get('provinceCode').errors?.provinceAndPsgcCodeNotMatch">
+                              PSGC code and Province code don't match!.
                             </span>
                             <span
                               class="help-block"

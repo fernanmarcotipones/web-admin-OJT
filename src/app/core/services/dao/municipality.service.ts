@@ -117,6 +117,22 @@ export class MunicipalityService {
       });
     }
 
+  getAll(): Promise<any[]> {
+    let municipalities = [];
+    return new Promise(async (resolve, reject) => {
+      try {
+        const query = new this.apiService.Query(this.className);
+        query.ascending('name');
+        municipalities = await query.find();
+        municipalities = municipalities.map(data => data.toJSON());
+        resolve(municipalities);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   sortByColumn(resultQuery, colName, sortType) {
     if (sortType === 'asc') {
       resultQuery.ascending(colName);

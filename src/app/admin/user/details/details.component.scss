@@ -12,9 +12,14 @@
         min-height: 400px;
     }
     .body-container {
-        color: #FFF;
+        // color: #FFF;
         .card {
             background-color: #FF0010;
+            
+            .nav, > h3
+            {
+                color: #FFF;
+            }
         }
         .nav.nav-tabs{
             border-bottom: 0;
