@@ -84,9 +84,9 @@
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center">
-          <select class="mr-auto ml-auto custom-select custom-select-md cso-group-input" formControlName="csoAccessLevel" (change)="selectedAccessLevel($event.target.value)">
+          <select class="mr-auto ml-auto custom-select custom-select-md cso-group-input" formControlName="csoAccessLevel" (change)="selectAccessLevel($event.target.value)">
             <option value="">Access Level</option>
-            <option *ngFor="let accesslevel of accesslevels" value="{{ accesslevel.name }}"> {{ accesslevel.name }} </option>
+            <option *ngFor="let accesslevel of accesslevels" value="{{ accesslevel.objectId }}"> {{ accesslevel.name }} </option>
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center">
@@ -98,7 +98,7 @@
       <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showRegionDiv">
           <select class="custom-select custom-select-md cso-group-input" formControlName="region" (change)="selectedRegion($event.target.value)">
             <option value="" >Region</option>
-            <option *ngFor="let region of regions" value="{{ region.objectId }},{{ region.name }}">{{ region.name }}</option>
+            <option *ngFor="let region of regions" value="{{ region.objectId }}">{{ region.name }}</option>
           </select>
        </div>
        <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showRegionDiv">
@@ -110,7 +110,7 @@
       <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showProvinceDiv">
           <select class="custom-select custom-select-md cso-group-input" formControlName="province" (change)="selectedProvince($event.target.value)">
             <option value="" >Province</option>
-            <option *ngFor="let province of provinces" value="{{ province.objectId }},{{ province.name }}">{{ province.name }}</option>
+            <option *ngFor="let province of provinces" value="{{ province.objectId }}">{{ province.name }}</option>
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showProvinceDiv">
@@ -122,7 +122,7 @@
       <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showMunicipalDiv">
           <select class="custom-select custom-select-md cso-group-input" formControlName="municipality" (change)="selectedMunicipality($event.target.value)">
             <option value="" >Municipality</option>
-            <option *ngFor="let municipality of municipalities" value="{{ municipality.objectId }},{{ municipality.name }}">{{ municipality.name }}</option>
+            <option *ngFor="let municipality of municipalities" value="{{ municipality.objectId }}">{{ municipality.name }}</option>
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showMunicipalDiv">
@@ -134,7 +134,7 @@
       <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showBarangayDiv">
           <select class="custom-select custom-select-md cso-group-input" formControlName="barangay" (change)="selectedBarangay($event.target.value)" >
             <option value="" >Barangay</option>
-            <option *ngFor="let barangay of barangays" value="{{ barangay.objectId }},{{ barangay.name }}">{{barangay.name}}</option>
+            <option *ngFor="let barangay of barangays" value="{{ barangay.objectId }}">{{barangay.name}}</option>
           </select>
       </div>
       <div class="row-fluid d-flex justify-content-center" *ngIf="showDivs.showBarangayDiv">
@@ -148,9 +148,10 @@
       </div>
     </div>
   </div>  
+  <!-- {{ csoAccessLevelForm.value | json}} -->
 </form>
 
-  <div class="row-fluid d-flex justify-content-center" *ngIf="this.saveds.length !=0">
+  <div class="row-fluid d-flex justify-content-center" *ngIf="this.accessLevelList.length !=0">
       <div class="col-10 card pt-3 pb-2">
        <table class="table table-responsive borderless w-100">
           <thead class="card-header mb-3">
@@ -162,11 +163,12 @@
             <th>Actions</th>
           </thead>
           <tbody>
-            <tr *ngFor="let saved of saveds">
-              <td>{{ saved.csoAgencyProgram }}</td>
+            <tr *ngFor="let accessLevel of accessLevelList">
+              <td>none</td>
               <td>AM(sample)</td>
-              <td>{{ saved.csoAccessLevel }}</td>
-              <td><strong>{{ saved.region[1] }}</strong> {{ saved.province[1] }} {{ saved.municipality[1] }} {{ saved.barangay[1] }}</td>
+              <td>{{ accessLevel.level.name}}</td>
+              <td *ngIf="!accessLevel.region?.name">ALL</td>
+              <td *ngIf="accessLevel.region?.name"><strong>{{ accessLevel.region?.name }}</strong> {{ accessLevel.province?.name }} {{ accessLevel.municipality?.name }}{{ accessLevel.barangay?.name }}</td>
               <td>
                 <div class="cso-group-input">
                   <mat-slide-toggle class = "tp-margin">
