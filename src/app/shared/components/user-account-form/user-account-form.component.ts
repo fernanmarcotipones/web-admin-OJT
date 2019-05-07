@@ -20,12 +20,12 @@ export class UserAccountFormComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public userService: UserService,
-  ) { 
+  ) {
     this.userAccountForm = fb.group({
       email: new FormControl('', [Validators.required, Validators.email], this.isEmailTaken.bind(this)),
       username: new FormControl('', [Validators.required, UserAccountFormValidators.validateWhiteSpaceOnly], this.isUsernameTaken.bind(this)),
-      newPassword: new FormControl(''),
-      repeatPassword: new FormControl(''),
+      newPassword: new FormControl('', [Validators.required]),
+      repeatPassword: new FormControl('', [Validators.required]),
     });
   }
 
