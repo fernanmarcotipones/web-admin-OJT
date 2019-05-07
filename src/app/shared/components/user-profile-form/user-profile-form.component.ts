@@ -43,7 +43,6 @@ export class UserProfileFormComponent implements OnInit {
     Object.keys(data).map(key => {
       if (this.userProfileForm.controls[key]) {
         this.userProfileForm.controls[key].patchValue(data[key]);
-        console.log(this.userProfileForm.controls[key]);
       }
     });
     this.currentMobileNumber = data['mobileNumber'];
