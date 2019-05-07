@@ -8,6 +8,7 @@ import { UserDetailsComponent } from './details/details.component';
 import { UserDetailsSummaryComponent } from './details/summary/summary.component';
 import { UserListComponent } from './list/list.component';
 import { UserTableComponent } from './table/table.component';
+import { EditComponent } from './edit/edit.component'; 
 
 export * from './details/details.component';
 
@@ -24,6 +25,7 @@ export * from './details/details.component';
     UserDetailsSummaryComponent,
     UserListComponent,
     UserTableComponent,
+    EditComponent
   ],
   entryComponents: [
     UserDetailsComponent,

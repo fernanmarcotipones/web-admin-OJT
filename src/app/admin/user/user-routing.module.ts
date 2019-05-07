@@ -3,6 +3,7 @@ import { RouterModule, Route } from '@angular/router';
 
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { UserListComponent } from './list/list.component';
+import { EditComponent } from './edit/edit.component';
 
 export const routerConfig: Route[] = [
   {
@@ -24,6 +25,13 @@ export const routerConfig: Route[] = [
       title: 'My Profile'
     },
     component: MyProfileComponent
+  },
+  {
+    path: 'user/edit/:id',
+    data: {
+      title: 'edit'
+    },
+    component: EditComponent
   },
 ];
 
