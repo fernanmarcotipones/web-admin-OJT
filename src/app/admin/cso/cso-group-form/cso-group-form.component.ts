@@ -311,13 +311,12 @@ export class CsoGroupFormComponent implements OnInit {
       })
     }
     
-
     this.csoAccessLevelForm.controls['csoAgencyProgram'].setValue('DPWH sample'); 
-    this.accessLevelList.push(this.accessInfo); //push ^ data to database
+    this.accessLevelList.push(this.accessInfo); //push ^ data to database 
+
     this.resetSelectFields();
     this.clearLocationArray();
     this.setValueOfSelectToEmpty();
-
 
     this.showDivs = {
       showRegionDiv:false,
