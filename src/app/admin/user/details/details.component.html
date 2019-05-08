@@ -11,11 +11,7 @@
           <a class="nav-link round-tab" 
             [ngClass]="{'active': isActive('about')}" 
             role="tab" 
-<<<<<<< HEAD
-            (click)="confirmChangeTab('profile')">
-=======
             (click)="confirmChangeTab('about')">
->>>>>>> DL-0008-33 - User Management: Create UI/UX and routing for form that contains input fields for user about information - Renamed - Changed component name user-profile-form to user-about-form
             <p class="mx-5 my-0"><i class="fa fa-user m-0"></i> About</p>
           </a>
         </li>
@@ -44,7 +40,7 @@
               'col-md-8': !isActive('roles'),
               'col-md-11': isActive('roles')
             }">
-            <app-user-profile-form *ngIf="isActive('about')"
+            <app-user-about-form *ngIf="isActive('about')"
               [userProfileData]="userProgramRole?.user?.userProfile"
               (newUserProfileData)="setUserData($event)">
             </app-user-about-form>
