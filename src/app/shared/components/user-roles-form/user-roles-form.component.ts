@@ -106,40 +106,36 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
 
     this.resetBooleans();
     this.resetValidators();
-    switch (accessValue) {
+
+    switch(accessValue) {
       case 'National':
         this.isNational = true;
         break;
-      case '':
+      case '' || null:
         break;
       default:
         this.enableRegional = true;
+        this.insertValidators(this.userRolesForm.controls.region);
+        this.resetFormControlValues(this.userRolesForm.controls.region);
         switch (accessValue) {
           case 'Regional':
             this.isRegional = true;
-            this.insertValidators(this.userRolesForm.controls.region);
-            this.resetFormControlValues(this.userRolesForm.controls.region);
             break;
           case 'Provincial':
             this.isProvincial = true;
-            this.insertValidators(
-              this.userRolesForm.controls.region,
-              this.userRolesForm.controls.province
-            );
-            this.resetFormControlValues(
-              this.userRolesForm.controls.region,
-              this.userRolesForm.controls.province
-            );
+            this.enableProvincial = true;
+            this.insertValidators(this.userRolesForm.controls.province);
+            this.resetFormControlValues(this.userRolesForm.controls.province);
             break;
           case 'Municipal' || 'Barangay':
             this.isMunicipal = true;
+            this.enableProvincial = true;
+            this.enableMunicipal = true;
             this.insertValidators(
-              this.userRolesForm.controls.region,
               this.userRolesForm.controls.province,
               this.userRolesForm.controls.municipality
             );
             this.resetFormControlValues(
-              this.userRolesForm.controls.region,
               this.userRolesForm.controls.province,
               this.userRolesForm.controls.municipality
             );
@@ -157,7 +153,6 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     if (!(this.isNational || this.isRegional)) {
       if (notNull) {
         this.fetchProvinces(regionValue.regionCode);
-        this.enableProvincial = true;
       }
     }
   }
@@ -170,7 +165,6 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     if (!(this.isNational || this.isRegional || this.isProvincial)) {
       if (notNull) {
         this.fetchMunicipalities(provinceValue.provinceCode);
-        this.enableMunicipal = true;
       }
     }
   }
@@ -206,42 +200,36 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
 
   async fetchUserRoles() {
     const roleList: any = await this.userRoleService.getAllUserRoles().then(data => data);
-    console.log(roleList);
     this.roles = roleList;
     return roleList;
   }
 
   async fetchAccessLevels() {
     const levelList: any = await this.programAccessLevelService.getAll().then(data => data);
-    console.log(levelList);
     this.levels = levelList;
     return levelList;
   }
 
   async fetchCSOGroups() {
     const csoList: any = await this.csoGroupService.getAllCSOGroup().then(data => data);
-    console.log(csoList);
     this.csoGroups = csoList;
     return csoList;
   }
 
   async fetchRegions() {
     const regionList: any = await this.regionService.getAll().then(data => data);
-    console.log(regionList);
     this.regions = regionList;
     return regionList;
   }
 
   async fetchProvinces(regionCode) {
     const provinceList: any = await this.provinceService.getByRegionCode(regionCode).then(data => data);
-    console.log(provinceList);
     this.provinces = provinceList;
     return provinceList;
   }
 
   async fetchMunicipalities(provinceCode) {
     const municipalityList: any = await this.municipalityService.getByProvinceCode(provinceCode).then(data => data);
-    console.log(municipalityList);
     this.municipalities = municipalityList;
     return municipalityList;
   }
