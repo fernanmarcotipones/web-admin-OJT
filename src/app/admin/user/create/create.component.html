@@ -1,3 +1,25 @@
-<p>
-  create works!
-</p>
+<div class="col-12">
+  <div class="card">
+    <h3 class="body-container col-md-12 py-3 text-white text-center rounded-top">Create User Information</h3>
+      <div class="col-md-8 m-auto">
+        <app-user-profile-form
+          (newUserProfileData)="setUserData($event)">
+          </app-user-profile-form>
+          <app-user-account-form
+          [isProjectAdmin]="true" 
+          (newUserAccountData)="setUserData($event)">
+          </app-user-account-form>
+          <app-user-roles-form>
+          </app-user-roles-form>
+
+      <hr>
+        <div class="controls text-right mb-4">
+          <button class="btn btn-sm btn-primary" 
+            [attr.disabled]="isControlDisabled?'':null"
+            (click)="activeModal('save')">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
