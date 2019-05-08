@@ -17,7 +17,7 @@ import { Constants } from 'app/shared/constants';
 export class UserDetailsComponent implements OnInit {
   @ViewChild('activateModal') public activateModal: ModalDirective;
   @Input() userProgramRole;
-  public activeTab = 'profile';
+  public activeTab = 'about';
 
   public user: any;
   public userProfile: any;
