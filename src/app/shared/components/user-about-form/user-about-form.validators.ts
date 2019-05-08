@@ -4,7 +4,7 @@ const mobileRegex = new RegExp(/^(9|09|\+639)\d{9}$/);
 const alphabetRegex = new RegExp(/^[a-zA-Z ]*$/);
 const numberRegex = new RegExp(/^[0-9]*$/);
 
-export class UserProfileFormValidators extends Validators {
+export class UserAboutFormValidators extends Validators {
   static validateMobileNumber(control: FormControl) {
     const mobileNumber = control.value;
     if (mobileNumber && mobileNumber.length > 0) {

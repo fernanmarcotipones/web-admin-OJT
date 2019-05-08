@@ -10,7 +10,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 
 import { PipesModule } from '../../pipes/pipes.module'
 
-import { UserProfileFormComponent } from './user-profile-form.component';
+import { UserAboutFormComponent } from './user-about-form.component';
 
 @NgModule({
   imports: [CommonModule,
@@ -29,9 +29,9 @@ import { UserProfileFormComponent } from './user-profile-form.component';
     }
     ),
   ],
-  declarations: [UserProfileFormComponent],
-  entryComponents: [UserProfileFormComponent],
-  exports: [UserProfileFormComponent]
+  declarations: [UserAboutFormComponent],
+  entryComponents: [UserAboutFormComponent],
+  exports: [UserAboutFormComponent]
 })
-export class UserProfileFormComponentModule {
+export class UserAboutFormComponentModule {
 }

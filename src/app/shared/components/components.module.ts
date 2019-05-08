@@ -4,7 +4,7 @@ import { FilterOptionsComponentModule } from './filter-options/filter-options.co
 import { DynamicFormDisplayModule } from './dynamic-form-display/dynamic-form-display.module';
 import { UserExportsComponentModule } from './user-exports-table/user-exports-table.component.module';
 import { UserAccountFormComponentModule } from './user-account-form/user-account-form.component.module';
-import { UserProfileFormComponentModule } from './user-profile-form/user-profile-form.component.module';
+import { UserAboutFormComponentModule } from './user-about-form/user-about-form.component.module';
 
 export * from './filter-options/filter-options.component.module';
 export * from './dynamic-form-display/dynamic-form-display.module';
@@ -17,7 +17,7 @@ export * from './user-account-form/user-account-form.component.module';
     DynamicFormDisplayModule,
     UserExportsComponentModule,
     UserAccountFormComponentModule,
-    UserProfileFormComponentModule,
+    UserAboutFormComponentModule,
   ],
 })
 export class ComponentsModule {

@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserProfileService } from 'app/core';
-import { UserProfileFormValidators } from './user-profile-form.validators';
+import { UserAboutFormValidators } from './user-about-form.validators';
 
 @Component({
-  selector: 'app-user-profile-form',
-  templateUrl: './user-profile-form.component.html',
-  styleUrls: ['./user-profile-form.component.scss']
+  selector: 'app-user-about-form',
+  templateUrl: './user-about-form.component.html',
+  styleUrls: ['./user-about-form.component.scss']
 })
-export class UserProfileFormComponent implements OnInit {
+export class UserAboutFormComponent implements OnInit {
   @Input() userProfileData;
   @Output() newUserProfileData: EventEmitter<Object> = new EventEmitter<Object>();
 
@@ -20,16 +20,16 @@ export class UserProfileFormComponent implements OnInit {
     public userProfileService: UserProfileService,
   ) {
     this.userProfileForm = fb.group({
-      firstName: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
-      lastName: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
-      middleName: new FormControl('', [UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
-      occupation: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
-      mobileNumber: new FormControl('', [Validators.required, UserProfileFormValidators.validateMobileNumber], this.isMobileNumberTaken.bind(this)),
-      streetName: new FormControl('', [Validators.required, UserProfileFormValidators.validateWhiteSpaceOnly]),
-      streetNumber: new FormControl('', [Validators.required, UserProfileFormValidators.validateNumberOnly]),
-      region: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
-      province: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
-      municipality: new FormControl('', [Validators.required, UserProfileFormValidators.validateAlphabetOnly, UserProfileFormValidators.validateWhiteSpaceOnly]),
+      firstName: new FormControl('', [Validators.required, UserAboutFormValidators.validateAlphabetOnly, UserAboutFormValidators.validateWhiteSpaceOnly]),
+      lastName: new FormControl('', [Validators.required, UserAboutFormValidators.validateAlphabetOnly, UserAboutFormValidators.validateWhiteSpaceOnly]),
+      middleName: new FormControl('', [UserAboutFormValidators.validateAlphabetOnly, UserAboutFormValidators.validateWhiteSpaceOnly]),
+      occupation: new FormControl('', [Validators.required, UserAboutFormValidators.validateAlphabetOnly, UserAboutFormValidators.validateWhiteSpaceOnly]),
+      mobileNumber: new FormControl('', [Validators.required, UserAboutFormValidators.validateMobileNumber], this.isMobileNumberTaken.bind(this)),
+      streetName: new FormControl('', [Validators.required, UserAboutFormValidators.validateWhiteSpaceOnly]),
+      streetNumber: new FormControl('', [Validators.required, UserAboutFormValidators.validateNumberOnly]),
+      region: new FormControl('', [Validators.required, UserAboutFormValidators.validateAlphabetOnly, UserAboutFormValidators.validateWhiteSpaceOnly]),
+      province: new FormControl('', [Validators.required, UserAboutFormValidators.validateAlphabetOnly, UserAboutFormValidators.validateWhiteSpaceOnly]),
+      municipality: new FormControl('', [Validators.required, UserAboutFormValidators.validateAlphabetOnly, UserAboutFormValidators.validateWhiteSpaceOnly]),
     });
   }
 
