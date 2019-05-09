@@ -3,26 +3,8 @@
   <div class="text-center vertical">
     <i class="fa fa-wpforms bigIcon color-success"></i>
     <div class="position">
-      <h4>Form preview will show here</h4>
+      <h4 *ngIf="sourceId==null">Form preview will show here </h4>
+      <h4 *ngIf="sourceId!=null">New Form</h4>
     </div>
   </div>
 </div>
-
-<!-- <div class="col-12 col-md-10 ml-md-auto mr-md-auto mb-3">
-  <form [formGroup]="formDetails" class="custom-form animated fadeIn">
-    <div *ngFor="let item of items" class="form-group row">
-      <label class="col-md-3 form-control-label required" [attr.for]="item.key">{{item.label}}</label>
-      <div class="col-md-9" [ngSwitch]="item.controlType">
-        <input class="form-control form-control-sm" *ngSwitchCase="'textbox'" [formControlName]="item.key"
-          [id]="item.key" [type]="item.type">
-        <select class="custom-select custom-select-md col-12" [formControlName]="item.key" [id]="item.key"
-          *ngSwitchCase="'dropdown'">
-          <option *ngFor="let opt of item.options">{{opt.value}}</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group text-right">
-      <button class="pr-3 pl-3 btn btn-primary" type="submit">Save</button>
-    </div>
-  </form>
-</div> -->

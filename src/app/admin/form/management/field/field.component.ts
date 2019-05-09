@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, Validators} from '@angular/forms';
 import { ActivatedRoute} from '@angular/router'
 
 @Component({
@@ -9,6 +9,8 @@ import { ActivatedRoute} from '@angular/router'
 
 })
 export class FieldComponent implements OnInit {
+  @Output() formSource: EventEmitter<string> = new EventEmitter<string>();
+
   showProgramField: Boolean;
   formDetailsGroup = this.fb.group({
   source: ['', Validators.required],
@@ -22,7 +24,7 @@ export class FieldComponent implements OnInit {
   })
   id: string
   constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
-
+    this.generateform()
    }
    showProgramProjectStatus(selected) {
      console.log(selected)
@@ -69,7 +71,15 @@ export class FieldComponent implements OnInit {
     this.formDetailsGroup.patchValue({[key] : 'Set Status'})
   })
   }
-  
+generateform() {
+  console.log('aaa')
+  this.formDetailsGroup.controls.source.valueChanges
+  .debounceTime(1000)
+  .subscribe(value => {
+    this.formSource.emit(value)
+  })
+}
+
   ngOnInit() {
     this.activatedRoute.url.subscribe(data => {
       // console.log(data[2].parameters)
