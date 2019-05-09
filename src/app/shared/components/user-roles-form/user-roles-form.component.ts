@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter, group } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, group, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { UserRolesFormValidators } from './user-roles-form.validators'
 
@@ -13,6 +13,7 @@ import {
   UserProgramRoleService,
   UserRoleService
 } from 'app/core';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-user-roles-form',
@@ -43,6 +44,14 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
   public enableProvincial = false;
   public enableMunicipal = false;
 
+  @Input() public mainLoading = false;
+  @Input() public rolesLoading = false;
+  @Input() public levelLoading = false;
+  @Input() public csoLoading = false;
+  @Input() public regionLoading = false;
+  @Input() public provinceLoading = false;
+  @Input() public municipalLoading = false;
+
   // Select Box Validators
   validators = [Validators.required, UserRolesFormValidators.validateNoNull];
 
@@ -56,7 +65,8 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     public regionService: RegionService,
     public userService: UserService,
     public userProgramRoleService: UserProgramRoleService,
-    public userRoleService: UserRoleService
+    public userRoleService: UserRoleService,
+    public ref: ChangeDetectorRef
   ) {
     this.userRolesForm = fb.group({
       role: new FormControl('', this.validators),
@@ -72,6 +82,11 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.userRolesData) {
       this.setUserRolesForm(this.userRolesData);
+    }
+
+    if (!this.roles)
+    {
+      console.log('Roles is Null');
     }
     this.fetchInitialOptions();
   }
@@ -91,13 +106,16 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
   // TODO: Push Values
   public pushValues() {
     console.log('Pushed');
+    console.log('OnPush: ' + this.rolesLoading);
   }
 
   fetchInitialOptions() {
+    console.log('Fetching Options');
     this.fetchUserRoles();
     this.fetchAccessLevels();
     this.fetchCSOGroups();
     this.fetchRegions();
+    console.log('Fetching: ' + this.rolesLoading);
   }
 
   onAccessFieldChange() {
@@ -198,40 +216,70 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     }
   }
 
-  async fetchUserRoles() {
-    const roleList: any = await this.userRoleService.getAllUserRoles().then(data => data);
-    this.roles = roleList;
-    return roleList;
+  fetchUserRoles(): Promise<void | any[]> {
+    return new Promise(async (resolve) => {
+      this.rolesLoading = true;
+      const roleList: any = await this.userRoleService.getAllUserRoles().then(data => this.roles = data);
+      resolve(roleList);
+    }).then(() => {
+      this.rolesLoading = false;
+      this.ref.detectChanges();
+    });
   }
 
-  async fetchAccessLevels() {
-    const levelList: any = await this.programAccessLevelService.getAll().then(data => data);
-    this.levels = levelList;
-    return levelList;
+  fetchAccessLevels(): Promise<void | any[]> {
+    return new Promise(async (resolve) => {
+      this.levelLoading = true;
+      const levelList: any = await this.programAccessLevelService.getAll().then(data => this.levels = data);
+      resolve(levelList);
+    }).then(() => {
+      this.levelLoading = false;
+      this.ref.detectChanges();
+    });
   }
 
-  async fetchCSOGroups() {
-    const csoList: any = await this.csoGroupService.getAllCSOGroup().then(data => data);
-    this.csoGroups = csoList;
-    return csoList;
+  fetchCSOGroups(): Promise<void | any[]> {
+    return new Promise(async (resolve) => {
+      this.csoLoading = true;
+      const csoList: any = await this.csoGroupService.getAllCSOGroup().then(data => this.csoGroups = data);
+      resolve(csoList);
+    }).then(() => {
+      this.csoLoading = false;
+      this.ref.detectChanges();
+    });
   }
 
-  async fetchRegions() {
-    const regionList: any = await this.regionService.getAll().then(data => data);
-    this.regions = regionList;
-    return regionList;
+  fetchRegions(): Promise<void | any[]> {
+    return new Promise(async (resolve) => {
+      this.regionLoading = true;
+      const regionList: any = await this.regionService.getAll().then(data => this.regions = data);
+      resolve(regionList);
+    }).then(() => {
+      this.regionLoading = false;
+      this.ref.detectChanges();
+    });
   }
 
-  async fetchProvinces(regionCode) {
-    const provinceList: any = await this.provinceService.getByRegionCode(regionCode).then(data => data);
-    this.provinces = provinceList;
-    return provinceList;
+  fetchProvinces(regionCode): Promise<void | any[]> {
+    return new Promise(async (resolve) => {
+      this.provinceLoading = true;
+      const provinceList: any = await this.provinceService.getByRegionCode(regionCode).then(data => this.provinces = data);
+      resolve(provinceList);
+    }).then(() => {
+      this.provinceLoading = false;
+      this.ref.detectChanges();
+    });
   }
 
-  async fetchMunicipalities(provinceCode) {
-    const municipalityList: any = await this.municipalityService.getByProvinceCode(provinceCode).then(data => data);
-    this.municipalities = municipalityList;
-    return municipalityList;
+  fetchMunicipalities(provinceCode): Promise<void | any[]> {
+    return new Promise(async (resolve) => {
+      this.municipalLoading = true;
+      const municipalityList: any = await this.municipalityService.getByProvinceCode(provinceCode).then(data => this.municipalities = data);
+      resolve(municipalityList);
+    }).then(() => {
+      this.municipalLoading = false;
+      this.ref.detectChanges();
+    });
   }
 
   isNotNull (val) {

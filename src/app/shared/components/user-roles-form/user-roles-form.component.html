@@ -4,18 +4,21 @@
       <legend class="p-1">Program Roles</legend>
       <div class="form-group row ml-2">
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-1">
+            <ngx-loading [show]="rolesLoading" ></ngx-loading>
               <select class="form-control form-control-sm col" formControlName="role" name="role" id="select-roles" aria-placeholder="Roles">
                   <option value="" disabled selected>Roles</option>
                   <option *ngFor="let role of roles" [ngValue]="role">{{ role.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
+            <ngx-loading [show]="levelLoading" ></ngx-loading>
               <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" (change)="onAccessFieldChange()" aria-placeholder="Access">
                 <option value="" disabled selected>Access Level</option>
                 <option *ngFor="let level of levels" [ngValue]="level">{{ level.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-3">
+            <ngx-loading [show]="csoLoading" ></ngx-loading>
               <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso" aria-placeholder="CSO">
                 <option value="" disabled selected>CSO Group</option>
                 <option *ngFor="let group of csoGroups" [ngValue]="group">{{ group.name }}</option>
@@ -24,18 +27,21 @@
           
           <div class="w-100"></div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-5">
+            <ngx-loading *ngIf="enableRegional" [show]="regionLoading" ></ngx-loading>
               <select *ngIf="enableRegional" class="form-control form-control-sm col" formControlName="region" name="region" id="select-region" (change)="onRegionalFieldChange()" aria-placeholder="Region">
                 <option value="" disabled selected>Region</option>
                 <option *ngFor="let region of regions" [ngValue]="region">{{ region.name }}</option>
             </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-6">
+            <ngx-loading [show]="provinceLoading" ></ngx-loading>
               <select *ngIf="enableProvincial" class="form-control form-control-sm col" formControlName="province" name="province" id="select-province" (change)="onProvincialFieldChange()"  aria-placeholder="Province">
                 <option value="" disabled selected>Province</option>
                 <option *ngFor="let province of provinces" [ngValue]="province">{{ province.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-7">
+            <ngx-loading [show]="municipalLoading" ></ngx-loading>
               <select *ngIf="enableMunicipal" class="form-control form-control-sm col" formControlName="municipality" name="municipality" id="select-municipality" aria-placeholder="Municipality">
                 <option value="" disabled selected>Municipalities</option>
                 <option *ngFor="let municipality of municipalities" [ngValue]="municipality">{{ municipality.name }}</option>

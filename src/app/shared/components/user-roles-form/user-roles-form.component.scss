@@ -15,8 +15,8 @@
   {
       position: relative;
       display: inline-block;
-      width: 60px;
-      height: 25px;
+      width: 45px;
+      height: 24px;
   
       /* Hide default HTML checkbox */
       input 
@@ -35,16 +35,16 @@
       right: 0;
       bottom: 0;
       background-color: #ccc;
+      box-shadow: 0 0 1px black;
       @include transition(0.25s);
     }
     
     .slider:before {
       position: absolute;
       content: "";
-      height: 15px;
-      width: 15px;
-      left: 4px;
-      bottom: 4px;
+      height: 24px;
+      width: 24px;
+      box-shadow: 0 0 1px black;
       background-color: white;
       @include transition(0.25s);
     }
@@ -58,7 +58,7 @@
     }
     
     input:checked + .slider:before {
-      @include transform(translateX(36px));
+      @include transform(translateX(20px));
     }
   
   .slider.round {
