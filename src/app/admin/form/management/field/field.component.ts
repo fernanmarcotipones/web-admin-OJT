@@ -14,7 +14,7 @@ export class FieldComponent implements OnInit {
   formTitle: ['',Validators.required],
   description: [''],
   selectedQuestionType: ['',Validators.required],
-  selectedProgramType: [''],
+  selectedProgramType: ['',Validators.required],
   selectedProgramStatus: [''],
   selectedProjectStatus: [''],
   status: ['',Validators.required]

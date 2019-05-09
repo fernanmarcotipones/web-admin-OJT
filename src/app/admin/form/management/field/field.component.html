@@ -40,6 +40,10 @@
           <option>Set Status</option>
           <option>Survey</option>
         </select>
+        <div class = "error-msg"
+        *ngIf="isFieldInvalid('selectedQuestionType') && formDetailsGroup.get('selectedQuestionType').hasError('required')">
+         Question Type is Required
+        </div>
       </div>
     </div>
     <div class="form-group row">
@@ -51,6 +55,10 @@
           <option>Profile</option>
           <option>Survey</option>
         </select>
+        <div class = "error-msg"
+        *ngIf="isFieldInvalid('selectedProgramType') && formDetailsGroup.get('selectedProgramType').hasError('required')">
+         Program is Required
+        </div>
       </div>
     </div>
     <div *ngIf="showProgramField">
@@ -95,7 +103,7 @@
         </select>
         <div class = "error-msg"
         *ngIf="isFieldInvalid('status') && formDetailsGroup.get('status').hasError('required')">
-        Project Status is required
+         Status is Required
         </div>
       </div>
     </div>
