@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { CurrentUserService } from 'app/core';
 
 @Component({
   selector: 'app-admin-form-management',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./management.component.scss'],
 })
 export class ManagementComponent implements OnInit {
-  constructor() {
-   }
+  private subscriptions: Array<Subscription> = [];
+  public currentUser: any;
+  constructor(
+    private currentUserService: CurrentUserService,
+  ) {
+  }
 
   ngOnInit() {
+    this.subscriptions.push(this.currentUserService.currentUser
+      .distinctUntilChanged()
+      .subscribe(user => {
+        if (user && user.objectId) {
+          this.currentUser = user;
+        }
+      }))
   }
 
 }

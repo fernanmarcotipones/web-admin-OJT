@@ -1,117 +1,104 @@
-<div class="col-12 col-md-10 ml-md-auto mr-md-auto mb-3">
-  <form [formGroup]="formDetailsGroup" class="custom-form animated fadeIn" novalidate>
-    <div class="form-group row">
-      <div class="col-md-3">
-        <label class="form-control-label required">Source:</label>
-      </div>
-      <div class = "col-md-9">
-      <input formControlName="source" placeholder="URL/ID" type="text"
-        class="form-control form-control-sm"
-        (keyup)="onFieldChange()">
-        <div class = "error-msg"
-        *ngIf="isFieldInvalid('source') && formDetailsGroup.get('source').hasError('required')">
-        Source is required
+<ngx-loading [show]="!doneFetchingFormDependencies()"></ngx-loading>
+<div *ngIf="doneFetchingFormDependencies()" class="animated fadeIn">
+  <div class="col-12 col-md-10 ml-md-auto mr-md-auto mb-3">
+    <form [formGroup]="formDetailsGroup" class="custom-form animated fadeIn" novalidate>
+      <div class="form-group row">
+        <div class="col-md-3">
+          <label class="form-control-label required">Source:</label>
+        </div>
+        <div class="col-md-9">
+          <input formControlName="source" placeholder="URL/ID" type="text" class="form-control form-control-sm" (keyup)="onFieldChange()">
+          <div class="error-msg" *ngIf="isFieldInvalid('source') && formDetailsGroup.get('source').hasError('required')">
+            Source is required
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-group row">
-      <div class = "col-md-3">
-      <label class=" form-control-label required">Title:</label>
+      <div class="form-group row">
+        <div class="col-md-3">
+          <label class=" form-control-label required">Title:</label>
+        </div>
+        <div class="col-md-9">
+          <input formControlName="formTitle" type="text" class="form-control form-control-sm" (keyup)="onFieldChange()">
+          <div class="error-msg" *ngIf="isFieldInvalid('formTitle') && formDetailsGroup.get('formTitle').hasError('required')">
+            Title is required
+          </div>
+        </div>
       </div>
-      <div class = "col-md-9">
-      <input formControlName="formTitle" type="text" class="form-control form-control-sm"
-      (keyup)="onFieldChange()">
-      <div class = "error-msg"
-      *ngIf="isFieldInvalid('formTitle') && formDetailsGroup.get('formTitle').hasError('required')">
-      Title is required
+      <div class="form-group row">
+        <label class="col-md-3 form-control-label">Description:</label>
+        <textarea formControlName="description" class="col-md-9"></textarea>
       </div>
-    </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-md-3 form-control-label">Description:</label>
-      <textarea formControlName="description" class="col-md-9"></textarea>
-    </div>
-    <div class="form-group row">
-      <label class="col-md-3 form-control-label required">Question Type:</label>
-      <div class="col-md-9 p-0">
-        <select (change)="showProgramProjectStatus($event.target.value)" formControlName="selectedQuestionType" id="QuestionType"
+      <div class="form-group row">
+        <label class="col-md-3 form-control-label required">Question Type:</label>
+        <div class="col-md-9 p-0">
+          <!-- <select (change)="showProgramProjectStatus($event.target.value)" formControlName="selectedQuestionType" id="QuestionType"
          type="text" class="custom-select custom-select-md col-12">
           <option>Set Status</option>
           <option>Profile</option>
           <option>Survey</option>
-        </select>
-        <div class = "error-msg"
-        *ngIf="isFieldInvalid('selectedQuestionType') && formDetailsGroup.get('selectedQuestionType').hasError('required')">
-         Question Type is Required
-        </div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label class="col-md-3 form-control-label required">Program:</label>
-      <div class="col-md-9 p-0">
-        <select formControlName="selectedProgramType" id="QuestionType" type="text"
-          class="custom-select custom-select-lg col-12">
-          <option>Set Status</option>
-          <option>DILG- Assistance to Municipalities</option>
-          <option>Profile</option>
-          <option>Survey</option>
-        </select>
-        <div class = "error-msg"
-        *ngIf="isFieldInvalid('selectedProgramType') && formDetailsGroup.get('selectedProgramType').hasError('required')">
-         Program is Required
-        </div>
-      </div>
-    </div>
-    <div *ngIf="showProgramField">
-      <div class="form-group row animated fast fadeIn">
-        <label class="col-md-3 form-control-label required">Program Status:</label>
-        <div class="col-md-9 p-0">
-          <select formControlName="selectedProgramStatus" id="QuestionType" type="text"
-            class="custom-select custom-select-md col-4">
-          <option>Set Status</option>
-            <option>Select Program Status</option>
-            <option>Secret</option>
+        </select> -->
+          <select formControlName="selectedQuestionType" class="form-control" (change)="showProgramProjectStatus($event.target.value)">
+            <option value="">Choose Question Type</option>
+            <option *ngFor='let type of formQuestionTypes' value="{{ type.code}}"> {{ type.name | titlecase }}</option>
           </select>
-          <div class = "error-msg"
-          *ngIf="isFieldInvalid('selectedProgramStatus') && formDetailsGroup.get('selectedProgramStatus').hasError('required')">
-          Program Status is required
+          <div class="error-msg" *ngIf="isFieldInvalid('selectedQuestionType') && formDetailsGroup.get('selectedQuestionType').hasError('required')">
+            Question Type is Required
           </div>
         </div>
       </div>
-      <div class="form-group row animated fast fadeIn">
-        <label class="col-md-3 form-control-label required">Project Status:</label>
+      <div class="form-group row">
+        <label class="col-md-3 form-control-label required">Program:</label>
         <div class="col-md-9 p-0">
-          <select formControlName="selectedProjectStatus" id="QuestionType" type="text"
-            class="custom-select custom-select-md col-4">
-          <option>Set Status</option>
-            <option>Select Project Status</option>
-            <option>Secret</option>
+          <select class="form-control" [disabled]="true">
+            <option [value]="currentUser.activeUserProgramRole.program.programCode">{{activeProgram}}</option>
           </select>
-          <div class = "error-msg"
-          *ngIf="isFieldInvalid('selectedProjectStatus') && formDetailsGroup.get('selectedProjectStatus').hasError('required')">
-          Project Status is required
+          <!-- <div class="error-msg" *ngIf="isFieldInvalid('selectedProgramType') && formDetailsGroup.get('selectedProgramType').hasError('required')">
+          Program is Required
+        </div> -->
+        </div>
+      </div>
+      <div *ngIf="showProgramField">
+        <div class="form-group row animated fast fadeIn">
+          <label class="col-md-3 form-control-label required">Program Status:</label>
+          <div class="col-md-9 p-0">
+            <select formControlName="selectedProgramStatus" class="form-control" [disabled]="!doneFetchingProgramStatus">
+              <option value="">Program Status</option>
+              <option *ngFor='let status of programStatuses ' value="{{ status.objectId}}"> {{ status.name | titlecase }}</option>
+            </select>
+            <div class="error-msg" *ngIf="isFieldInvalid('selectedProgramStatus') && formDetailsGroup.get('selectedProgramStatus').hasError('required')">
+              Program Status is required
+            </div>
+          </div>
+        </div>
+        <div class="form-group row animated fast fadeIn">
+          <label class="col-md-3 form-control-label required">Project Status:</label>
+          <div class="col-md-9 p-0">
+            <select formControlName="selectedProjectStatus" class="form-control" [disabled]="!doneFetchingProjectStatus">
+              <option value="">Project Status</option>
+              <option *ngFor='let status of projectStatuses' value="{{ status.objectId}}"> {{ status.name | titlecase }}</option>
+            </select>
+            <div class="error-msg" *ngIf="isFieldInvalid('selectedProjectStatus') && formDetailsGroup.get('selectedProjectStatus').hasError('required')">
+              Project Status is required
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group row">
-      <label class="col-md-3 form-control-label required">Status:</label>
-      <div class="col-md-9 p-0">
-        <select formControlName="status" id="QuestionType" type="text"
-          class="custom-select custom-select-md col-12">
-          <option>Set Status</option>
-          <option>Profile</option>
-          <option>Survey</option>
-        </select>
-        <div class = "error-msg"
-        *ngIf="isFieldInvalid('status') && formDetailsGroup.get('status').hasError('required')">
-         Status is Required
+      <div class="form-group row">
+        <label class="col-md-3 form-control-label required">Status:</label>
+        <div class="col-md-9 p-0">
+          <select formControlName="status" class="form-control">
+            <option value="">Status</option>
+            <option *ngFor='let status of formStatuses' value="{{ status.code}}"> {{ status.name | titlecase }}</option>
+          </select>
+          <div class="error-msg" *ngIf="isFieldInvalid('status') && formDetailsGroup.get('status').hasError('required')">
+            Status is Required
+          </div>
         </div>
       </div>
-    </div>
-    <div class="form-group text-right">
-      <button [disabled]="!formDetailsGroup.valid" class="btn btn-md btn-primary pl-3 pr-3 ">Save</button>
-    </div>
-  </form>
+      <div class="form-group text-right">
+        <button [disabled]="!formDetailsGroup.valid" class="btn btn-md btn-primary pl-3 pr-3 ">Save</button>
+      </div>
+    </form>
+  </div>
 </div>

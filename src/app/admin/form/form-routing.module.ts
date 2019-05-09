@@ -20,7 +20,7 @@ export const routerConfig: Route[] = [
     component: FormListComponent
   },
   {
-    path: 'form/management',
+    path: 'form/management/add',
     data: {
       title: 'Form Management'
     },
