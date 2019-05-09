@@ -1,24 +1,24 @@
 <form [formGroup]="userRolesForm" #createUserRolesForm="ngForm" class="custom-form animated fadeIn">
     <h1 class="text-center">Roles and Permissions</h1>
+    
+      
+    <ngx-loading [show]="mainLoading && rolesLoading && levelLoading && csoLoading" ></ngx-loading>
     <fieldset class="form-group program-roles border border-dark container mb-4">
       <legend class="p-1">Program Roles</legend>
       <div class="form-group row ml-2">
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-1">
-            <ngx-loading [show]="rolesLoading" ></ngx-loading>
               <select class="form-control form-control-sm col" formControlName="role" name="role" id="select-roles" aria-placeholder="Roles">
                   <option value="" disabled selected>Roles</option>
                   <option *ngFor="let role of roles" [ngValue]="role">{{ role.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-2">
-            <ngx-loading [show]="levelLoading" ></ngx-loading>
               <select class="form-control form-control-sm col" formControlName="access" name="access" id="select-access" (change)="onAccessFieldChange()" aria-placeholder="Access">
                 <option value="" disabled selected>Access Level</option>
                 <option *ngFor="let level of levels" [ngValue]="level">{{ level.name }}</option>
               </select>
           </div>
           <div class="col-lg-3 col-md-6 col-xs-12 my-2 order-3">
-            <ngx-loading [show]="csoLoading" ></ngx-loading>
               <select class="form-control form-control-sm col" formControlName="cso" name="cso" id="select-cso" aria-placeholder="CSO">
                 <option value="" disabled selected>CSO Group</option>
                 <option *ngFor="let group of csoGroups" [ngValue]="group">{{ group.name }}</option>
@@ -59,7 +59,6 @@
       </div>
     </fieldset>
   
-    <!-- TODO: Display non mock data -->
     <table class="table table-responsive w-100">
         <thead>
             <tr>
@@ -72,24 +71,24 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Project Admin</td>
-                <td>National</td>
-                <td class="d-none d-lg-table-cell">N/A</td>
-                <td>N/A</td>
-                <td>
-                    <label class="switch mx-auto">
-                        <input type="checkbox" id="aToggle">
-                        <span class="slider round"></span>
-                    </label>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-outline-info"
-                        [routerLink]="['/admin/settings/user-management', value]">
-                        <i class="fa fa-pencil"></i>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-danger" (click)="deactivateUserModal(value)"><i class="fa fa-remove"></i></button>
-                </td>
+            <tr *ngFor="let userProgramRole of userProgramRoles">
+              <td>{{ userProgramRole.role.name }}</td>
+              <td>{{ userProgramRole.level.name }}</td>
+              <td>{{ userProgramRole.csoGroup ? userProgramRole.csoGroup.name : 'N/A' }}</td>
+              <td>{{ userProgramRole.region ? userProgramRole.region.name : 'N/A' }}</td>
+              <td>
+                  <label class="switch mx-auto">
+                      <input type="checkbox" id="aToggle" [checked]="userProgramRole.selected">
+                      <span class="slider round"></span>
+                  </label>
+              </td>
+              <td>
+                  <button type="button" class="btn btn-sm btn-outline-info"
+                      [routerLink]="['/admin/settings/user-management', value]">
+                      <i class="fa fa-pencil"></i>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="deactivateUserModal(value)"><i class="fa fa-remove"></i></button>
+              </td>
             </tr>
         </tbody>
     </table>
