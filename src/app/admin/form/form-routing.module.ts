@@ -26,6 +26,13 @@ export const routerConfig: Route[] = [
     },
     component: ManagementComponent
   },
+  {
+    path: 'form/management/edit',
+    data: {
+      title: 'Form Management'
+    },
+    component: ManagementComponent
+  },
 ];
 
 @NgModule({

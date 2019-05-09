@@ -7,6 +7,7 @@ import { FormListComponent } from './list/list.component';
 import { FormTableComponent } from './table/table.component';
 import { ManagementComponent } from './management/management.component';
 import { FieldComponent } from './management/field/field.component';
+import { FormPreviewComponent } from './management/form-preview/form-preview.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { FieldComponent } from './management/field/field.component';
     FormTableComponent,
     ManagementComponent,
     FieldComponent,
+    FormPreviewComponent,
   ],
   entryComponents: [
     FormListComponent,

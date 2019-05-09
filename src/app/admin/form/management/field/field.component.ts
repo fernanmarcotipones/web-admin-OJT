@@ -1,27 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormBuilder,Validators } from '@angular/forms';
-import { FieldValidators } from './field.component.validators';
+import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute} from '@angular/router'
 
 @Component({
   selector: 'app-admin-form-management-field',
   templateUrl: './field.component.html',
-  styleUrls: ['./field.component.scss']
+  styleUrls: ['./field.component.scss'],
+
 })
 export class FieldComponent implements OnInit {
   showProgramField: Boolean;
   formDetailsGroup = this.fb.group({
-  source: ['',Validators.required],
-  formTitle: ['',Validators.required],
+  source: ['', Validators.required],
+  formTitle: ['', Validators.required],
   description: [''],
-  selectedQuestionType: ['',Validators.required],
-  selectedProgramType: ['',Validators.required],
+  selectedQuestionType: ['', Validators.required],
+  selectedProgramType: ['', Validators.required],
   selectedProgramStatus: [''],
   selectedProjectStatus: [''],
-  status: ['',Validators.required]
+  status: ['', Validators.required]
   })
-  constructor(private fb: FormBuilder) {
+  id: string
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
+
    }
-   showProgramProjectStatus(selected){
+   showProgramProjectStatus(selected) {
      console.log(selected)
     if (selected === 'Profile' || selected === 'Survey') {
       this.showProgramField = true;
@@ -36,9 +39,6 @@ export class FieldComponent implements OnInit {
       this.formDetailsGroup.controls['selectedProjectStatus'].updateValueAndValidity()
     }
   }
-  ngOnInit() {
-  }
-
   isFieldInvalid(field: string) {
     return !this.formDetailsGroup.get(field).valid && this.formDetailsGroup.get(field).touched;
   }
@@ -60,6 +60,24 @@ export class FieldComponent implements OnInit {
       isFormInvalid: !this.formDetailsGroup.valid}
 
     // this.newUserAccountData.emit(data);
+}
+  getFormInformation() {
+    this.setFormValues()
+  }
+  setFormValues() {
+  Object.keys(this.formDetailsGroup.value).map(key => {
+    this.formDetailsGroup.patchValue({[key] : 'Set Status'})
+  })
+  }
+  
+  ngOnInit() {
+    this.activatedRoute.url.subscribe(data => {
+      // console.log(data[2].parameters)
+      // console.log(data)
+      if (data[2].path === 'edit') {
+        this.getFormInformation()
+      }
+    console.log(data)
+    })
   }
 }
-

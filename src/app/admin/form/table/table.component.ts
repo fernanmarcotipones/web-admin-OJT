@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { FormService, Page, Form} from 'app/core';
 import { Constants } from 'app/shared/constants';
@@ -6,12 +6,14 @@ import { Constants } from 'app/shared/constants';
 @Component({
   selector: 'app-admin-form-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class FormTableComponent implements OnInit, OnChanges {
   @Input() activeUserProgramRole: any;
   @Input() filterValues: any;
   @Input() isFilterLoaded: boolean;
+  id: string
+
 
   public loading = false;
   public page = new Page();
