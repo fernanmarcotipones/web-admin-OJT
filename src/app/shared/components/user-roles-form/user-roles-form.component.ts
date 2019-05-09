@@ -83,11 +83,6 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
     if (this.userRolesData) {
       this.setUserRolesForm(this.userRolesData);
     }
-
-    if (!this.roles)
-    {
-      console.log('Roles is Null');
-    }
     this.fetchInitialOptions();
   }
 
@@ -106,16 +101,13 @@ export class UserRolesFormComponent implements OnInit, OnChanges {
   // TODO: Push Values
   public pushValues() {
     console.log('Pushed');
-    console.log('OnPush: ' + this.rolesLoading);
   }
 
   fetchInitialOptions() {
-    console.log('Fetching Options');
     this.fetchUserRoles();
     this.fetchAccessLevels();
     this.fetchCSOGroups();
     this.fetchRegions();
-    console.log('Fetching: ' + this.rolesLoading);
   }
 
   onAccessFieldChange() {
