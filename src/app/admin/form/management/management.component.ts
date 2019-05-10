@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ValueTransformer } from '@angular/compiler/src/util';
+import { Subscription } from 'rxjs/Subscription';
+import { CurrentUserService } from 'app/core';
 
 @Component({
   selector: 'app-admin-form-management',
@@ -8,17 +9,27 @@ import { ValueTransformer } from '@angular/compiler/src/util';
 })
 export class ManagementComponent implements OnInit {
 
-  formSourceId: string;
+  private subscriptions: Array<Subscription> = [];
+  public currentUser: any;
+  formSourceId: any;
 
-  setSource(value){
+  constructor(
+    private currentUserService: CurrentUserService,
+  ) {
+  }
+  setSource(value) {
     this.formSourceId = value
     return this.formSourceId
   }
-  constructor() {
-  console.log()
-   }
 
   ngOnInit() {
+    this.subscriptions.push(this.currentUserService.currentUser
+      .distinctUntilChanged()
+      .subscribe(user => {
+        if (user && user.objectId) {
+          this.currentUser = user;
+        }
+      }))
   }
 
 }

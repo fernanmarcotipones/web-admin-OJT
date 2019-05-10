@@ -46,8 +46,8 @@ export class DynamicFormDisplayComponent implements OnInit {
         const itemsData = await this.formDisplay.fields.items;
         let order = 0;
         itemsData.forEach((item: DynamicFormControlGroup) => {
-          if (this.response && this.response.value) {
-            if (item.fieldId in this.response.value) {
+          // if (this.response && this.response.value) {
+            // if (item.fieldId in this.response.value) {
               const type = item.type;
               let itemData;
 
@@ -63,37 +63,37 @@ export class DynamicFormDisplayComponent implements OnInit {
                 case 'MULTIPLE_CHOICE':
                   itemData = new ITEMS_MODELS.radioButton(item);
                   break;
-                case 'GRID': 
+                case 'GRID':
                   itemData = new ITEMS_MODELS.radioGrid(item);
                   break;
-                case 'LIST': 
+                case 'LIST':
                   itemData = new ITEMS_MODELS.dropDown(item);
                   break;
-                case 'CHECKBOX': 
+                case 'CHECKBOX':
                   itemData = new ITEMS_MODELS.checkBox(item);
                   break;
-                case 'CHECKBOX_GRID': 
+                case 'CHECKBOX_GRID':
                   itemData = new ITEMS_MODELS.checkBoxGrid(item);
                   break;
-                case 'FILE': 
+                case 'FILE':
                   itemData = new ITEMS_MODELS.fileUpload(item);
                   break;
-                case 'PARAGRAPH_TEXT': 
-                case 'TEXTAREA': 
+                case 'PARAGRAPH_TEXT':
+                case 'TEXTAREA':
                   itemData = new ITEMS_MODELS.textArea(item);
                   break;
-                case 'DATE': 
+                case 'DATE':
                   itemData = new ITEMS_MODELS.date(item);
                   break;
               }
-              
+
               if (item.type === 'SECTION_HEADER' || item.type === 'PAGE_BREAK') {
                 itemData = item;
               }
 
               items.push(itemData);
-            }
-          }
+            // }
+          // }
         });
         this.items = items.sort((a, b) => a.index - b.index);
         this.form = this.formControlService.toFormGroup(this.items);

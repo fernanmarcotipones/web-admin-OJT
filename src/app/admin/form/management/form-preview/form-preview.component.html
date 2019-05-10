@@ -1,10 +1,11 @@
-<div id="myForm" [ngStyle]="{'background-image': 'url(' + formPreviewThumbnail + ')','background-size': '100% 100%'}"
-  class="card align-middle">
+<div id="myForm" [ngStyle]="{'background-image': 'url(' + formPreviewThumbnail + ')','background-size': '100% 100%'}" class="card align-middle">
   <div class="text-center vertical">
     <i class="fa fa-wpforms bigIcon color-success"></i>
     <div class="position">
-      <h4 *ngIf="sourceId==null">Form preview will show here </h4>
-      <h4 *ngIf="sourceId!=null">New Form</h4>
+      <h4 *ngIf="!sourceId">Form preview will show here </h4>
+      <ng-container *ngIf="formReady">
+        <app-dynamic-form-display [formDisplay]="form"></app-dynamic-form-display>
+      </ng-container>
     </div>
   </div>
 </div>
